@@ -1,0 +1,29 @@
+{
+    "name": "vk/php-sdk",
+    "description": "VK SDK for PHP",
+    "keywords": ["vk", "sdk"],
+    "type": "library",
+    "homepage": "https://github.com/VKCOM/vk-php-sdk",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1",
+        "vkcom/vk-api-schema": "^1.4.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/VKCOM/vk-api-schema"
+        }
+    ],
+    "scripts": {
+        "generate-sdk": [
+          "@php scripts/generate.php"
+        ]
+    },
+    "autoload": {
+        "psr-4": { "VK\\": "src/VK" }
+    }
+}
