@@ -34,7 +34,7 @@ class CurlHttpClient implements TransportClient {
     public function post(string $url, ?array $payload = null) {
         return $this->sendRequest($url, array(
             CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $payload
+            CURLOPT_POSTFIELDS => $payload,
         ));
     }
 
@@ -71,7 +71,7 @@ class CurlHttpClient implements TransportClient {
             CURLOPT_HTTPHEADER => array(
                 static::HEADER_UPLOAD_CONTENT_TYPE,
             ),
-            CURLOPT_POSTFIELDS => $payload
+            CURLOPT_POSTFIELDS => $payload,
         ));
     }
 
@@ -135,7 +135,7 @@ class CurlHttpClient implements TransportClient {
         $raw_body = array_pop($parts);
         $raw_headers = implode("\r\n\r\n", $parts);
 
-        return [trim($raw_headers), trim($raw_body)];
+        return array(trim($raw_headers), trim($raw_body));
     }
 
     /**

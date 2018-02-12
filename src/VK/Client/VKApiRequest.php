@@ -61,6 +61,7 @@ class VKApiRequest {
         if (!isset($params[static::API_PARAM_VERSION])) {
             $params[static::API_PARAM_VERSION] = $this->version;
         }
+
         if (!isset($params[static::API_PARAM_LANG])) {
             $params[static::API_PARAM_LANG] = $this->lang;
         }

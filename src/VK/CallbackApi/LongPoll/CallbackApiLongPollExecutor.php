@@ -137,7 +137,7 @@ class CallbackApiLongPollExecutor {
             static::API_PARAM_KEY => $key,
             static::API_PARAM_TS => $ts,
             static::API_PARAM_WAIT => $this->wait,
-            static::API_PARAM_ACT => static::VALUE_ACT
+            static::API_PARAM_ACT => static::VALUE_ACT,
         );
 
         try {
@@ -173,8 +173,10 @@ class CallbackApiLongPollExecutor {
                     $ts = $params[static::API_PARAM_TS];
                     $msg = '\'ts\' value is incorrect, minimal value is 1, maximal value is ' . $ts;
                     throw new LongPollServerTsException($msg);
+
                 case static::ERROR_CODE_TOKEN_EXPIRED:
                     throw new LongPollServerKeyExpiredException('Try to generate a new key.');
+
                 default:
                     throw new VKClientException('Unknown LongPollServer exception, something went wrong. ' . $decode_body);
             }
