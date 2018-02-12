@@ -10,7 +10,7 @@ use VK\TransportClient\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;
 
 class VKOAuth {
-    protected const VK_API_VERSION = '5.69';
+    protected const OAUTH_VERSION = '5.69';
 
     protected const OAUTH_PARAM_VERSION = 'v';
     protected const OAUTH_PARAM_CLIENT_ID = 'client_id';
@@ -29,28 +29,28 @@ class VKOAuth {
     protected const RESPONSE_KEY_ACCESS_TOKEN = 'access_token';
 
     protected const OAUTH_HOST = 'https://oauth.vk.com';
-    protected const ENDPOINT_AUTHORIZE = '/authorize';
-    protected const ENDPOINT_ACCESS_TOKEN = '/access_token';
+    protected const OAUTH_ENDPOINT_AUTHORIZE = '/authorize';
+    protected const OAUTH_ENDPOINT_ACCESS_TOKEN = '/access_token';
 
     protected const CONNECTION_TIMEOUT = 10;
     protected const HTTP_STATUS_CODE_OK = 200;
 
     protected $http_client;
-    protected $api_version;
+    protected $version;
     protected $url_authorize;
     protected $url_access_token;
 
     /**
      * VKOAuth constructor.
      *
-     * @param string $api_version
+     * @param string $version
      * @param string $url_authorize
      * @param string $url_access_token
      */
-    public function __construct(string $api_version = self::VK_API_VERSION, string $url_authorize = self::OAUTH_HOST . self::ENDPOINT_AUTHORIZE,
-                                string $url_access_token = self::OAUTH_HOST . self::ENDPOINT_ACCESS_TOKEN) {
+    public function __construct(string $version = self::OAUTH_VERSION, string $url_authorize = self::OAUTH_HOST . self::OAUTH_ENDPOINT_AUTHORIZE,
+                                string $url_access_token = self::OAUTH_HOST . self::OAUTH_ENDPOINT_ACCESS_TOKEN) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
-        $this->api_version = $api_version;
+        $this->version = $version;
         $this->url_authorize = $url_authorize;
         $this->url_access_token = $url_access_token;
     }
@@ -58,7 +58,7 @@ class VKOAuth {
     /**
      * Opens the authorization dialog.
      *
-     * @param string $response_type
+     * @param string $response_type.
      * @param int $client_id
      * @param string $redirect_uri
      * @param string $display
@@ -88,14 +88,15 @@ class VKOAuth {
             static::OAUTH_PARAM_SCOPE => $scope_mask,
             static::OAUTH_PARAM_STATE => $state,
             static::OAUTH_PARAM_RESPONSE_TYPE => $response_type,
-            static::OAUTH_PARAM_VERSION => $this->api_version
+            static::OAUTH_PARAM_VERSION => $this->version
         );
 
         if ($group_ids) {
             $params[static::OAUTH_PARAM_GROUP_IDS] = implode(',', $group_ids);
         }
+
         if ($revoke) {
-            $params[static::OAUTH_PARAM_REVOKE] = 1;
+          $params[static::OAUTH_PARAM_REVOKE] = 1;
         }
 
         try {

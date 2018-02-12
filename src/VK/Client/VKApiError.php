@@ -34,42 +34,42 @@ class VKApiError {
     }
 
     /**
-     * @return mixed|null
+     * @return int|null
      */
     public function getErrorCode() {
         return $this->error_code;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
     public function getErrorMsg() {
         return $this->error_msg;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
     public function getCaptchaSid() {
         return $this->captcha_sid;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
     public function getCaptchaImg() {
         return $this->captcha_img;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
     public function getConfirmationText() {
         return $this->confirmation_text;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
     public function getRedirectUri() {
         return $this->redirect_uri;
