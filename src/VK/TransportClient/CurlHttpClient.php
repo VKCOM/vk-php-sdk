@@ -33,7 +33,7 @@ class CurlHttpClient implements TransportClient {
      */
     public function post(string $url, ?array $payload = null) {
         return $this->sendRequest($url, array(
-            CURLOPT_POST => 1,
+            CURLOPT_POST       => 1,
             CURLOPT_POSTFIELDS => $payload,
         ));
     }
@@ -42,13 +42,17 @@ class CurlHttpClient implements TransportClient {
      * Makes get request.
      *
      * @param string $url
-     * @param array $payload
+     * @param array $query_params
      *
      * @return TransportClientResponse
      * @throws HttpRequestException
      */
-    public function get(string $url, ?array $payload = null) {
-        return $this->sendRequest($url . static::QUESTION_MARK . http_build_query($payload), array());
+    public function get(string $url, ?array $query_params = null) {
+        if ($query_params !== null) {
+            $url .= static::QUESTION_MARK . http_build_query($query_params);
+        }
+
+        return $this->sendRequest($url);
     }
 
     /**
@@ -62,14 +66,14 @@ class CurlHttpClient implements TransportClient {
      * @throws HttpRequestException
      */
     public function upload(string $url, string $parameter_name, string $path) {
-        $payload = array();
-        $payload[$parameter_name] = (class_exists('CURLFile', false)) ?
-            new \CURLFile($path) : '@' . $path;
+        $payload = array(
+            $parameter_name => (class_exists('CURLFile', false)) ? new \CURLFile($path) : '@' . $path,
+        );
 
         return $this->sendRequest($url, array(
-            CURLOPT_POST => 1,
+            CURLOPT_POST       => 1,
             CURLOPT_HTTPHEADER => array(
-                static::HEADER_UPLOAD_CONTENT_TYPE,
+              static::HEADER_UPLOAD_CONTENT_TYPE,
             ),
             CURLOPT_POSTFIELDS => $payload,
         ));
@@ -84,7 +88,7 @@ class CurlHttpClient implements TransportClient {
      * @return TransportClientResponse
      * @throws HttpRequestException
      */
-    public function sendRequest(string $url, array $opts) {
+    public function sendRequest(string $url, array $opts = array()) {
         $curl = curl_init($url);
 
         curl_setopt_array($curl, $this->initial_opts + $opts);

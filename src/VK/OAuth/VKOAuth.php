@@ -37,22 +37,18 @@ class VKOAuth {
 
     protected $http_client;
     protected $version;
-    protected $url_authorize;
-    protected $url_access_token;
+    protected $host;
 
     /**
      * VKOAuth constructor.
      *
      * @param string $version
-     * @param string $url_authorize
-     * @param string $url_access_token
+     * @param string $host
      */
-    public function __construct(string $version = self::OAUTH_VERSION, string $url_authorize = self::OAUTH_HOST . self::OAUTH_ENDPOINT_AUTHORIZE,
-                                string $url_access_token = self::OAUTH_HOST . self::OAUTH_ENDPOINT_ACCESS_TOKEN) {
+    public function __construct(string $version = self::OAUTH_VERSION, string $host = self::OAUTH_HOST) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
         $this->version = $version;
-        $this->url_authorize = $url_authorize;
-        $this->url_access_token = $url_access_token;
+        $this->host = $host;
     }
 
     /**
@@ -88,7 +84,7 @@ class VKOAuth {
             static::OAUTH_PARAM_SCOPE => $scope_mask,
             static::OAUTH_PARAM_STATE => $state,
             static::OAUTH_PARAM_RESPONSE_TYPE => $response_type,
-            static::OAUTH_PARAM_VERSION => $this->version
+            static::OAUTH_PARAM_VERSION => $this->version,
         );
 
         if ($group_ids) {
@@ -100,7 +96,33 @@ class VKOAuth {
         }
 
         try {
-            $response = $this->http_client->post($this->url_access_token, $params);
+            $response = $this->http_client->post($this->host . self::OAUTH_ENDPOINT_AUTHORIZE, $params);
+        } catch (HttpRequestException $e) {
+            throw new VKClientException($e);
+        }
+
+        return $this->checkOAuthResponse($response);
+    }
+
+    /**
+     * @param int $client_id
+     * @param string $client_secret
+     * @param string $redirect_uri
+     * @param string $code
+     * @return mixed
+     * @throws VKClientException
+     * @throws VKOAuthException
+     */
+    public function getAccessToken(int $client_id, string $client_secret, string $redirect_uri, string $code) {
+        $params = array(
+          static::OAUTH_PARAM_CLIENT_ID     => $client_id,
+          static::OAUTH_PARAM_CLIENT_SECRET => $client_secret,
+          static::OAUTH_PARAM_REDIRECT_URI  => $redirect_uri,
+          static::OAUTH_PARAM_CODE          => $code,
+        );
+
+        try {
+            $response = $this->http_client->get($this->host . self::OAUTH_ENDPOINT_ACCESS_TOKEN, $params);
         } catch (HttpRequestException $e) {
             throw new VKClientException($e);
         }

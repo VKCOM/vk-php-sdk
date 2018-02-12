@@ -12,10 +12,10 @@ interface TransportClient {
 
     /**
      * @param string $url
-     * @param array|null $payload
+     * @param array|null $query_params
      * @return mixed
      */
-    public function get(string $url, ?array $payload = null);
+    public function get(string $url, ?array $query_params = null);
 
     /**
      * @param string $url
