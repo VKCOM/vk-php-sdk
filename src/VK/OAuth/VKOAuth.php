@@ -57,7 +57,7 @@ class VKOAuth {
     public function __construct(string $version = self::VERSION) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
         $this->version = $version;
-        $this->host = self::HOST;
+        $this->host = static::HOST;
     }
 
     /**
@@ -105,7 +105,7 @@ class VKOAuth {
         }
 
         try {
-            $response = $this->http_client->post($this->host . self::ENDPOINT_AUTHORIZE, $params);
+            $response = $this->http_client->post($this->host . static::ENDPOINT_AUTHORIZE, $params);
         } catch (TransportRequestException $e) {
             throw new VKClientException($e);
         }
@@ -131,7 +131,7 @@ class VKOAuth {
         );
 
         try {
-            $response = $this->http_client->get($this->host . self::ENDPOINT_ACCESS_TOKEN, $params);
+            $response = $this->http_client->get($this->host . static::ENDPOINT_ACCESS_TOKEN, $params);
         } catch (TransportRequestException $e) {
             throw new VKClientException($e);
         }
