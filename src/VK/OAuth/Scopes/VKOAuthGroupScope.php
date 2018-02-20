@@ -1,8 +1,8 @@
 <?php
 
-namespace VK\OAuth\Enums;
+namespace VK\OAuth\Scopes;
 
-class OAuthGroupScope {
+class VKOAuthGroupScope {
     const PHOTOS = 4;
     const APP_WIDGET = 64;
     const MESSAGES = 4096;

@@ -1,8 +1,8 @@
 <?php
 
-namespace VK\OAuth\Enums;
+namespace VK\OAuth;
 
-class OAuthDisplay {
+class VKOAuthDisplay {
     const PAGE = 'page';
     const POPUP = 'popup';
     const MOBILE = 'mobile';

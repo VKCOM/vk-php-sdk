@@ -2,9 +2,9 @@
 
 namespace VK\CallbackApi\LongPoll;
 
-use VK\CallbackApi\CallbackApiHandler;
-use VK\CallbackApi\LongPoll\Exceptions\LongPollServerKeyExpiredException;
-use VK\CallbackApi\LongPoll\Exceptions\LongPollServerTsException;
+use VK\CallbackApi\VKCallbackApiHandler;
+use VK\CallbackApi\LongPoll\Exceptions\VKLongPollServerKeyExpiredException;
+use VK\CallbackApi\LongPoll\Exceptions\VKLongPollServerTsException;
 use VK\Client\VKApiClient;
 use VK\Exceptions\Api\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -12,7 +12,7 @@ use VK\TransportClient\Curl\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
 
-class CallbackApiLongPollExecutor {
+class VKCallbackApiLongPollExecutor {
     protected const PARAM_GROUP_ID = 'group_id';
     protected const PARAM_ACT = 'act';
     protected const PARAM_KEY = 'key';
@@ -52,10 +52,10 @@ class CallbackApiLongPollExecutor {
      * @param VKApiClient $api_client
      * @param string $access_token
      * @param int $group_id
-     * @param CallbackApiHandler $handler
+     * @param VKCallbackApiHandler $handler
      * @param int $wait
      */
-    public function __construct(VKApiClient $api_client, string $access_token, int $group_id, CallbackApiHandler $handler,
+    public function __construct(VKApiClient $api_client, string $access_token, int $group_id, VKCallbackApiHandler $handler,
                                 int $wait = self::DEFAULT_WAIT) {
         $this->api_client = $api_client;
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
@@ -71,7 +71,7 @@ class CallbackApiLongPollExecutor {
      * @param int|null $timestamp
      *
      * @return null
-     * @throws LongPollServerTsException
+     * @throws VKLongPollServerTsException
      * @throws VKApiException
      * @throws VKClientException
      */
@@ -94,7 +94,7 @@ class CallbackApiLongPollExecutor {
                 $this->handler->parseObject($this->group_id, null, $event[static::EVENT_TYPE], $event[static::EVENT_OBJECT]);
             }
             $this->last_timestamp = $response[static::EVENTS_TIMESTAMP];
-        } catch (LongPollServerKeyExpiredException $e) {
+        } catch (VKLongPollServerKeyExpiredException $e) {
             $this->server = $this->getLongPollServer();
         }
 
@@ -128,8 +128,8 @@ class CallbackApiLongPollExecutor {
      * @param int $ts
      *
      * @return mixed
-     * @throws LongPollServerKeyExpiredException
-     * @throws LongPollServerTsException
+     * @throws VKLongPollServerKeyExpiredException
+     * @throws VKLongPollServerTsException
      * @throws VKClientException
      */
     public function getEvents(string $host, string $key, int $ts) {
@@ -157,8 +157,8 @@ class CallbackApiLongPollExecutor {
      *
      * @return mixed
      *
-     * @throws LongPollServerTsException
-     * @throws LongPollServerKeyExpiredException
+     * @throws VKLongPollServerTsException
+     * @throws VKLongPollServerKeyExpiredException
      * @throws VKClientException
      */
     private function parseResponse(array $params, TransportClientResponse $response) {
@@ -172,10 +172,10 @@ class CallbackApiLongPollExecutor {
                 case static::ERROR_CODE_INCORRECT_TS_VALUE:
                     $ts = $params[static::PARAM_TS];
                     $msg = '\'ts\' value is incorrect, minimal value is 1, maximal value is ' . $ts;
-                    throw new LongPollServerTsException($msg);
+                    throw new VKLongPollServerTsException($msg);
 
                 case static::ERROR_CODE_TOKEN_EXPIRED:
-                    throw new LongPollServerKeyExpiredException('Try to generate a new key.');
+                    throw new VKLongPollServerKeyExpiredException('Try to generate a new key.');
 
                 default:
                     throw new VKClientException('Unknown LongPollServer exception, something went wrong. ' . $decode_body);

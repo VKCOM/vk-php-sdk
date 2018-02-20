@@ -54,8 +54,8 @@ $oauth = new VKOAuth();
 $oauth = new VKOAuth();
 $client_id = 1234567;
 $redurect_uri = 'https://example.com/vk';
-$display = OAuthDisplay::PAGE;
-$scope = array(OAuthUserScope::WALL, OAuthUserScope::GROUPS);
+$display = VKOAuthDisplay::PAGE;
+$scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
 $state = 'secret_state_code';
 
 $browser_url = $oauth->authorize(OAuthResponseType::CODE, $client_id, $redurect_uri, $display, $scope, $state);
@@ -65,12 +65,12 @@ $browser_url = $oauth->authorize(OAuthResponseType::CODE, $client_id, $redurect_
 $oauth = new VKOAuth();
 $client_id = 1234567;
 $redurect_uri = 'https://example.com/vk';
-$display = OAuthDisplay::PAGE;
-$scope = array(OAuthGroupScope::MESSAGES);
+$display = VKOAuthDisplay::PAGE;
+$scope = array(VKOAuthGroupScope::MESSAGES);
 $state = 'secret_state_code';
 $groups_ids = array(1, 2);
 
-$browser_url = $oauth->authorize(OAuthResponseType::CODE, $client_id, $redurect_uri, $display, $scope, $state, $groups_ids);
+$browser_url = $oauth->authorize(VKOAuthResponseType::CODE, $client_id, $redurect_uri, $display, $scope, $state, $groups_ids);
 ```
 
 [User access key](https://vk.com/dev/permissions?f=1.%20%D0%9F%D1%80%D0%B0%D0%B2%D0%B0%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%BE%D0%BA%D0%B5%D0%BD%D0%B0%20%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F) and [community access key](https://vk.com/dev/permissions?f=2.%20%D0%9F%D1%80%D0%B0%D0%B2%D0%B0%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%BE%D0%BA%D0%B5%D0%BD%D0%B0%20%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B0) uses different values inside scope array
@@ -111,12 +111,12 @@ $oauth = new VKOAuth();
 $oauth = new VKOAuth();
 $client_id = 1234567;
 $redurect_uri = 'https://example.com/vk';
-$display = OAuthDisplay::PAGE;
-$scope = array(OAuthUserScope::WALL, OAuthUserScope::GROUPS);
+$display = VKOAuthDisplay::PAGE;
+$scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
 $state = 'secret_state_code';
 $revoke_auth = true;
 
-$browser_url = $oauth->authorize(OAuthResponseType::TOKEN, $client_id, $redurect_uri, $display, $scope, $state, $revoke_auth);
+$browser_url = $oauth->authorize(VKOAuthResponseType::TOKEN, $client_id, $redurect_uri, $display, $scope, $state, $revoke_auth);
 ```
 
 If you want to make user getting access anyway, set **revoke_auth** as true.
@@ -126,12 +126,12 @@ If you want to make user getting access anyway, set **revoke_auth** as true.
 $oauth = new VKOAuth();
 $client_id = 1234567;
 $redurect_uri = 'https://example.com/vk';
-$display = OAuthDisplay::PAGE;
-$scope = array(OAuthGroupScope::MESSAGES);
+$display = VKOAuthDisplay::PAGE;
+$scope = array(VKOAuthGroupScope::MESSAGES);
 $state = 'secret_state_code';
 $groups_ids = array(1, 2);
 
-$browser_url = $oauth->authorize(OAuthResponseType::TOKEN, $client_id, $redurect_uri, $display, $scope, $state, $groups_ids);
+$browser_url = $oauth->authorize(VKOAuthResponseType::TOKEN, $client_id, $redurect_uri, $display, $scope, $state, $groups_ids);
 ```
 
 Arguments are similar with authorization code flow
@@ -238,10 +238,10 @@ $vk->groups()->setLongPollSettings($access_token, array(
 ));
 ```
 
-Override methods from CallbackApiHandler class for handling events:
+Override methods from VKCallbackApiHandler class for handling events:
 
 ```php
-class CallbackApiMyHandler extends CallbackApiHandler {
+class CallbackApiMyHandler extends VKCallbackApiHandler {
     public function messageNew($object) {
         echo 'New message: ' . $object['body'];
     }
@@ -252,7 +252,7 @@ class CallbackApiMyHandler extends CallbackApiHandler {
 }
 ```
 
-To start listening to LongPoll events, create an instance of your CallbackApiMyHandler class, instance of CallbackApiLongPollExecutor class and call method listen():
+To start listening to LongPoll events, create an instance of your CallbackApiMyHandler class, instance of VKCallbackApiLongPollExecutor class and call method listen():
 
 ```php
 $vk = new VKApiClient();
@@ -261,7 +261,7 @@ $group_id = 159895463;
 $wait = 25;
 
 $handler = new CallbackApiMyHandler();
-$executor = new CallbackApiLongPollExecutor($vk, $access_token, $group_id, $handler, $wait);
+$executor = new VKCallbackApiLongPollExecutor($vk, $access_token, $group_id, $handler, $wait);
 $executor->listen();
 ```
 
@@ -278,7 +278,7 @@ $group_id = 159895463;
 $timestamp = 12;
 $wait = 25;
 
-$executor = new CallbackApiLongPollExecutor($vk, $access_token, $group_id, $handler, $wait);
+$executor = new VKCallbackApiLongPollExecutor($vk, $access_token, $group_id, $handler, $wait);
 $executor->listen($timestamp);
 ```
 
@@ -292,9 +292,9 @@ First step will be approve your domain. VK sends you request to your server with
 
 Look at this example:
 ```php
-use VK\CallbackApi\Server\CallbackApiServerHandler;
+use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
-class ServerHandler extends CallbackApiServerHandler {
+class ServerHandler extends VKCallbackApiServerHandler {
     const SECRET = 'ab12aba';
     const GROUP_ID = 123999;
     const CONFIRMATION_TOKEN = 'e67anm1';
@@ -315,7 +315,7 @@ $data = json_decode(file_get_contents('php://input'));
 $handler->parse($data);
 ```
 
-To handle events you should to override methods from CallbackApiServerHandler class like this. 
+To handle events you should to override methods from VKCallbackApiServerHandler class like this. 
 
 `confirmation` event handler contains 2 arguments: group id, and secret key. You must to override confirmation method.
 

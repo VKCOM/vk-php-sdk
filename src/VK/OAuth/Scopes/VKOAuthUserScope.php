@@ -1,8 +1,8 @@
 <?php
 
-namespace VK\OAuth\Enums;
+namespace VK\OAuth\Scopes;
 
-class OAuthUserScope {
+class VKOAuthUserScope {
     const NOTIFY = 1;
     const FRIENDS = 2;
     const PHOTOS = 4;

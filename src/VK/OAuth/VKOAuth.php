@@ -4,7 +4,6 @@ namespace VK\OAuth;
 
 use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKOAuthException;
-use VK\OAuth\Enums\OAuthResponseType;
 use VK\TransportClient\Curl\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
@@ -75,10 +74,10 @@ class VKOAuth {
      * @return mixed
      * @throws VKClientException
      * @throws VKOAuthException
-     * @see OAuthResponseType
-     * @see OAuthDisplay
-     * @see OAuthGroupScope
-     * @see OAuthUserScope
+     * @see VKOAuthResponseType
+     * @see VKOAuthDisplay
+     * @see VKOAuthGroupScope
+     * @see VKOAuthUserScope
      */
     public function authorize(string $response_type, int $client_id, string $redirect_uri, string $display,
                               ?array $scope = null, ?string $state = null, ?array $group_ids = null, bool $revoke = false) {

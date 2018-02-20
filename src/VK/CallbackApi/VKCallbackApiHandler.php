@@ -2,7 +2,7 @@
 
 namespace VK\CallbackApi;
 
-abstract class CallbackApiHandler {
+abstract class VKCallbackApiHandler {
     protected const CALLBACK_EVENT_MESSAGE_NEW = 'message_new';
     protected const CALLBACK_EVENT_MESSAGE_REPLY = 'message_reply';
     protected const CALLBACK_EVENT_MESSAGE_ALLOW = 'message_allow';

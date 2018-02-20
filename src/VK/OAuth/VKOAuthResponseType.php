@@ -1,8 +1,8 @@
 <?php
 
-namespace VK\OAuth\Enums;
+namespace VK\OAuth;
 
-class OAuthResponseType {
+class VKOAuthResponseType {
     const CODE = 'code';
     const TOKEN = 'token';
 }

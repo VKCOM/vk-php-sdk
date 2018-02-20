@@ -2,9 +2,9 @@
 
 namespace VK\CallbackApi\Server;
 
-use VK\CallbackApi\CallbackApiHandler;
+use VK\CallbackApi\VKCallbackApiHandler;
 
-abstract class CallbackApiServerHandler extends CallbackApiHandler {
+abstract class VKCallbackApiServerHandler extends VKCallbackApiHandler {
     protected const EVENT_KEY_TYPE = 'type';
     protected const EVENT_KEY_OBJECT = 'object';
     protected const EVENT_KEY_SECRET = 'secret';
