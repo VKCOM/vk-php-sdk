@@ -772,7 +772,7 @@ class Groups {
     }
 
     /**
-     * Returns data for connection to Bots Longpoll API.
+     * Returns data for connection to Bots Long Poll API.
      *
      * @param $access_token string
      * @param $params array
@@ -788,7 +788,7 @@ class Groups {
     }
 
     /**
-     * Gets settings of Bots Longpoll API for the community.
+     * Gets settings of Bots Long Poll API for the community.
      *
      * @param $access_token string
      * @param $params array
@@ -804,12 +804,12 @@ class Groups {
     }
 
     /**
-     * Sets settings of Bots Longpoll API for the community.
+     * Sets settings of Bots Long Poll API for the community.
      *
      * @param $access_token string
      * @param $params array
      *      - integer group_id: Community ID.
-     *      - boolean enabled: Enable Bots Longpoll ('0' — disabled, '1' — enabled).
+     *      - boolean enabled: Enable Bots Long Poll ('0' — disabled, '1' — enabled).
      *      - boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
      *      - boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
      *      - boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
