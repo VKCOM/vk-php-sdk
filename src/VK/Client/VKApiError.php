@@ -36,49 +36,51 @@ class VKApiError {
     /**
      * @return mixed|null
      */
-    public function getErrorCode() {
+    public function getErrorCode(): ?mixed {
         return $this->error_code;
     }
 
     /**
      * @return mixed|null
      */
-    public function getErrorMsg() {
+    public function getErrorMsg(): ?mixed {
         return $this->error_msg;
     }
 
     /**
      * @return mixed|null
      */
-    public function getCaptchaSid() {
+    public function getCaptchaSid(): ?mixed {
         return $this->captcha_sid;
     }
 
     /**
      * @return mixed|null
      */
-    public function getCaptchaImg() {
+    public function getCaptchaImg(): ?mixed {
         return $this->captcha_img;
     }
 
     /**
      * @return mixed|null
      */
-    public function getConfirmationText() {
+    public function getConfirmationText(): ?mixed {
         return $this->confirmation_text;
     }
 
     /**
      * @return mixed|null
      */
-    public function getRedirectUri() {
+    public function getRedirectUri(): ?mixed {
         return $this->redirect_uri;
     }
 
     /**
      * @return mixed|null
      */
-    public function getRequestParams() {
+    public function getRequestParams(): ?mixed {
         return $this->request_params;
     }
+
+
 }

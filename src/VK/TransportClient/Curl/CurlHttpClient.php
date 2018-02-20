@@ -37,7 +37,7 @@ class CurlHttpClient implements TransportClient {
      * @return TransportClientResponse
      * @throws TransportRequestException
      */
-    public function post(string $url, ?array $payload = null) {
+    public function post(string $url, ?array $payload = null): TransportClientResponse {
         return $this->sendRequest($url, array(
             CURLOPT_POST       => 1,
             CURLOPT_POSTFIELDS => $payload
@@ -53,7 +53,7 @@ class CurlHttpClient implements TransportClient {
      * @return TransportClientResponse
      * @throws TransportRequestException
      */
-    public function get(string $url, ?array $payload = null) {
+    public function get(string $url, ?array $payload = null): TransportClientResponse {
         return $this->sendRequest($url . static::QUESTION_MARK . http_build_query($payload), array());
     }
 
@@ -67,7 +67,7 @@ class CurlHttpClient implements TransportClient {
      * @return TransportClientResponse
      * @throws TransportRequestException
      */
-    public function upload(string $url, string $parameter_name, string $path) {
+    public function upload(string $url, string $parameter_name, string $path): TransportClientResponse {
         $payload = array();
         $payload[$parameter_name] = (class_exists('CURLFile', false)) ?
             new \CURLFile($path) : '@' . $path;
@@ -183,7 +183,7 @@ class CurlHttpClient implements TransportClient {
      *
      * @return int
      */
-    protected function getHttpStatus(string $raw_response_header) {
+    protected function getHttpStatus(string $raw_response_header): int {
         preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $raw_response_header, $match);
         return (int)$match[1];
     }

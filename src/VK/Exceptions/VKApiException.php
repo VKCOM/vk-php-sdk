@@ -4,19 +4,53 @@ namespace VK\Exceptions\Api;
 
 class VKApiException extends \Exception
 {
-    protected $code;
+    /**
+     * @var int
+     */
+    protected $error_code;
+
+    /**
+     * @var string
+     */
     protected $description;
-    protected $message;
+
+    /**
+     * @var string
+     */
+    protected $error_message;
 
     /**
      * VKApiException constructor.
-     * @param int $code
+     * @param int $error_code
      * @param string $description
-     * @param string $message
+     * @param string $error_message
      */
-    public function __construct(int $code, string $description, string $message) {
-        $this->code = $code;
+    public function __construct(int $error_code, string $description, string $error_message) {
+        $this->error_code = $error_code;
         $this->description = $description;
-        $this->message = $message;
+        $this->error_message = $error_message;
     }
+
+    /**
+     * @return int
+     */
+    public function getErrorCode(): int {
+        return $this->error_code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage(): string {
+        return $this->error_message;
+    }
+
+
 }

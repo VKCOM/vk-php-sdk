@@ -13,7 +13,7 @@ interface TransportClient {
      * @return TransportClientResponse
      * @throws TransportRequestException
      */
-    public function post(string $url, ?array $payload = null);
+    public function post(string $url, ?array $payload = null): TransportClientResponse;
 
     /**
      * Makes get request.
@@ -24,7 +24,7 @@ interface TransportClient {
      * @return TransportClientResponse
      * @throws TransportRequestException
      */
-    public function get(string $url, ?array $payload = null);
+    public function get(string $url, ?array $payload = null): TransportClientResponse;
 
     /**
      * Makes upload request.
@@ -36,5 +36,5 @@ interface TransportClient {
      * @return TransportClientResponse
      * @throws TransportRequestException
      */
-    public function upload(string $url, string $parameter_name, string $path);
+    public function upload(string $url, string $parameter_name, string $path): TransportClientResponse;
 }
