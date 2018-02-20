@@ -5,11 +5,11 @@ namespace VK\Client;
 class VKApiError {
     protected const KEY_ERROR_CODE = 'error_code';
     protected const KEY_ERROR_MSG = 'error_msg';
-    protected const KEY_CAPTCHA_SID = '$captcha_sid';
-    protected const KEY_CAPTCHA_IMG = '$captcha_img';
-    protected const KEY_CONFIRMATION_TEXT = '$confirmation_text';
-    protected const KEY_REDIRECT_URI = '$redirect_uri';
-    protected const KEY_REQUEST_PARAMS = '$request_params';
+    protected const KEY_CAPTCHA_SID = 'captcha_sid';
+    protected const KEY_CAPTCHA_IMG = 'captcha_img';
+    protected const KEY_CONFIRMATION_TEXT = 'confirmation_text';
+    protected const KEY_REDIRECT_URI = 'redirect_uri';
+    protected const KEY_REQUEST_PARAMS = 'request_params';
 
     protected $error_code;
     protected $error_msg;
