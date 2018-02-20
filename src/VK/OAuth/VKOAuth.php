@@ -54,12 +54,11 @@ class VKOAuth {
      * VKOAuth constructor.
      *
      * @param string $version
-     * @param string $host
      */
-    public function __construct(string $version = self::VERSION, string $host = self::HOST) {
+    public function __construct(string $version = self::VERSION) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
         $this->version = $version;
-        $this->host = $host;
+        $this->host = self::HOST;
     }
 
     /**

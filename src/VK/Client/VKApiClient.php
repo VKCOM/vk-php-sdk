@@ -2,7 +2,6 @@
 
 namespace VK\Client;
 
-use VK\Client\Enums\VKLanguage;
 use VK\Actions\Account;
 use VK\Actions\Ads;
 use VK\Actions\Apps;
@@ -39,7 +38,8 @@ use VK\Actions\Wall;
 use VK\Actions\Widgets;
 
 class VKApiClient {
-    protected const VK_API_VERSION = '5.69';
+    protected const API_VERSION = '5.69';
+    protected const API_HOST = 'https://api.vk.com/method';
 
     /**
      * @var VKApiRequest
@@ -218,11 +218,12 @@ class VKApiClient {
 
     /**
      * VKApiClient constructor.
-     * @param string $default_language
      * @param string $api_version
+     * @param string|null $language
      */
-    public function __construct(string $default_language = VKLanguage::RUSSIAN, string $api_version = self::VK_API_VERSION) {
-        $this->request = new VKApiRequest($default_language, $api_version);
+    public function __construct(string $api_version = self::API_VERSION, ?string $language = null) {
+        $this->request = new VKApiRequest($api_version, $language, self::API_HOST);
+
         $this->account = new Account($this->request);
         $this->ads = new Ads($this->request);
         $this->apps = new Apps($this->request);
@@ -260,247 +261,240 @@ class VKApiClient {
     }
 
     /**
-     * @return VKApiRequest
-     */
-    public function request() {
-        return $this->request;
-    }
-
-    /**
      * @return Account
      */
-    public function account() {
+    public function account(): Account {
         return $this->account;
     }
 
     /**
      * @return Ads
      */
-    public function ads() {
+    public function ads(): Ads {
         return $this->ads;
     }
 
     /**
      * @return Apps
      */
-    public function apps() {
+    public function apps(): Apps {
         return $this->apps;
     }
 
     /**
      * @return Auth
      */
-    public function auth() {
+    public function auth(): Auth {
         return $this->auth;
     }
 
     /**
      * @return Board
      */
-    public function board() {
+    public function board(): Board {
         return $this->board;
     }
 
     /**
      * @return Database
      */
-    public function database() {
+    public function database(): Database {
         return $this->database;
     }
 
     /**
      * @return Docs
      */
-    public function docs() {
+    public function docs(): Docs {
         return $this->docs;
     }
 
     /**
      * @return Fave
      */
-    public function fave() {
+    public function fave(): Fave {
         return $this->fave;
     }
 
     /**
      * @return Friends
      */
-    public function friends() {
+    public function friends(): Friends {
         return $this->friends;
     }
 
     /**
      * @return Gifts
      */
-    public function gifts() {
+    public function gifts(): Gifts {
         return $this->gifts;
     }
 
     /**
      * @return Groups
      */
-    public function groups() {
+    public function groups(): Groups {
         return $this->groups;
     }
 
     /**
      * @return Leads
      */
-    public function leads() {
+    public function leads(): Leads {
         return $this->leads;
     }
 
     /**
      * @return Likes
      */
-    public function likes() {
+    public function likes(): Likes {
         return $this->likes;
     }
 
     /**
      * @return Market
      */
-    public function market() {
+    public function market(): Market {
         return $this->market;
     }
 
     /**
      * @return Messages
      */
-    public function messages() {
+    public function messages(): Messages {
         return $this->messages;
     }
 
     /**
      * @return Newsfeed
      */
-    public function newsfeed() {
+    public function newsfeed(): Newsfeed {
         return $this->newsfeed;
     }
 
     /**
      * @return Notes
      */
-    public function notes() {
+    public function notes(): Notes {
         return $this->notes;
     }
 
     /**
      * @return Notifications
      */
-    public function notifications() {
+    public function notifications(): Notifications {
         return $this->notifications;
     }
 
     /**
      * @return Orders
      */
-    public function orders() {
+    public function orders(): Orders {
         return $this->orders;
     }
 
     /**
      * @return Pages
      */
-    public function pages() {
+    public function pages(): Pages {
         return $this->pages;
     }
 
     /**
      * @return Photos
      */
-    public function photos() {
+    public function photos(): Photos {
         return $this->photos;
     }
 
     /**
      * @return Places
      */
-    public function places() {
+    public function places(): Places {
         return $this->places;
     }
 
     /**
      * @return Polls
      */
-    public function polls() {
+    public function polls(): Polls {
         return $this->polls;
     }
 
     /**
      * @return Search
      */
-    public function search() {
+    public function search(): Search {
         return $this->search;
     }
 
     /**
      * @return Secure
      */
-    public function secure() {
+    public function secure(): Secure {
         return $this->secure;
     }
 
     /**
      * @return Stats
      */
-    public function stats() {
+    public function stats(): Stats {
         return $this->stats;
     }
 
     /**
      * @return Status
      */
-    public function status() {
+    public function status(): Status {
         return $this->status;
     }
 
     /**
      * @return Storage
      */
-    public function storage() {
+    public function storage(): Storage {
         return $this->storage;
     }
 
     /**
      * @return Streaming
      */
-    public function streaming() {
+    public function streaming(): Streaming {
         return $this->streaming;
     }
 
     /**
      * @return Users
      */
-    public function users() {
+    public function users(): Users {
         return $this->users;
     }
 
     /**
      * @return Utils
      */
-    public function utils() {
+    public function utils(): Utils {
         return $this->utils;
     }
 
     /**
      * @return Video
      */
-    public function video() {
+    public function video(): Video {
         return $this->video;
     }
 
     /**
      * @return Wall
      */
-    public function wall() {
+    public function wall(): Wall {
         return $this->wall;
     }
 
     /**
      * @return Widgets
      */
-    public function widgets() {
+    public function widgets(): Widgets {
         return $this->widgets;
     }
 

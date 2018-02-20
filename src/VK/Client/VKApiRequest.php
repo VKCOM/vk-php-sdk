@@ -22,8 +22,6 @@ class VKApiRequest {
     protected const CONNECTION_TIMEOUT = 10;
     protected const HTTP_STATUS_CODE_OK = 200;
 
-    protected const VK_API_HOST = 'https://api.vk.com/method';
-
     /**
      * @var string
      */
@@ -37,24 +35,24 @@ class VKApiRequest {
     /**
      * @var string
      */
-    private $api_version;
+    private $version;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $lang;
+    private $language;
 
     /**
      * VKApiRequest constructor.
-     * @param string $default_language
      * @param string $api_version
+     * @param string|null $language
      * @param string $host
      */
-    public function __construct(string $default_language, string $api_version = self::VERSION, string $host = self::VK_API_HOST) {
+    public function __construct(string $api_version, ?string $language, string $host) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
-        $this->api_version = $api_version;
+        $this->version = $api_version;
         $this->host = $host;
-        $this->lang = $default_language;
+        $this->language = $language;
     }
 
     /**
@@ -74,10 +72,11 @@ class VKApiRequest {
         $params[static::PARAM_ACCESS_TOKEN] = $access_token;
 
         if (!isset($params[static::PARAM_VERSION])) {
-            $params[static::PARAM_VERSION] = $this->api_version;
+            $params[static::PARAM_VERSION] = $this->version;
         }
-        if (!isset($params[static::PARAM_LANG])) {
-            $params[static::PARAM_LANG] = $this->lang;
+
+        if ($this->language && !isset($params[static::PARAM_LANG])) {
+            $params[static::PARAM_LANG] = $this->language;
         }
 
         $url = $this->host . '/' . $method;
