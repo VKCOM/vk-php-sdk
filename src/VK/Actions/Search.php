@@ -3,14 +3,14 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\VKClientException;
 use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKClientException;
 
 class Search {
 
     /**
      * @var VKApiRequest
-     **/
+     */
     private $request;
 
     /**
@@ -23,20 +23,20 @@ class Search {
 
     /**
      * Allows the programmer to do a quick search for any substring.
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - string q: Search query string.
      *      - integer offset: Offset for querying specific result subset
      *      - integer limit: Maximum number of results to return.
-     *      - array filters: 
-     *      - boolean search_global: 
-     * 
+     *      - array filters:
+     *      - boolean search_global:
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
     public function getHints(string $access_token, array $params = array()) {
         return $this->request->post('search.getHints', $access_token, $params);
     }

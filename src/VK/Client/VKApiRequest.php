@@ -3,43 +3,58 @@
 namespace VK\Client;
 
 use VK\Exceptions\Api\ExceptionMapper;
-use VK\Exceptions\HttpRequestException;
 use VK\Exceptions\Api\VKApiException;
 use VK\Exceptions\VKClientException;
-use VK\TransportClient\CurlHttpClient;
+use VK\TransportClient\Curl\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;
+use VK\TransportClient\TransportRequestException;
 
 class VKApiRequest {
-    const API_VERSION = '5.69';
-    const API_HOST = 'https://api.vk.com/method';
+    protected const VERSION = '5.69';
 
-    protected const API_PARAM_VERSION = 'v';
-    protected const API_PARAM_ACCESS_TOKEN = 'access_token';
-    protected const API_PARAM_LANG = 'lang';
+    private const PARAM_VERSION = 'v';
+    private const PARAM_ACCESS_TOKEN = 'access_token';
+    private const PARAM_LANG = 'lang';
 
-    protected const RESPONSE_KEY_ERROR = 'error';
-    protected const RESPONSE_KEY_RESPONSE = 'response';
+    private const KEY_ERROR = 'error';
+    private const KEY_RESPONSE = 'response';
 
     protected const CONNECTION_TIMEOUT = 10;
     protected const HTTP_STATUS_CODE_OK = 200;
 
-    protected $host;
-    protected $http_client;
-    protected $version;
-    protected $lang;
+    protected const VK_API_HOST = 'https://api.vk.com/method';
+
+    /**
+     * @var string
+     */
+    private $host;
+
+    /**
+     * @var CurlHttpClient
+     */
+    private $http_client;
+
+    /**
+     * @var string
+     */
+    private $api_version;
+
+    /**
+     * @var string
+     */
+    private $lang;
 
     /**
      * VKApiRequest constructor.
-     *
-     * @param string $language
-     * @param string $version
+     * @param string $default_language
+     * @param string $api_version
      * @param string $host
      */
-    public function __construct(string $language, string $version = self::API_VERSION, string $host = self::API_HOST) {
+    public function __construct(string $default_language, string $api_version = self::VERSION, string $host = self::VK_API_HOST) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
-        $this->version = $version;
+        $this->api_version = $api_version;
         $this->host = $host;
-        $this->lang = $language;
+        $this->lang = $default_language;
     }
 
     /**
@@ -56,21 +71,20 @@ class VKApiRequest {
      */
     public function post(string $method, string $access_token, array $params = array()) {
         $params = $this->formatParams($params);
-        $params[static::API_PARAM_ACCESS_TOKEN] = $access_token;
+        $params[static::PARAM_ACCESS_TOKEN] = $access_token;
 
-        if (!isset($params[static::API_PARAM_VERSION])) {
-            $params[static::API_PARAM_VERSION] = $this->version;
+        if (!isset($params[static::PARAM_VERSION])) {
+            $params[static::PARAM_VERSION] = $this->api_version;
         }
-
-        if (!isset($params[static::API_PARAM_LANG])) {
-            $params[static::API_PARAM_LANG] = $this->lang;
+        if (!isset($params[static::PARAM_LANG])) {
+            $params[static::PARAM_LANG] = $this->lang;
         }
 
         $url = $this->host . '/' . $method;
 
         try {
             $response = $this->http_client->post($url, $params);
-        } catch (HttpRequestException $e) {
+        } catch (TransportRequestException $e) {
             throw new VKClientException($e);
         }
 
@@ -92,7 +106,7 @@ class VKApiRequest {
     public function upload(string $upload_url, string $parameter_name, string $path) {
         try {
             $response = $this->http_client->upload($upload_url, $parameter_name, $path);
-        } catch (HttpRequestException $e) {
+        } catch (TransportRequestException $e) {
             throw new VKClientException($e);
         }
 
@@ -115,14 +129,14 @@ class VKApiRequest {
         $body = $response->getBody();
         $decode_body = $this->decodeBody($body);
 
-        if (isset($decode_body[static::RESPONSE_KEY_ERROR])) {
-            $error = $decode_body[static::RESPONSE_KEY_ERROR];
+        if (isset($decode_body[static::KEY_ERROR])) {
+            $error = $decode_body[static::KEY_ERROR];
             $api_error = new VKApiError($error);
             throw ExceptionMapper::parse($api_error);
         }
 
-        if (isset($decode_body[static::RESPONSE_KEY_RESPONSE])) {
-            return $decode_body[static::RESPONSE_KEY_RESPONSE];
+        if (isset($decode_body[static::KEY_RESPONSE])) {
+            return $decode_body[static::KEY_RESPONSE];
         } else {
             return $decode_body;
         }

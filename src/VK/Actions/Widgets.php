@@ -3,14 +3,14 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\VKClientException;
 use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKClientException;
 
 class Widgets {
 
     /**
      * @var VKApiRequest
-     **/
+     */
     private $request;
 
     /**
@@ -23,7 +23,7 @@ class Widgets {
 
     /**
      * Gets a list of comments for the page added through the [vk.com/dev/Comments|Comments widget].
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - integer widget_api_id:
@@ -32,12 +32,12 @@ class Widgets {
      *      - string order:
      *      - array fields:
      *      - integer count:
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
     public function getComments(string $access_token, array $params = array()) {
         return $this->request->post('widgets.getComments', $access_token, $params);
     }
@@ -45,19 +45,19 @@ class Widgets {
     /**
      * Gets a list of application/site pages where the [vk.com/dev/Comments|Comments widget] or [vk.com/dev/Like|Like
      * widget] is installed.
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - integer widget_api_id:
      *      - string order:
      *      - string period:
      *      - integer count:
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
     public function getPages(string $access_token, array $params = array()) {
         return $this->request->post('widgets.getPages', $access_token, $params);
     }

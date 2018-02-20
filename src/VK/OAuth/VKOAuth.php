@@ -2,42 +2,53 @@
 
 namespace VK\OAuth;
 
-use VK\Exceptions\HttpRequestException;
 use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKOAuthException;
 use VK\OAuth\Enums\OAuthResponseType;
-use VK\TransportClient\CurlHttpClient;
+use VK\TransportClient\Curl\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;
+use VK\TransportClient\TransportRequestException;
 
 class VKOAuth {
-    protected const OAUTH_VERSION = '5.69';
+    protected const VERSION = '5.69';
 
-    protected const OAUTH_PARAM_VERSION = 'v';
-    protected const OAUTH_PARAM_CLIENT_ID = 'client_id';
-    protected const OAUTH_PARAM_REDIRECT_URI = 'redirect_uri';
-    protected const OAUTH_PARAM_GROUP_IDS = 'group_ids';
-    protected const OAUTH_PARAM_DISPLAY = 'display';
-    protected const OAUTH_PARAM_SCOPE = 'scope';
-    protected const OAUTH_PARAM_RESPONSE_TYPE = 'response_type';
-    protected const OAUTH_PARAM_STATE = 'state';
-    protected const OAUTH_PARAM_CLIENT_SECRET = 'client_secret';
-    protected const OAUTH_PARAM_CODE = 'code';
-    protected const OAUTH_PARAM_REVOKE = 'revoke';
+    private const PARAM_VERSION = 'v';
+    private const PARAM_CLIENT_ID = 'client_id';
+    private const PARAM_REDIRECT_URI = 'redirect_uri';
+    private const PARAM_GROUP_IDS = 'group_ids';
+    private const PARAM_DISPLAY = 'display';
+    private const PARAM_SCOPE = 'scope';
+    private const PARAM_RESPONSE_TYPE = 'response_type';
+    private const PARAM_STATE = 'state';
+    private const PARAM_CLIENT_SECRET = 'client_secret';
+    private const PARAM_CODE = 'code';
+    private const PARAM_REVOKE = 'revoke';
 
-    protected const RESPONSE_KEY_ERROR = 'error';
-    protected const RESPONSE_KEY_ERROR_DESCRIPTION = 'error_description';
-    protected const RESPONSE_KEY_ACCESS_TOKEN = 'access_token';
+    private const RESPONSE_KEY_ERROR = 'error';
+    private const RESPONSE_KEY_ERROR_DESCRIPTION = 'error_description';
+    private const RESPONSE_KEY_ACCESS_TOKEN = 'access_token';
 
-    protected const OAUTH_HOST = 'https://oauth.vk.com';
-    protected const OAUTH_ENDPOINT_AUTHORIZE = '/authorize';
-    protected const OAUTH_ENDPOINT_ACCESS_TOKEN = '/access_token';
+    protected const HOST = 'https://oauth.vk.com';
+    private const ENDPOINT_AUTHORIZE = '/authorize';
+    private const ENDPOINT_ACCESS_TOKEN = '/access_token';
 
     protected const CONNECTION_TIMEOUT = 10;
     protected const HTTP_STATUS_CODE_OK = 200;
 
-    protected $http_client;
-    protected $version;
-    protected $host;
+    /**
+     * @var CurlHttpClient
+     */
+    private $http_client;
+
+    /**
+     * @var string
+     */
+    private $version;
+
+    /**
+     * @var string
+     */
+    private $host;
 
     /**
      * VKOAuth constructor.
@@ -45,7 +56,7 @@ class VKOAuth {
      * @param string $version
      * @param string $host
      */
-    public function __construct(string $version = self::OAUTH_VERSION, string $host = self::OAUTH_HOST) {
+    public function __construct(string $version = self::VERSION, string $host = self::HOST) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
         $this->version = $version;
         $this->host = $host;
@@ -54,7 +65,7 @@ class VKOAuth {
     /**
      * Opens the authorization dialog.
      *
-     * @param string $response_type.
+     * @param string $response_type
      * @param int $client_id
      * @param string $redirect_uri
      * @param string $display
@@ -78,26 +89,26 @@ class VKOAuth {
         }
 
         $params = array(
-            static::OAUTH_PARAM_CLIENT_ID => $client_id,
-            static::OAUTH_PARAM_REDIRECT_URI => $redirect_uri,
-            static::OAUTH_PARAM_DISPLAY => $display,
-            static::OAUTH_PARAM_SCOPE => $scope_mask,
-            static::OAUTH_PARAM_STATE => $state,
-            static::OAUTH_PARAM_RESPONSE_TYPE => $response_type,
-            static::OAUTH_PARAM_VERSION => $this->version,
+            static::PARAM_CLIENT_ID     => $client_id,
+            static::PARAM_REDIRECT_URI  => $redirect_uri,
+            static::PARAM_DISPLAY       => $display,
+            static::PARAM_SCOPE         => $scope_mask,
+            static::PARAM_STATE         => $state,
+            static::PARAM_RESPONSE_TYPE => $response_type,
+            static::PARAM_VERSION       => $this->version,
         );
 
         if ($group_ids) {
-            $params[static::OAUTH_PARAM_GROUP_IDS] = implode(',', $group_ids);
+            $params[static::PARAM_GROUP_IDS] = implode(',', $group_ids);
         }
 
         if ($revoke) {
-          $params[static::OAUTH_PARAM_REVOKE] = 1;
+            $params[static::PARAM_REVOKE] = 1;
         }
 
         try {
-            $response = $this->http_client->post($this->host . self::OAUTH_ENDPOINT_AUTHORIZE, $params);
-        } catch (HttpRequestException $e) {
+            $response = $this->http_client->post($this->host . self::ENDPOINT_AUTHORIZE, $params);
+        } catch (TransportRequestException $e) {
             throw new VKClientException($e);
         }
 
@@ -115,15 +126,15 @@ class VKOAuth {
      */
     public function getAccessToken(int $client_id, string $client_secret, string $redirect_uri, string $code) {
         $params = array(
-          static::OAUTH_PARAM_CLIENT_ID     => $client_id,
-          static::OAUTH_PARAM_CLIENT_SECRET => $client_secret,
-          static::OAUTH_PARAM_REDIRECT_URI  => $redirect_uri,
-          static::OAUTH_PARAM_CODE          => $code,
+            static::PARAM_CLIENT_ID     => $client_id,
+            static::PARAM_CLIENT_SECRET => $client_secret,
+            static::PARAM_REDIRECT_URI  => $redirect_uri,
+            static::PARAM_CODE          => $code,
         );
 
         try {
-            $response = $this->http_client->get($this->host . self::OAUTH_ENDPOINT_ACCESS_TOKEN, $params);
-        } catch (HttpRequestException $e) {
+            $response = $this->http_client->get($this->host . self::ENDPOINT_ACCESS_TOKEN, $params);
+        } catch (TransportRequestException $e) {
             throw new VKClientException($e);
         }
 

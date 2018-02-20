@@ -3,14 +3,14 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\VKClientException;
 use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKClientException;
 
 class Gifts {
 
     /**
      * @var VKApiRequest
-     **/
+     */
     private $request;
 
     /**
@@ -23,18 +23,18 @@ class Gifts {
 
     /**
      * Returns a list of user gifts.
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - integer user_id: User ID.
      *      - integer count: Number of gifts to return.
      *      - integer offset: Offset needed to return a specific subset of results.
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
     public function get(string $access_token, array $params = array()) {
         return $this->request->post('gifts.get', $access_token, $params);
     }

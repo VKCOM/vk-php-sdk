@@ -21,7 +21,7 @@ class GenerateActions {
     protected const LINE_LENGTH_DESCRIPTION = 112;
 
     protected const COMMENT_START = '/**';
-    protected const COMMENT_END = '**/';
+    protected const COMMENT_END = '*/';
 
     protected const KEYWORD_METHODS = 'methods';
     protected const KEYWORD_USE = 'use';
@@ -33,10 +33,10 @@ class GenerateActions {
     protected const KEYWORD_ENUMS = 'Enums';
     protected const KEYWORD_CLIENT = 'Client';
     protected const VK_NAMESPACE = 'VK';
-    protected const USE_VK = self::KEYWORD_USE . self::SPACE . self::VK_NAMESPACE . self::BACKSLASH;
     protected const VK_ACTIONS = self::VK_NAMESPACE . self::BACKSLASH . self::KEYWORD_ACTIONS;
     protected const VK_ENUMS = self::VK_ACTIONS . self::BACKSLASH. self::KEYWORD_ENUMS;
     protected const VK_CLIENT = self::VK_NAMESPACE . self::BACKSLASH. self::KEYWORD_CLIENT;
+    protected const VK_LANGUAGE = 'VKLanguage';
     protected const VK_API_REQUEST_VAR_NAME = 'request';
     protected const VK_API_REQUEST = 'VKApiRequest';
     protected const VK_API_CLIENT = 'VKApiClient';
@@ -53,6 +53,7 @@ class GenerateActions {
     protected const KEY_ENUM = 'enum';
     protected const KEY_ENUM_NAMES = 'enumNames';
     protected const KEY_TYPE = 'type';
+    protected const KEY_ERRORS = 'errors';
 
     protected const LINK_SCHEMA = 'https://raw.githubusercontent.com/VKCOM/vk-api-schema/master/';
     protected const LINK_METHODS = self::LINK_SCHEMA . 'methods.json';
@@ -61,9 +62,11 @@ class GenerateActions {
     protected const PATH_SCHEMA = '/vendor/vkcom/vk-api-schema/methods.json';
     protected const SRC_VK = '/src/VK/';
 
-    protected const USE_VK_API_REQUEST = self::USE_VK . self::KEYWORD_CLIENT . self::BACKSLASH . self::VK_API_REQUEST . ';';
+    protected const USE_VK = self::KEYWORD_USE . self::SPACE . self::VK_NAMESPACE . self::BACKSLASH;
+    protected const USE_VK_API_EXCEPTIONS = self::USE_VK . 'Exceptions\Api\\';
+    protected const USE_VK_API_EXCEPTION = self::USE_VK_API_EXCEPTIONS . 'VKApiException;';
     protected const USE_VK_CLIENT_EXCEPTION = self::USE_VK . 'Exceptions\VKClientException;';
-    protected const USE_VK_API_EXCEPTION = self::USE_VK . 'Exceptions\Api\VKApiException;';
+    protected const USE_VK_API_REQUEST = self::USE_VK . self::KEYWORD_CLIENT . self::BACKSLASH . self::VK_API_REQUEST . ';';
 
     protected $response = null;
     protected $enums_path = null;
@@ -128,8 +131,11 @@ class GenerateActions {
             '', 'protected ');
         $this->api_client_members .= $this->api_request_member;
         $this->api_client_construct_code = $this->wrapConstructAssignment(static::VK_API_REQUEST_VAR_NAME,
-            static::KEYWORD_NEW . self::VK_API_REQUEST . '($api_version)');
-        $this->api_client_gets = $this->wrapGetActionMethod(static::VK_API_REQUEST_VAR_NAME);
+            static::KEYWORD_NEW . self::VK_API_REQUEST . '($default_language, $api_version)');
+
+        $this->api_client_gets = PHP_EOL . $this->wrapComment(array('@return ' . static::VK_API_REQUEST));
+        $this->api_client_gets .= $this->wrapGetActionMethod(static::VK_API_REQUEST_VAR_NAME);
+        $this->api_client_use = $this->wrapClassUse(self::VK_CLIENT . self::BACKSLASH . self::KEYWORD_ENUMS, self::VK_LANGUAGE);
 
         foreach ($mapped_methods as $action_name => &$action_methods) {
             $class_name = ucwords($action_name);
@@ -137,16 +143,18 @@ class GenerateActions {
             $this->updateApiActionClientProperties($class_name, $action_name);
 
             $action_class_code = '';
+            $action_exceptions = array();
             foreach ($action_methods as &$method) {
-                $action_class_code .= $this->wrapActionMethod($method, $action_name);
+                $action_class_code .= $this->wrapActionMethod($method, $action_name, $action_exceptions);
             }
 
             $action_class_use = PHP_EOL . static::USE_VK_API_REQUEST;
             $action_class_use .= PHP_EOL . static::USE_VK_CLIENT_EXCEPTION;
             $action_class_use .= PHP_EOL . static::USE_VK_API_EXCEPTION;
+            $action_class_use .= $this->addActionExceptionsToUse($action_exceptions);
             $action_class_use .= $this->addActionEnumsToUse($action_methods, $action_name);
             $action_class_members = $this->api_request_member;
-            $action_class_construct = $this->wrapConstruct(static::VK_API_REQUEST . static::SPACE .
+            $action_class_construct = $this->wrapConstruct($class_name, static::VK_API_REQUEST . static::SPACE .
                 static::DOLLAR . static::VK_API_REQUEST_VAR_NAME,
                 $this->wrapConstructAssignment(static::VK_API_REQUEST_VAR_NAME,
                     static::DOLLAR . static::VK_API_REQUEST_VAR_NAME));
@@ -159,7 +167,7 @@ class GenerateActions {
         }
 
         $api_client_class_name = static::VK_API_CLIENT;
-        $api_client_construct = $this->wrapConstruct('string $api_version = self::VK_API_VERSION', $this->api_client_construct_code);
+        $api_client_construct = $this->wrapConstruct($api_client_class_name, 'string $default_language = VKLanguage::RUSSIAN, string $api_version = self::VK_API_VERSION', $this->api_client_construct_code);
 
         $api_client_class = $this->wrapClass($api_client_class_name, static::VK_CLIENT,
             $this->api_client_use, $this->api_client_members, $api_client_construct, $this->api_client_gets);
@@ -192,6 +200,7 @@ class GenerateActions {
         $value = static::KEYWORD_NEW . $class_name . '(' . static::DOLLAR . static::KEYWORD_THIS . static::VK_API_REQUEST_VAR_NAME . ')';
         $this->api_client_construct_code .= $this->wrapConstructAssignment($action_name, $value);
 
+        $this->api_client_gets .= PHP_EOL . $this->wrapComment(array('@return ' . $class_name));
         $this->api_client_gets .= $this->wrapGetActionMethod($action_name);
     }
 
@@ -217,7 +226,7 @@ class GenerateActions {
         return $result;
     }
 
-    protected function wrapActionMethod($method, $action_name) {
+    protected function wrapActionMethod($method, $action_name, &$exception_names) {
         $method_name = $method[static::KEY_NAME];
         $add_params = function ($param) use (&$action_name, &$method_name) {
             $result = static::SPACE . $this->tab(1) . static::DASH . static::SPACE;
@@ -270,14 +279,32 @@ class GenerateActions {
             $method_description = $method[static::KEY_DESCRIPTION];
         }
 
-        $method_description = wordwrap($method_description, static::LINE_LENGTH_DESCRIPTION);
+        $method_errors = array('', '@return mixed',
+            '@throws VKClientException in case of network error',
+            '@throws VKApiException in case of network error');
+        if (isset($method[static::KEY_ERRORS])) {
+            foreach ($method[static::KEY_ERRORS] as $error) {
+                $exception_name = static::parseErrorName($error['name']);
+                $error_text = '@throws ' . $exception_name;
+
+                if (!in_array($exception_name, $exception_names)) {
+                    array_push($exception_names, $exception_name);
+                }
+
+                if (isset($error['description'])) {
+                    $error_text .= self::SPACE . $error['description'];
+                }
+                array_push($method_errors, $error_text);
+            }
+        }
+        array_push($method_errors, '');
+
+        $method_description = wordwrap($method_description, static::LINE_LENGTH_DESCRIPTION, PHP_EOL);
         $method_description_array = explode(PHP_EOL, $method_description);
 
         $result .= $this->wrapComment(array_merge($method_description_array, array('', '@param ' . static::DOLLAR .
         static::ARG_ACCESS_TOKEN . ' string', '@param ' . static::DOLLAR .
-            static::ARG_PARAMS . ' array'), $params, array('', '@return mixed',
-                '@throws VKClientException in case of error on the Api side',
-                '@throws VKApiException in case of network error', ''))) . PHP_EOL;
+            static::ARG_PARAMS . ' array'), $params, $method_errors)) . PHP_EOL;
 
         $result .= $this->tab(1) . 'public function ' . $method_name . '(string ' . static::DOLLAR . static::ARG_ACCESS_TOKEN
             . ', array ' . static::DOLLAR . static::ARG_PARAMS . ' = array()) {' . PHP_EOL;
@@ -290,6 +317,15 @@ class GenerateActions {
         $result .= $this->tab(1) . '}';
 
         return $result;
+    }
+
+    protected function parseErrorName(string $name) {
+        $error_name = str_replace(static::SPACE, '',
+            ucwords(str_replace(static::UNDERSCORE, static::SPACE, strtolower($name))));
+        $error_name = str_replace('Error', '', $error_name);
+        $error_name = self::VK_NAMESPACE . $error_name;
+        $error_name .= 'Exception';
+        return $error_name;
     }
 
     protected function createParameterEnum($param, $parameter_name, $method_name, $action_name) {
@@ -344,8 +380,15 @@ class GenerateActions {
         return $result;
     }
 
-    protected function wrapConstruct($params, $code) {
-        $result = $this->tab(1) . 'public function __construct(' . $params . ') {';
+    protected function wrapConstruct($class_name, $params, $code) {
+        $result = $this->tab(1) . static::COMMENT_START . PHP_EOL;
+        $result .= $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . $class_name . static::SPACE . 'constructor.';
+        foreach (explode(',', $params) as $param) {
+            $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . '@param' . static::SPACE . trim(explode('=', $param)[0]);
+        }
+        $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::COMMENT_END . PHP_EOL;
+
+        $result .= $this->tab(1) . 'public function __construct(' . $params . ') {';
         $result .= $code . PHP_EOL;
         $result .= $this->tab(1) . '}';
         return $result;
@@ -378,15 +421,19 @@ class GenerateActions {
         return PHP_EOL . static::KEYWORD_USE . static::SPACE . static::VK_ACTIONS . static::BACKSLASH . $class_name . ';';
     }
 
+    protected function wrapClassUse($vk_namespace, $class_name) {
+        return PHP_EOL . static::KEYWORD_USE . static::SPACE . $vk_namespace . static::BACKSLASH . $class_name . ';';
+    }
+
     protected function wrapConstructAssignment($varName, $value) {
         return PHP_EOL . $this->tab(2) . static::DOLLAR . static::KEYWORD_THIS . $varName . ' = ' . $value . ';';
     }
 
     protected function wrapGetActionMethod($var_name) {
-        $result = PHP_EOL . PHP_EOL;
+        $result = PHP_EOL;
         $result .= $this->tab(1) . 'public function ' . $var_name . '() {' . PHP_EOL;
         $result .= $this->tab(2) . static::KEYWORD_RETURN . static::DOLLAR . static::KEYWORD_THIS . $var_name . ';' . PHP_EOL;
-        $result .= $this->tab(1) . '}';
+        $result .= $this->tab(1) . '}' . PHP_EOL;
         return $result;
     }
 
@@ -402,6 +449,14 @@ class GenerateActions {
                     }
                 }
             }
+        }
+        return $result;
+    }
+
+    protected function addActionExceptionsToUse($action_exceptions) {
+        $result = '';
+        foreach ($action_exceptions as $exception_name) {
+            $result .= PHP_EOL . self::USE_VK_API_EXCEPTIONS . $exception_name . ';';
         }
         return $result;
     }

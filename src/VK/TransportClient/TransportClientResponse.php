@@ -22,21 +22,21 @@ class TransportClientResponse {
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBody() {
         return $this->body;
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getHttpStatus() {
         return $this->http_status;
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
     public function getHeaders() {
         return $this->headers;

@@ -1,7 +1,7 @@
 <?php
 
-require_once 'GenerateActions.php';
-require_once 'GenerateExceptions.php';
+require_once('GenerateActions.php');
+require_once('GenerateExceptions.php');
 
 $gen_actions = new GenerateActions();
 $gen_actions->generate();

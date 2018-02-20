@@ -2,16 +2,22 @@
 
 namespace VK\Actions;
 
-use VK\Client\VKApiRequest;
-use VK\Exceptions\VKClientException;
-use VK\Exceptions\Api\VKApiException;
 use VK\Actions\Enums\AuthSignupSex;
+use VK\Client\VKApiRequest;
+use VK\Exceptions\Api\VKApiAuthDelayException;
+use VK\Exceptions\Api\VKApiAuthFloodException;
+use VK\Exceptions\Api\VKApiAuthParamCodeException;
+use VK\Exceptions\Api\VKApiAuthParamPasswordException;
+use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\Api\VKApiParamPhoneException;
+use VK\Exceptions\Api\VKApiPhoneAlreadyUsedException;
+use VK\Exceptions\VKClientException;
 
 class Auth {
 
     /**
      * @var VKApiRequest
-     **/
+     */
     private $request;
 
     /**
@@ -24,26 +30,29 @@ class Auth {
 
     /**
      * Checks a user's phone number for correctness.
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - string phone: Phone number.
      *      - integer client_id: User ID.
      *      - string client_secret:
      *      - boolean auth_by_phone:
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiPhoneAlreadyUsedException This phone number is used by another user
+     * @throws VKApiAuthDelayException Processing. Try later
+     * @throws VKApiParamPhoneException Invalid phone number
+     *
+     */
     public function checkPhone(string $access_token, array $params = array()) {
         return $this->request->post('auth.checkPhone', $access_token, $params);
     }
 
     /**
      * Registers a new user by phone number.
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - string first_name: User's first name.
@@ -60,14 +69,17 @@ class Auth {
      *      - boolean voice: '1' — call the phone number and leave a voice message of the authorization code, '0'
      *        — send the code by SMS (default)
      *      - AuthSignupSex sex: '1' — female, '2' — male
-     *        @see AuthSignupSex
+     * @see AuthSignupSex
      *      - string sid: Session ID required for method recall when SMS was not delivered.
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiPhoneAlreadyUsedException This phone number is used by another user
+     * @throws VKApiAuthDelayException Processing. Try later
+     * @throws VKApiParamPhoneException Invalid phone number
+     *
+     */
     public function signup(string $access_token, array $params = array()) {
         return $this->request->post('auth.signup', $access_token, $params);
     }
@@ -75,7 +87,7 @@ class Auth {
     /**
      * Completes a user's registration (begun with the [vk.com/dev/auth.signup|auth.signup] method) using an
      * authorization code.
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - integer client_id:
@@ -85,12 +97,14 @@ class Auth {
      *      - string password:
      *      - boolean test_mode:
      *      - integer intro:
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiAuthParamPasswordException Invalid password
+     * @throws VKApiAuthParamCodeException Incorrect code
+     *
+     */
     public function confirm(string $access_token, array $params = array()) {
         return $this->request->post('auth.confirm', $access_token, $params);
     }
@@ -98,17 +112,18 @@ class Auth {
     /**
      * Allows to restore account access using a code received via SMS. " This method is only available for apps with
      * [vk.com/dev/auth_direct|Direct authorization] access. "
-     * 
+     *
      * @param $access_token string
      * @param $params array
      *      - string phone: User phone number.
      *      - string last_name: User last name.
-     * 
+     *
      * @return mixed
-     * @throws VKClientException in case of error on the Api side
-     * @throws VKApiException in case of network error
-     * 
-     **/
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiAuthFloodException Too many auth attempts, try again later
+     *
+     */
     public function restore(string $access_token, array $params = array()) {
         return $this->request->post('auth.restore', $access_token, $params);
     }
