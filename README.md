@@ -78,7 +78,7 @@ $browser_url = $oauth->authorize(VKOAuthResponseType::CODE, $client_id, $redurec
 After successful authorization user's browser will be redirected to the specified **redirect_uri**. Meanwhile the code will be sent as a GET parameter to the specified address:
 
 ```sh
-https://REDIRECT_URIREDIRECT_URI?code=CODE
+https://example.com?code=CODE
 ```
 
 Then use this method to get the access token:
@@ -140,11 +140,11 @@ After successful authorization user's browser will be redirected to the specifie
 
 For **user access key** will be:
 ```sh
-https://REDIRECT_URI#access_token=533bacf01e11f55b536a565b57531ad114461ae8736d6506a3&expires_in=86400&user_id=8492&state=123456
+https://example.com#access_token=533bacf01e11f55b536a565b57531ad114461ae8736d6506a3&expires_in=86400&user_id=8492&state=123456
 ```
 And for **community access key**:
 ```sh
-https://REDIRECT_URI#access_token_XXXXXX=533bacf01e11f55b536a565b57531ad114461ae8736d6506a3&expires_in=86400
+https://example.com#access_token_XXXXXX=533bacf01e11f55b536a565b57531ad114461ae8736d6506a3&expires_in=86400
 ```
 
 **access_token** is your new access token.  
