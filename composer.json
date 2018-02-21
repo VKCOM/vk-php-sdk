@@ -1,6 +1,6 @@
 {
-    "name": "vk/php-sdk",
-    "description": "VK SDK for PHP",
+    "name": "vkcom/vk-php-sdk",
+    "description": "VK PHP SDK",
     "keywords": ["vk", "sdk"],
     "type": "library",
     "homepage": "https://github.com/VKCOM/vk-php-sdk",
