@@ -13,7 +13,7 @@ This library has been created using the VK API JSON Schema. It can be found [her
 The VK PHP SDK can be installed using Composer by running the following command:
 
 ```sh
-composer require vk/php-sdk
+composer require vkcom/vk-php-sdk
 ```
 
 ## 3. Initialization
