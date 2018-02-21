@@ -78,7 +78,7 @@ $browser_url = $oauth->authorize(VKOAuthResponseType::CODE, $client_id, $redurec
 After successful authorization user's browser will be redirected to the specified **redirect_uri**. Meanwhile the code will be sent as a GET parameter to the specified address:
 
 ```sh
-REDIRECT_URI?code=CODE
+https://REDIRECT_URIREDIRECT_URI?code=CODE
 ```
 
 Then use this method to get the access token:
