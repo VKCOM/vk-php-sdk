@@ -21,7 +21,7 @@ class VKCallbackApiLongPollExecutor {
     protected const VALUE_ACT = 'a_check';
 
     protected const EVENTS_FAILED = 'failed';
-    protected const EVENTS_TIMESTAMP = 'timestamp';
+    protected const EVENTS_TS = 'ts';
     protected const EVENTS_UPDATES = 'updates';
 
     protected const EVENT_TYPE = 'type';
@@ -44,7 +44,7 @@ class VKCallbackApiLongPollExecutor {
     protected $handler;
     protected $http_client;
     protected $server;
-    protected $last_timestamp = null;
+    protected $last_ts = null;
     protected $wait;
 
     /**
@@ -68,37 +68,38 @@ class VKCallbackApiLongPollExecutor {
     /**
      * Starts listening to LongPoll events.
      *
-     * @param int|null $timestamp
+     * @param int|null $ts
      *
      * @return null
      * @throws VKLongPollServerTsException
      * @throws VKApiException
      * @throws VKClientException
      */
-    public function listen(?int $timestamp = null) {
+    public function listen(?int $ts = null) {
         if ($this->server === null) {
             $this->server = $this->getLongPollServer();
         }
 
-        if ($this->last_timestamp === null) {
-            $this->last_timestamp = $this->server[static::SERVER_TIMESTAMP];
+        if ($this->last_ts === null) {
+            $this->last_ts = $this->server[static::SERVER_TIMESTAMP];
         }
 
-        if ($timestamp === null) {
-            $timestamp = $this->last_timestamp;
+        if ($ts === null) {
+            $ts = $this->last_ts;
         }
 
         try {
-            $response = $this->getEvents($this->server[static::SERVER_URL], $this->server[static::SERVER_KEY], $timestamp);
+            $response = $this->getEvents($this->server[static::SERVER_URL], $this->server[static::SERVER_KEY], $ts);
             foreach ($response[static::EVENTS_UPDATES] as $event) {
                 $this->handler->parseObject($this->group_id, null, $event[static::EVENT_TYPE], $event[static::EVENT_OBJECT]);
             }
-            $this->last_timestamp = $response[static::EVENTS_TIMESTAMP];
+
+            $this->last_ts = $response[static::EVENTS_TS];
         } catch (VKLongPollServerKeyExpiredException $e) {
             $this->server = $this->getLongPollServer();
         }
 
-        return $this->last_timestamp;
+        return $this->last_ts;
     }
 
     /**
