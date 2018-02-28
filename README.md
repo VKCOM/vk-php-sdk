@@ -319,5 +319,5 @@ $handler->parse($data);
 
 To handle events you need to override methods from VKCallbackApiServerHandler class as shown above. 
 
-`confirmation` event handler has 2 arguments: group id, and secret key. You need to override it.
+`confirmation` event handler has 2 arguments: group id, and secret key. You need to override this method.
 
