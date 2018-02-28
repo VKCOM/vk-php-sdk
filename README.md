@@ -288,7 +288,7 @@ $executor->listen($timestamp);
 
 CallbackApi handler will wait for event notifications form VK. Once an event has occurred, you will be notified of it and will be able to handle it. More information [here](https://vk.com/dev/callback_api).
 
-To start using Callback API you need to configure it under the "Manage community" tab on your community page. 
+To start using Callback API you need to configure it under the "Manage community" tab of your community page. 
 
 The first step is confirming your domain. VK sends a request to your server with the event type **confirmation** and you need to send back a confirmation string. For other types of events you need to send back `ok` string.
 
