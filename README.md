@@ -286,13 +286,13 @@ $executor->listen($timestamp);
 
 ### 6.2. Callback API
 
-CallbackApi handler will wait until VK send notification about event when it happened you may handle this event. More information [here](https://vk.com/dev/callback_api).
+CallbackApi handler will wait for event notifications form VK. Once an event has occurred, you will be able to handle it. More information [here](https://vk.com/dev/callback_api).
 
-You should to configure Callback API inside your community settings. 
+To start using Callback API you need to configure it under the "Manage community" tab on your community page. 
 
-First step will be approve your domain. VK sends you request to your server with event type **confirmation** and you should to send back confirmation string. In other types of event you should to send back `ok` string.
+The first step is confirming your domain. VK sends a request to your server with the event type **confirmation** and you need to send back a confirmation string. For other types of events you need to send back `ok` string.
 
-Look at this example:
+Take a look at this example:
 ```php
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
@@ -317,7 +317,7 @@ $data = json_decode(file_get_contents('php://input'));
 $handler->parse($data);
 ```
 
-To handle events you should to override methods from VKCallbackApiServerHandler class like this. 
+To handle events you need to override methods from VKCallbackApiServerHandler class as shown above. 
 
-`confirmation` event handler contains 2 arguments: group id, and secret key. You must to override confirmation method.
+`confirmation` event handler has 2 arguments: group id, and secret key. You need to override it.
 
