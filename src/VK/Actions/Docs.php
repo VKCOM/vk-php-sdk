@@ -176,6 +176,7 @@ class Docs {
      * @param $access_token string
      * @param $params array
      *      - string q: Search query string.
+     *      - boolean search_own:
      *      - integer count: Number of results to return.
      *      - integer offset: Offset needed to return a specific subset of results.
      *

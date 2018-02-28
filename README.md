@@ -2,7 +2,9 @@
 
 PHP library for VK API interaction, includes OAuth 2.0 authorization and API methods. Full VK API features documentation can be found [here](http://vk.com/dev).
 
-This library has been created using the VK API JSON Schema. It can be found [here](https://github.com/VKCOM/vk-api-schema). It uses VK API [version](https://vk.com/dev/versions) 5.69.
+This library has been created using the VK API JSON Schema. It can be found [here](https://github.com/VKCOM/vk-api-schema). It uses VK API [version](https://vk.com/dev/versions) 5.73.
+
+[![Packagist](https://img.shields.io/packagist/v/vkcom/vk-api-schema.svg)](https://packagist.org/packages/vkcom/vk-api-schema)
 
 ## 1. Prerequisites
 
@@ -27,11 +29,11 @@ $vk = new VKApiClient();
 Also you can initialize `VKApiClient` with different API version and different language like this:
 
 ```php
-$vk = new VKApiClient('5.69');
+$vk = new VKApiClient('5.73');
 ```
 
 ```php
-$vk = new VKApiClient('5.69', VKLanguage::ENGLISH);
+$vk = new VKApiClient('5.73', VKLanguage::ENGLISH);
 ```
 
 ## 4. Authorization
@@ -136,7 +138,7 @@ $browser_url = $oauth->authorize(VKOAuthResponseType::TOKEN, $client_id, $redure
 
 Arguments are similar with authorization code flow
 
-After successful authorization user's browser will be redirected to the specified **redirect_uri**. Meanwhile the access token will be sent as a GET parameter to the specified address:
+After successful authorization user's browser will be redirected to the specified **redirect_uri**. Meanwhile the access token will be sent as a fragment parameter to the specified address:
 
 For **user access key** will be:
 ```sh
@@ -226,7 +228,7 @@ Videos are processed for some time after uploading.
  
 ### 6.1. Long Poll
 
-Enable Callback API Long Poll for your group and specify which events should be tracked by calling the following API method:
+Enable Long Poll for your group and specify which events should be tracked by calling the following API method:
 
 ```php
 $vk = new VKApiClient();
@@ -284,13 +286,13 @@ $executor->listen($timestamp);
 
 ### 6.2. Callback API
 
-CallbackApi handler will wait until VK send notification about event when it happened you may handle this event. More information [here](https://vk.com/dev/callback_api).
+CallbackApi handler will wait for event notifications form VK. Once an event has occurred, you will be notified of it and will be able to handle it. More information [here](https://vk.com/dev/callback_api).
 
-You should to configure Callback API inside your community settings. 
+To start using Callback API you need to configure it under the "Manage community" tab of your community page. 
 
-First step will be approve your domain. VK sends you request to your server with event type **confirmation** and you should to send back confirmation string. In other types of event you should to send back `ok` string.
+The first step is confirming your domain. VK sends a request to your server with the event type **confirmation** and you need to send back a confirmation string. For other types of events you need to send back `ok` string.
 
-Look at this example:
+Take a look at this example:
 ```php
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
@@ -315,7 +317,7 @@ $data = json_decode(file_get_contents('php://input'));
 $handler->parse($data);
 ```
 
-To handle events you should to override methods from VKCallbackApiServerHandler class like this. 
+To handle events you need to override methods from VKCallbackApiServerHandler class as shown above. 
 
-`confirmation` event handler contains 2 arguments: group id, and secret key. You must to override confirmation method.
+`confirmation` event handler has 2 arguments: group id, and secret key. You need to override this method.
 
