@@ -286,7 +286,7 @@ $executor->listen($timestamp);
 
 ### 6.2. Callback API
 
-CallbackApi handler will wait for event notifications form VK. Once an event has occurred, you will be able to handle it. More information [here](https://vk.com/dev/callback_api).
+CallbackApi handler will wait for event notifications form VK. Once an event has occurred, you will be notified of it and will be able to handle it. More information [here](https://vk.com/dev/callback_api).
 
 To start using Callback API you need to configure it under the "Manage community" tab on your community page. 
 
