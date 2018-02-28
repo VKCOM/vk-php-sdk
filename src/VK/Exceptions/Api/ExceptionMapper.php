@@ -141,6 +141,8 @@ class ExceptionMapper {
                 return new VKApiStatusNoAudioException($error->getErrorMsg());
             case 222:
                 return new VKApiWallLinksForbiddenException($error->getErrorMsg());
+            case 224:
+                return new VKApiWallAdsPostLimitReachedException($error->getErrorMsg());
             case 250:
                 return new VKApiPollsAccessException($error->getErrorMsg());
             case 251:
@@ -233,6 +235,10 @@ class ExceptionMapper {
                 return new VKApiMarketTooManyItemsInAlbumException($error->getErrorMsg());
             case 1407:
                 return new VKApiMarketTooManyAlbumsException($error->getErrorMsg());
+            case 1600:
+                return new VKApiStoryExpiredException($error->getErrorMsg());
+            case 1602:
+                return new VKApiIncorrectReplyPrivacyException($error->getErrorMsg());
             default:
                 return new VKApiException($error->getErrorCode(), $error->getErrorMsg(), 'Unknown error');
         }

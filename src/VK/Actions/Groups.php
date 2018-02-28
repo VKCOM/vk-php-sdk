@@ -772,39 +772,39 @@ class Groups {
     }
 
     /**
-     * Returns data for connection to Bots Long Poll API.
+     * Returns the data needed to query a Long Poll server for events
      *
      * @param $access_token string
      * @param $params array
-     *      - integer group_id: Community ID.
+     *      - integer group_id: Community ID
      *
      * @return mixed
-     * @throws VKClientException in case of error on the API side
+     * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
-     **/
+     */
     public function getLongPollServer(string $access_token, array $params = array()) {
         return $this->request->post('groups.getLongPollServer', $access_token, $params);
     }
 
     /**
-     * Gets settings of Bots Long Poll API for the community.
+     * Returns Long Poll notification settings
      *
      * @param $access_token string
      * @param $params array
      *      - integer group_id: Community ID.
      *
      * @return mixed
-     * @throws VKClientException in case of error on the API side
+     * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
-     **/
+     */
     public function getLongPollSettings(string $access_token, array $params = array()) {
         return $this->request->post('groups.getLongPollSettings', $access_token, $params);
     }
 
     /**
-     * Sets settings of Bots Long Poll API for the community.
+     * Sets Long Poll notification settings
      *
      * @param $access_token string
      * @param $params array
@@ -812,6 +812,7 @@ class Groups {
      *      - boolean enabled: Enable Bots Long Poll ('0' — disabled, '1' — enabled).
      *      - boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
      *      - boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
+     *      - boolean message_edit: A message has been edited ('0' — disabled, '1' — enabled).
      *      - boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
      *      - boolean message_deny: Denied messages notifications ('0' — disabled, '1' — enabled).
      *      - boolean photo_new: New photos notifications ('0' — disabled, '1' — enabled).
@@ -848,10 +849,10 @@ class Groups {
      *      - boolean user_unblock: User removed from community blacklist
      *
      * @return mixed
-     * @throws VKClientException in case of error on the API side
+     * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
-     **/
+     */
     public function setLongPollSettings(string $access_token, array $params = array()) {
         return $this->request->post('groups.setLongPollSettings', $access_token, $params);
     }

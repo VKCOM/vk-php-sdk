@@ -30,6 +30,7 @@ use VK\Actions\Secure;
 use VK\Actions\Stats;
 use VK\Actions\Status;
 use VK\Actions\Storage;
+use VK\Actions\Stories;
 use VK\Actions\Streaming;
 use VK\Actions\Users;
 use VK\Actions\Utils;
@@ -38,7 +39,7 @@ use VK\Actions\Wall;
 use VK\Actions\Widgets;
 
 class VKApiClient {
-    protected const API_VERSION = '5.69';
+    protected const API_VERSION = '5.73';
     protected const API_HOST = 'https://api.vk.com/method';
 
     /**
@@ -187,6 +188,11 @@ class VKApiClient {
     private $storage;
 
     /**
+     * @var Stories
+     */
+    private $stories;
+
+    /**
      * @var Streaming
      */
     private $streaming;
@@ -252,6 +258,7 @@ class VKApiClient {
         $this->stats = new Stats($this->request);
         $this->status = new Status($this->request);
         $this->storage = new Storage($this->request);
+        $this->stories = new Stories($this->request);
         $this->streaming = new Streaming($this->request);
         $this->users = new Users($this->request);
         $this->utils = new Utils($this->request);
@@ -454,6 +461,13 @@ class VKApiClient {
      */
     public function storage(): Storage {
         return $this->storage;
+    }
+
+    /**
+     * @return Stories
+     */
+    public function stories(): Stories {
+        return $this->stories;
     }
 
     /**

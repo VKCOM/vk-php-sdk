@@ -15,6 +15,7 @@ use VK\Exceptions\Api\VKApiWallAccessCommentException;
 use VK\Exceptions\Api\VKApiWallAccessPostException;
 use VK\Exceptions\Api\VKApiWallAccessRepliesException;
 use VK\Exceptions\Api\VKApiWallAddPostException;
+use VK\Exceptions\Api\VKApiWallAdsPostLimitReachedException;
 use VK\Exceptions\Api\VKApiWallAdsPublishedException;
 use VK\Exceptions\Api\VKApiWallLinksForbiddenException;
 use VK\Exceptions\Api\VKApiWallTooManyRecipientsException;
@@ -149,6 +150,7 @@ class Wall {
      * @throws VKApiWallAddPostException Access to adding post denied
      * @throws VKApiWallTooManyRecipientsException Too many recipients
      * @throws VKApiWallLinksForbiddenException Hyperlinks are forbidden
+     * @throws VKApiWallAdsPostLimitReachedException Too many ads posts
      *
      */
     public function post(string $access_token, array $params = array()) {
@@ -170,6 +172,7 @@ class Wall {
      * @throws VKApiException in case of API error
      * @throws VKApiWallAdsPublishedException Advertisement post was recently added
      * @throws VKApiWallAddPostException Access to adding post denied
+     * @throws VKApiWallAdsPostLimitReachedException Too many ads posts
      *
      */
     public function repost(string $access_token, array $params = array()) {
@@ -227,6 +230,7 @@ class Wall {
      * @return mixed
      * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
+     * @throws VKApiWallAdsPostLimitReachedException Too many ads posts
      *
      */
     public function edit(string $access_token, array $params = array()) {
