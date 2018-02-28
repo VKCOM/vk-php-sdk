@@ -138,7 +138,7 @@ $browser_url = $oauth->authorize(VKOAuthResponseType::TOKEN, $client_id, $redure
 
 Arguments are similar with authorization code flow
 
-After successful authorization user's browser will be redirected to the specified **redirect_uri**. Meanwhile the access token will be sent as a GET parameter to the specified address:
+After successful authorization user's browser will be redirected to the specified **redirect_uri**. Meanwhile the access token will be sent as a fragment parameter to the specified address:
 
 For **user access key** will be:
 ```sh
@@ -228,7 +228,7 @@ Videos are processed for some time after uploading.
  
 ### 6.1. Long Poll
 
-Enable Callback API Long Poll for your group and specify which events should be tracked by calling the following API method:
+Enable Long Poll for your group and specify which events should be tracked by calling the following API method:
 
 ```php
 $vk = new VKApiClient();
