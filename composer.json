@@ -6,11 +6,11 @@
     "homepage": "https://github.com/VKCOM/vk-php-sdk",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
-        "vkcom/vk-api-schema": "^1.7.2"
+        "php": ">=7.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6"
+        "phpunit/phpunit": "^6",
+        "vkcom/vk-api-schema": "^1.7.2"
     },
     "repositories": [
         {
