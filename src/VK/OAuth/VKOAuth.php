@@ -61,7 +61,7 @@ class VKOAuth {
     }
 
     /**
-     * Opens the authorization dialog.
+     * Get authorize url
      *
      * @param string $response_type
      * @param int $client_id
@@ -72,15 +72,13 @@ class VKOAuth {
      * @param int[] $group_ids
      * @param bool $revoke
      * @return mixed
-     * @throws VKClientException
-     * @throws VKOAuthException
      * @see VKOAuthResponseType
      * @see VKOAuthDisplay
      * @see VKOAuthGroupScope
      * @see VKOAuthUserScope
      */
-    public function authorize(string $response_type, int $client_id, string $redirect_uri, string $display,
-                              ?array $scope = null, ?string $state = null, ?array $group_ids = null, bool $revoke = false) {
+    public function getAuthorizeUrl(string $response_type, int $client_id, string $redirect_uri, string $display,
+                                    ?array $scope = null, ?string $state = null, ?array $group_ids = null, bool $revoke = false) {
         $scope_mask = 0;
         foreach ($scope as $scope_setting) {
             $scope_mask |= $scope_setting;
@@ -104,13 +102,7 @@ class VKOAuth {
             $params[static::PARAM_REVOKE] = 1;
         }
 
-        try {
-            $response = $this->http_client->post($this->host . static::ENDPOINT_AUTHORIZE, $params);
-        } catch (TransportRequestException $e) {
-            throw new VKClientException($e);
-        }
-
-        return $this->checkOAuthResponse($response);
+        return $this->host . static::ENDPOINT_AUTHORIZE . '?' . http_build_query($params);
     }
 
     /**
