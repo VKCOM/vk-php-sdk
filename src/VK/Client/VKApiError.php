@@ -24,61 +24,61 @@ class VKApiError {
      * @param array $error
      */
     public function __construct(array $error) {
-        $this->error_code = isset($error[static::KEY_ERROR_CODE]) ? $error[static::KEY_ERROR_CODE] : null;
-        $this->error_msg = isset($error[static::KEY_ERROR_MSG]) ? $error[static::KEY_ERROR_MSG] : null;
-        $this->captcha_sid = isset($error[static::KEY_CAPTCHA_SID]) ? $error[static::KEY_CAPTCHA_SID] : null;
-        $this->captcha_img = isset($error[static::KEY_CAPTCHA_IMG]) ? $error[static::KEY_CAPTCHA_IMG] : null;
-        $this->confirmation_text = isset($error[static::KEY_CONFIRMATION_TEXT]) ? $error[static::KEY_CONFIRMATION_TEXT] : null;
-        $this->redirect_uri = isset($error[static::KEY_REDIRECT_URI]) ? $error[static::KEY_REDIRECT_URI] : null;
-        $this->request_params = isset($error[static::KEY_REQUEST_PARAMS]) ? $error[static::KEY_REQUEST_PARAMS] : null;
+        $this->error_code = isset($error[static::KEY_ERROR_CODE]) ? intval($error[static::KEY_ERROR_CODE]) : null;
+        $this->error_msg = isset($error[static::KEY_ERROR_MSG]) ? strval($error[static::KEY_ERROR_MSG]) : null;
+        $this->captcha_sid = isset($error[static::KEY_CAPTCHA_SID]) ? strval($error[static::KEY_CAPTCHA_SID]) : null;
+        $this->captcha_img = isset($error[static::KEY_CAPTCHA_IMG]) ? strval($error[static::KEY_CAPTCHA_IMG]) : null;
+        $this->confirmation_text = isset($error[static::KEY_CONFIRMATION_TEXT]) ? strval($error[static::KEY_CONFIRMATION_TEXT]) : null;
+        $this->redirect_uri = isset($error[static::KEY_REDIRECT_URI]) ? strval($error[static::KEY_REDIRECT_URI]) : null;
+        $this->request_params = isset($error[static::KEY_REQUEST_PARAMS]) ? ((array) $error[static::KEY_REQUEST_PARAMS]) : null;
     }
 
     /**
-     * @return mixed|null
+     * @return int|null
      */
-    public function getErrorCode(): ?mixed {
+    public function getErrorCode(): ?int {
         return $this->error_code;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
-    public function getErrorMsg(): ?mixed {
+    public function getErrorMsg(): ?string {
         return $this->error_msg;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
-    public function getCaptchaSid(): ?mixed {
+    public function getCaptchaSid(): ?string {
         return $this->captcha_sid;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
-    public function getCaptchaImg(): ?mixed {
+    public function getCaptchaImg(): ?string {
         return $this->captcha_img;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
-    public function getConfirmationText(): ?mixed {
+    public function getConfirmationText(): ?string {
         return $this->confirmation_text;
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
-    public function getRedirectUri(): ?mixed {
+    public function getRedirectUri(): ?string {
         return $this->redirect_uri;
     }
 
     /**
-     * @return mixed|null
+     * @return array|null
      */
-    public function getRequestParams(): ?mixed {
+    public function getRequestParams(): ?array {
         return $this->request_params;
     }
 
