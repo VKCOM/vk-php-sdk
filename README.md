@@ -167,7 +167,7 @@ Example of calling method **users.get**:
 $vk = new VKApiClient();
 $response = $vk->users()->get($access_token, array(
     'user_ids'  => array(1, 210700286),
-    'fields'    => $array('city', 'photo'),
+    'fields'    => array('city', 'photo'),
 ));
 ```
  
