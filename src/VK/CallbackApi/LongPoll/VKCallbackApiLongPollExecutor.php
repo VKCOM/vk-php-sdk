@@ -2,9 +2,9 @@
 
 namespace VK\CallbackApi\LongPoll;
 
-use VK\CallbackApi\VKCallbackApiHandler;
 use VK\CallbackApi\LongPoll\Exceptions\VKLongPollServerKeyExpiredException;
 use VK\CallbackApi\LongPoll\Exceptions\VKLongPollServerTsException;
+use VK\CallbackApi\VKCallbackApiHandler;
 use VK\Client\VKApiClient;
 use VK\Exceptions\Api\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -13,6 +13,7 @@ use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
 
 class VKCallbackApiLongPollExecutor {
+
     protected const PARAM_GROUP_ID = 'group_id';
     protected const PARAM_ACT = 'act';
     protected const PARAM_KEY = 'key';
@@ -103,7 +104,9 @@ class VKCallbackApiLongPollExecutor {
     }
 
     /**
-     * @return mixed
+     * Get long poll server
+     *
+     * @return array
      * @throws VKApiException
      * @throws VKClientException
      */
@@ -127,7 +130,6 @@ class VKCallbackApiLongPollExecutor {
      * @param string $host
      * @param string $key
      * @param int $ts
-     *
      * @return mixed
      * @throws VKLongPollServerKeyExpiredException
      * @throws VKLongPollServerTsException
@@ -155,9 +157,7 @@ class VKCallbackApiLongPollExecutor {
      *
      * @param array $params
      * @param TransportClientResponse $response
-     *
      * @return mixed
-     *
      * @throws VKLongPollServerTsException
      * @throws VKLongPollServerKeyExpiredException
      * @throws VKClientException
@@ -190,7 +190,6 @@ class VKCallbackApiLongPollExecutor {
      * Decodes body.
      *
      * @param string $body
-     *
      * @return mixed
      */
     protected function decodeBody(string $body) {
@@ -204,8 +203,9 @@ class VKCallbackApiLongPollExecutor {
     }
 
     /**
-     * @param TransportClientResponse $response
+     * Check http status of response
      *
+     * @param TransportClientResponse $response
      * @throws VKClientException
      */
     protected function checkHttpStatus(TransportClientResponse $response) {

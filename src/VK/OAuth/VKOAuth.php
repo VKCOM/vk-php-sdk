@@ -71,14 +71,14 @@ class VKOAuth {
      * @param string $state
      * @param int[] $group_ids
      * @param bool $revoke
-     * @return mixed
+     * @return string
      * @see VKOAuthResponseType
      * @see VKOAuthDisplay
      * @see VKOAuthGroupScope
      * @see VKOAuthUserScope
      */
     public function getAuthorizeUrl(string $response_type, int $client_id, string $redirect_uri, string $display,
-                                    ?array $scope = null, ?string $state = null, ?array $group_ids = null, bool $revoke = false) {
+                                    ?array $scope = null, ?string $state = null, ?array $group_ids = null, bool $revoke = false): string {
         $scope_mask = 0;
         foreach ($scope as $scope_setting) {
             $scope_mask |= $scope_setting;
