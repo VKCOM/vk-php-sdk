@@ -118,7 +118,7 @@ $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
 $state = 'secret_state_code';
 $revoke_auth = true;
 
-$browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, $revoke_auth);
+$browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, null, $revoke_auth);
 ```
 
 If you want to make user getting access anyway, set **revoke_auth** as true.
