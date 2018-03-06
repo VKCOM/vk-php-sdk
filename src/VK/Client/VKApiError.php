@@ -3,6 +3,7 @@
 namespace VK\Client;
 
 class VKApiError {
+
     protected const KEY_ERROR_CODE = 'error_code';
     protected const KEY_ERROR_MSG = 'error_msg';
     protected const KEY_CAPTCHA_SID = 'captcha_sid';
@@ -30,10 +31,12 @@ class VKApiError {
         $this->captcha_img = isset($error[static::KEY_CAPTCHA_IMG]) ? strval($error[static::KEY_CAPTCHA_IMG]) : null;
         $this->confirmation_text = isset($error[static::KEY_CONFIRMATION_TEXT]) ? strval($error[static::KEY_CONFIRMATION_TEXT]) : null;
         $this->redirect_uri = isset($error[static::KEY_REDIRECT_URI]) ? strval($error[static::KEY_REDIRECT_URI]) : null;
-        $this->request_params = isset($error[static::KEY_REQUEST_PARAMS]) ? ((array) $error[static::KEY_REQUEST_PARAMS]) : null;
+        $this->request_params = isset($error[static::KEY_REQUEST_PARAMS]) ? ((array)$error[static::KEY_REQUEST_PARAMS]) : null;
     }
 
     /**
+     * Error code
+     *
      * @return int|null
      */
     public function getErrorCode(): ?int {
@@ -41,6 +44,8 @@ class VKApiError {
     }
 
     /**
+     * Error message
+     *
      * @return string|null
      */
     public function getErrorMsg(): ?string {
@@ -48,6 +53,8 @@ class VKApiError {
     }
 
     /**
+     * Captcha SID
+     *
      * @return string|null
      */
     public function getCaptchaSid(): ?string {
@@ -55,6 +62,8 @@ class VKApiError {
     }
 
     /**
+     * Captcha image url
+     *
      * @return string|null
      */
     public function getCaptchaImg(): ?string {
@@ -62,6 +71,8 @@ class VKApiError {
     }
 
     /**
+     * Confirmation text
+     *
      * @return string|null
      */
     public function getConfirmationText(): ?string {
@@ -69,6 +80,8 @@ class VKApiError {
     }
 
     /**
+     * Redirect URI
+     *
      * @return string|null
      */
     public function getRedirectUri(): ?string {
@@ -76,6 +89,8 @@ class VKApiError {
     }
 
     /**
+     * Request params
+     *
      * @return array|null
      */
     public function getRequestParams(): ?array {
