@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiAuthFloodException extends VKApiException {
     /**
      * VKApiAuthFloodException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(1105, 'Too many auth attempts, try again later', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(1105, 'Too many auth attempts, try again later', $error);
     }
 }

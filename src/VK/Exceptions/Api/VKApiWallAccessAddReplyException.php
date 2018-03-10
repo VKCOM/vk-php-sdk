@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiWallAccessAddReplyException extends VKApiException {
     /**
      * VKApiWallAccessAddReplyException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(213, 'Access to status replies denied', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(213, 'Access to status replies denied', $error);
     }
 }

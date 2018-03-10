@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiPhoneAlreadyUsedException extends VKApiException {
     /**
      * VKApiPhoneAlreadyUsedException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(1004, 'This phone number is used by another user', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(1004, 'This phone number is used by another user', $error);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiMessagesPrivacyException extends VKApiException {
     /**
      * VKApiMessagesPrivacyException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(902, 'Can\'t send messages to this user due to their privacy settings', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(902, 'Can\'t send messages to this user due to their privacy settings', $error);
     }
 }

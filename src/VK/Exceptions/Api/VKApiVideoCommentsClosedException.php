@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiVideoCommentsClosedException extends VKApiException {
     /**
      * VKApiVideoCommentsClosedException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(801, 'Comments for this video are closed', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(801, 'Comments for this video are closed', $error);
     }
 }

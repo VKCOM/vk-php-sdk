@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiMarketAlbumNotFoundException extends VKApiException {
     /**
      * VKApiMarketAlbumNotFoundException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(1402, 'Album not found', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(1402, 'Album not found', $error);
     }
 }

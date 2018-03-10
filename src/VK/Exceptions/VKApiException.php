@@ -2,6 +2,8 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiException extends \Exception
 {
     /**
@@ -19,16 +21,23 @@ class VKApiException extends \Exception
      */
     protected $error_message;
 
+    /*
+     * @var VKApiError
+     */
+    protected $error;
+
     /**
      * VKApiException constructor.
      * @param int $error_code
      * @param string $description
-     * @param string $error_message
+     * @param VKApiError $error
      */
-    public function __construct(int $error_code, string $description, string $error_message) {
+    public function __construct(int $error_code, string $description, VKApiError $error) {
         $this->error_code = $error_code;
         $this->description = $description;
-        $this->error_message = $error_message;
+        $this->error_message = $error->getErrorMsg();
+        $this->error = $error;
+        parent::__construct($error->getErrorMsg(), $error_code);
     }
 
     /**
@@ -50,6 +59,13 @@ class VKApiException extends \Exception
      */
     public function getErrorMessage(): string {
         return $this->error_message;
+    }
+
+    /*
+     * @return VKApiError
+     */
+    public function getError(): VKApiError {
+        return $this->error;
     }
 
 

@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiSignatureException extends VKApiException {
     /**
      * VKApiSignatureException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(4, 'Incorrect signature', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(4, 'Incorrect signature', $error);
     }
 }

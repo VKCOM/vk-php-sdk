@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiMessagesForwardAmountExceededException extends VKApiException {
     /**
      * VKApiMessagesForwardAmountExceededException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(913, 'Too many forwarded messages', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(913, 'Too many forwarded messages', $error);
     }
 }

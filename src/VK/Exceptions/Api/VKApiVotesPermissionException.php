@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiVotesPermissionException extends VKApiException {
     /**
      * VKApiVotesPermissionException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(500, 'Permission denied. You must enable votes processing in application settings', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(500, 'Permission denied. You must enable votes processing in application settings', $error);
     }
 }

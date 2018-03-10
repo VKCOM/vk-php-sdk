@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiSaveFileException extends VKApiException {
     /**
      * VKApiSaveFileException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(105, 'Couldn\'t save file', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(105, 'Couldn\'t save file', $error);
     }
 }
