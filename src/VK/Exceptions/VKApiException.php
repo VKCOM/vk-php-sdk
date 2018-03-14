@@ -21,7 +21,7 @@ class VKApiException extends \Exception
      */
     protected $error_message;
 
-    /*
+    /**
      * @var VKApiError
      */
     protected $error;
@@ -61,12 +61,10 @@ class VKApiException extends \Exception
         return $this->error_message;
     }
 
-    /*
+    /**
      * @return VKApiError
      */
     public function getError(): VKApiError {
         return $this->error;
     }
-
-
 }
