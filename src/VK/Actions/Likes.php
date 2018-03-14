@@ -8,7 +8,7 @@ use VK\Actions\Enums\LikesGetListFilter;
 use VK\Actions\Enums\LikesGetListType;
 use VK\Actions\Enums\LikesIsLikedType;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
 class Likes {

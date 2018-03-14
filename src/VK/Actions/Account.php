@@ -8,7 +8,7 @@ use VK\Actions\Enums\AccountSaveProfileInfoRelation;
 use VK\Actions\Enums\AccountSaveProfileInfoSex;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessMenuException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiInvalidAddressException;
 use VK\Exceptions\VKClientException;
 

@@ -11,7 +11,7 @@ use VK\Actions\Enums\UsersSearchSex;
 use VK\Actions\Enums\UsersSearchSort;
 use VK\Actions\Enums\UsersSearchStatus;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
 class Users {

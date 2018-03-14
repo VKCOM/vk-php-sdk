@@ -9,7 +9,7 @@ use VK\Actions\Enums\VideoSearchSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessVideoException;
 use VK\Exceptions\Api\VKApiAlbumsLimitException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiVideoAlreadyAddedException;
 use VK\Exceptions\Api\VKApiVideoCommentsClosedException;
 use VK\Exceptions\Api\VKApiWallAddPostException;

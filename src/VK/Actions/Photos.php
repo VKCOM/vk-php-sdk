@@ -9,7 +9,7 @@ use VK\Actions\Enums\PhotosReportReason;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAlbumsLimitException;
 use VK\Exceptions\Api\VKApiBlockedException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiParamAlbumIdException;
 use VK\Exceptions\Api\VKApiParamHashException;
 use VK\Exceptions\Api\VKApiParamPhotoException;

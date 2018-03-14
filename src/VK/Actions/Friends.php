@@ -9,7 +9,7 @@ use VK\Actions\Enums\FriendsGetRequestsSort;
 use VK\Actions\Enums\FriendsGetSuggestionsNameCase;
 use VK\Actions\Enums\FriendsSearchNameCase;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiFriendsAddEnemyException;
 use VK\Exceptions\Api\VKApiFriendsAddInEnemyException;
 use VK\Exceptions\Api\VKApiFriendsAddYourselfException;

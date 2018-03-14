@@ -1,6 +1,6 @@
 <?php
 
-namespace VK\Exceptions\Api;
+namespace VK\Exceptions;
 
 use VK\Client\VKApiError;
 

@@ -6,7 +6,7 @@ use VK\Actions\Enums\BoardGetCommentsSort;
 use VK\Actions\Enums\BoardGetTopicsOrder;
 use VK\Actions\Enums\BoardGetTopicsPreview;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
 class Board {

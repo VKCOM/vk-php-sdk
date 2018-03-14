@@ -6,7 +6,7 @@ use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessCommentException;
 use VK\Exceptions\Api\VKApiAccessNoteCommentException;
 use VK\Exceptions\Api\VKApiAccessNoteException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiParamNoteIdException;
 use VK\Exceptions\VKClientException;
 

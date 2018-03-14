@@ -7,7 +7,7 @@ use VK\Actions\Enums\NewsfeedIgnoreItemType;
 use VK\Actions\Enums\NewsfeedUnignoreItemType;
 use VK\Actions\Enums\NewsfeedUnsubscribeType;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiTooManyListsException;
 use VK\Exceptions\VKClientException;
 

@@ -26,7 +26,7 @@ use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessGroupsException;
 use VK\Exceptions\Api\VKApiCommunitiesCatalogDisabledException;
 use VK\Exceptions\Api\VKApiCommunitiesCategoriesDisabledException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiGroupChangeCreatorException;
 use VK\Exceptions\Api\VKApiGroupNotInClubException;
 use VK\Exceptions\Api\VKApiGroupTooManyOfficersException;

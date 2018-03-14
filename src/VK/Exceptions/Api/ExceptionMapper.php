@@ -3,10 +3,11 @@
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
 
 class ExceptionMapper {
     public static function parse(VKApiError $error) {
-        switch($error->getErrorCode()) {
+        switch ($error->getErrorCode()) {
             case 1:
                 return new VKApiUnknownException($error);
             case 2:
@@ -240,7 +241,7 @@ class ExceptionMapper {
             case 1602:
                 return new VKApiIncorrectReplyPrivacyException($error);
             default:
-                return new VKApiException($error->getErrorCode(), $error->getErrorMsg(), 'Unknown error');
+                return new VKApiException($error->getErrorCode(), $error->getErrorMsg(),  $error);
         }
     }
 }

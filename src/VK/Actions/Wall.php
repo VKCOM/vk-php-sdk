@@ -8,7 +8,7 @@ use VK\Actions\Enums\WallReportCommentReason;
 use VK\Actions\Enums\WallReportPostReason;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiBlockedException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiUserDeletedException;
 use VK\Exceptions\Api\VKApiWallAccessAddReplyException;
 use VK\Exceptions\Api\VKApiWallAccessCommentException;

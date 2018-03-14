@@ -5,7 +5,7 @@ namespace VK\Actions;
 use VK\Actions\Enums\LeadsGetUsersStatus;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiActionFailedException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiParamException;
 use VK\Exceptions\Api\VKApiVotesException;

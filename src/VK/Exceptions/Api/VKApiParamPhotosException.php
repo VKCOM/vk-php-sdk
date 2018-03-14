@@ -3,6 +3,7 @@
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
 
 class VKApiParamPhotosException extends VKApiException {
     /**

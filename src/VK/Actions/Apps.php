@@ -9,7 +9,7 @@ use VK\Actions\Enums\AppsGetNameCase;
 use VK\Actions\Enums\AppsGetPlatform;
 use VK\Actions\Enums\AppsSendRequestType;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiFloodException;
 use VK\Exceptions\VKClientException;
 
