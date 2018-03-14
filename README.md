@@ -92,7 +92,8 @@ $client_secret = 'SDAScasd'
 $redirect_uri = 'https://example.com/vk';
 $code = 'CODE';
 
-$access_token = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+$response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+$access_token = $response['access_token'];
 ```
 
 The **redirect_uri** should be the URL that was used to get a code at the first step.
