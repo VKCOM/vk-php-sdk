@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiMethodPermissionException extends VKApiException {
     /**
      * VKApiMethodPermissionException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(20, 'Permission to perform this action is denied for non-standalone applications', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(20, 'Permission to perform this action is denied for non-standalone applications', $error);
     }
 }

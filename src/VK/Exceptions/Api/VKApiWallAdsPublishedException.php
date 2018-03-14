@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiWallAdsPublishedException extends VKApiException {
     /**
      * VKApiWallAdsPublishedException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(219, 'Advertisement post was recently added', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(219, 'Advertisement post was recently added', $error);
     }
 }

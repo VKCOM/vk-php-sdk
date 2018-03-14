@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiParamPageIdException extends VKApiException {
     /**
      * VKApiParamPageIdException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(140, 'Page not found', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(140, 'Page not found', $error);
     }
 }

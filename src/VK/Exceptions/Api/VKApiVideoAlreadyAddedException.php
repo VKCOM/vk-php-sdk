@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiVideoAlreadyAddedException extends VKApiException {
     /**
      * VKApiVideoAlreadyAddedException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(800, 'This video is already added', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(800, 'This video is already added', $error);
     }
 }

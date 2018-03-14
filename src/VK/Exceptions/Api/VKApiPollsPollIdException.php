@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiPollsPollIdException extends VKApiException {
     /**
      * VKApiPollsPollIdException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(251, 'Invalid poll id', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(251, 'Invalid poll id', $error);
     }
 }

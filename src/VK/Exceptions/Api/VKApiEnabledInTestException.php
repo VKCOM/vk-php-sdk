@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiEnabledInTestException extends VKApiException {
     /**
      * VKApiEnabledInTestException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(11, 'In test mode application should be disabled or user should be authorized', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(11, 'In test mode application should be disabled or user should be authorized', $error);
     }
 }

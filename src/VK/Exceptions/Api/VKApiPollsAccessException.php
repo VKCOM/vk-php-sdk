@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiPollsAccessException extends VKApiException {
     /**
      * VKApiPollsAccessException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(250, 'Access to poll denied', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(250, 'Access to poll denied', $error);
     }
 }

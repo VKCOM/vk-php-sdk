@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiParamHashException extends VKApiException {
     /**
      * VKApiParamHashException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(121, 'Invalid hash', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(121, 'Invalid hash', $error);
     }
 }

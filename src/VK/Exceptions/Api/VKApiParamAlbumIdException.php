@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiParamAlbumIdException extends VKApiException {
     /**
      * VKApiParamAlbumIdException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(114, 'Invalid album id', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(114, 'Invalid album id', $error);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+
 class VKApiCommunitiesCategoriesDisabledException extends VKApiException {
     /**
      * VKApiCommunitiesCategoriesDisabledException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(1311, 'Catalog categories are not available for this user', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(1311, 'Catalog categories are not available for this user', $error);
     }
 }
