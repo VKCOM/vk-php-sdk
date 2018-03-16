@@ -25,7 +25,6 @@ class VKOAuth {
 
     private const RESPONSE_KEY_ERROR = 'error';
     private const RESPONSE_KEY_ERROR_DESCRIPTION = 'error_description';
-    private const RESPONSE_KEY_ACCESS_TOKEN = 'access_token';
 
     protected const HOST = 'https://oauth.vk.com';
     private const ENDPOINT_AUTHORIZE = '/authorize';
@@ -151,11 +150,7 @@ class VKOAuth {
             throw new VKOAuthException("{$decode_body[static::RESPONSE_KEY_ERROR_DESCRIPTION]}. OAuth error {$decode_body[static::RESPONSE_KEY_ERROR]}");
         }
 
-        if (isset($decode_body[static::RESPONSE_KEY_ACCESS_TOKEN])) {
-            return $decode_body[static::RESPONSE_KEY_ACCESS_TOKEN];
-        } else {
-            return $decode_body;
-        }
+        return $decode_body;
     }
 
     /**

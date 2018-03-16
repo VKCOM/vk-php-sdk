@@ -6,7 +6,7 @@ use VK\CallbackApi\LongPoll\Exceptions\VKLongPollServerKeyExpiredException;
 use VK\CallbackApi\LongPoll\Exceptions\VKLongPollServerTsException;
 use VK\CallbackApi\VKCallbackApiHandler;
 use VK\Client\VKApiClient;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 use VK\TransportClient\Curl\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;

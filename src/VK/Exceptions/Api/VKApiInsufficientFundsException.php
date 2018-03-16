@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiInsufficientFundsException extends VKApiException {
     /**
      * VKApiInsufficientFundsException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(147, 'Application has insufficient funds', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(147, 'Application has insufficient funds', $error);
     }
 }

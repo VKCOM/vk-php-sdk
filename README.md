@@ -60,7 +60,7 @@ $display = VKOAuthDisplay::PAGE;
 $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
 $state = 'secret_state_code';
 
-$browser_url = $oauth->getAuthorizeUrl(OAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
+$browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
 ```
 #### 4.1.2. Or if you want to get **community access key** use:
 ```php
@@ -92,7 +92,8 @@ $client_secret = 'SDAScasd'
 $redirect_uri = 'https://example.com/vk';
 $code = 'CODE';
 
-$access_token = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+$response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+$access_token = $response['access_token'];
 ```
 
 The **redirect_uri** should be the URL that was used to get a code at the first step.
@@ -118,7 +119,7 @@ $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
 $state = 'secret_state_code';
 $revoke_auth = true;
 
-$browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, $revoke_auth);
+$browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, null, $revoke_auth);
 ```
 
 If you want to make user getting access anyway, set **revoke_auth** as true.

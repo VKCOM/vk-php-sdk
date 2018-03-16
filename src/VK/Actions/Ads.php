@@ -14,7 +14,7 @@ use VK\Actions\Enums\AdsGetUploadURLAdFormat;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAdsPartialSuccessException;
 use VK\Exceptions\Api\VKApiAdsPermissionException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiWeightedFloodException;
 use VK\Exceptions\VKClientException;
 

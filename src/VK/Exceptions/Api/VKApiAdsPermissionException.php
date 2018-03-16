@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiAdsPermissionException extends VKApiException {
     /**
      * VKApiAdsPermissionException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(600, 'Permission denied. You have no access to operations specified with given object(s)', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(600, 'Permission denied. You have no access to operations specified with given object(s)', $error);
     }
 }

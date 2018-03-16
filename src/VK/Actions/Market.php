@@ -8,7 +8,7 @@ use VK\Actions\Enums\MarketReportReason;
 use VK\Actions\Enums\MarketSearchRev;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessMarketException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiMarketAlbumNotFoundException;
 use VK\Exceptions\Api\VKApiMarketCommentsClosedException;
 use VK\Exceptions\Api\VKApiMarketItemAlreadyAddedException;

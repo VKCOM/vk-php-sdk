@@ -5,7 +5,7 @@ namespace VK\Actions;
 use VK\Actions\Enums\StoriesGetPhotoUploadServerLinkText;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiBlockedException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiIncorrectReplyPrivacyException;
 use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
 use VK\Exceptions\Api\VKApiStoryExpiredException;

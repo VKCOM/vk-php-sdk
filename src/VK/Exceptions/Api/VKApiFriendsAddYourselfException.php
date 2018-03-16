@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiFriendsAddYourselfException extends VKApiException {
     /**
      * VKApiFriendsAddYourselfException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(174, 'Cannot add user himself as friend', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(174, 'Cannot add user himself as friend', $error);
     }
 }

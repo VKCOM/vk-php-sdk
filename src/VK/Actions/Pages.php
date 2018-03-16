@@ -6,7 +6,7 @@ use VK\Actions\Enums\PagesSaveAccessEdit;
 use VK\Actions\Enums\PagesSaveAccessView;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessPageException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiParamPageIdException;
 use VK\Exceptions\Api\VKApiParamTitleException;
 use VK\Exceptions\VKClientException;

@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiMarketCommentsClosedException extends VKApiException {
     /**
      * VKApiMarketCommentsClosedException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(1401, 'Comments for this market are closed', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(1401, 'Comments for this market are closed', $error);
     }
 }

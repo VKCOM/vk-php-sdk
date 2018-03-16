@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiWeightedFloodException extends VKApiException {
     /**
      * VKApiWeightedFloodException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(601, 'Permission denied. You have requested too many actions this day. Try later.', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(601, 'Permission denied. You have requested too many actions this day. Try later.', $error);
     }
 }

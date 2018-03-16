@@ -3,244 +3,245 @@
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
 
 class ExceptionMapper {
     public static function parse(VKApiError $error) {
-        switch($error->getErrorCode()) {
+        switch ($error->getErrorCode()) {
             case 1:
-                return new VKApiUnknownException($error->getErrorMsg());
+                return new VKApiUnknownException($error);
             case 2:
-                return new VKApiDisabledException($error->getErrorMsg());
+                return new VKApiDisabledException($error);
             case 3:
-                return new VKApiMethodException($error->getErrorMsg());
+                return new VKApiMethodException($error);
             case 4:
-                return new VKApiSignatureException($error->getErrorMsg());
+                return new VKApiSignatureException($error);
             case 5:
-                return new VKApiAuthException($error->getErrorMsg());
+                return new VKApiAuthException($error);
             case 6:
-                return new VKApiTooManyException($error->getErrorMsg());
+                return new VKApiTooManyException($error);
             case 7:
-                return new VKApiPermissionException($error->getErrorMsg());
+                return new VKApiPermissionException($error);
             case 8:
-                return new VKApiRequestException($error->getErrorMsg());
+                return new VKApiRequestException($error);
             case 9:
-                return new VKApiFloodException($error->getErrorMsg());
+                return new VKApiFloodException($error);
             case 10:
-                return new VKApiServerException($error->getErrorMsg());
+                return new VKApiServerException($error);
             case 11:
-                return new VKApiEnabledInTestException($error->getErrorMsg());
+                return new VKApiEnabledInTestException($error);
             case 14:
-                return new VKApiCaptchaException($error->getErrorMsg());
+                return new VKApiCaptchaException($error);
             case 15:
-                return new VKApiAccessException($error->getErrorMsg());
+                return new VKApiAccessException($error);
             case 16:
-                return new VKApiAuthHttpsException($error->getErrorMsg());
+                return new VKApiAuthHttpsException($error);
             case 17:
-                return new VKApiAuthValidationException($error->getErrorMsg());
+                return new VKApiAuthValidationException($error);
             case 18:
-                return new VKApiUserDeletedException($error->getErrorMsg());
+                return new VKApiUserDeletedException($error);
             case 19:
-                return new VKApiBlockedException($error->getErrorMsg());
+                return new VKApiBlockedException($error);
             case 20:
-                return new VKApiMethodPermissionException($error->getErrorMsg());
+                return new VKApiMethodPermissionException($error);
             case 21:
-                return new VKApiMethodAdsException($error->getErrorMsg());
+                return new VKApiMethodAdsException($error);
             case 22:
-                return new VKApiUploadException($error->getErrorMsg());
+                return new VKApiUploadException($error);
             case 23:
-                return new VKApiMethodDisabledException($error->getErrorMsg());
+                return new VKApiMethodDisabledException($error);
             case 24:
-                return new VKApiNeedConfirmationException($error->getErrorMsg());
+                return new VKApiNeedConfirmationException($error);
             case 100:
-                return new VKApiParamException($error->getErrorMsg());
+                return new VKApiParamException($error);
             case 101:
-                return new VKApiParamApiIdException($error->getErrorMsg());
+                return new VKApiParamApiIdException($error);
             case 103:
-                return new VKApiLimitsException($error->getErrorMsg());
+                return new VKApiLimitsException($error);
             case 104:
-                return new VKApiNotFoundException($error->getErrorMsg());
+                return new VKApiNotFoundException($error);
             case 105:
-                return new VKApiSaveFileException($error->getErrorMsg());
+                return new VKApiSaveFileException($error);
             case 106:
-                return new VKApiActionFailedException($error->getErrorMsg());
+                return new VKApiActionFailedException($error);
             case 113:
-                return new VKApiParamUserIdException($error->getErrorMsg());
+                return new VKApiParamUserIdException($error);
             case 114:
-                return new VKApiParamAlbumIdException($error->getErrorMsg());
+                return new VKApiParamAlbumIdException($error);
             case 118:
-                return new VKApiParamServerException($error->getErrorMsg());
+                return new VKApiParamServerException($error);
             case 119:
-                return new VKApiParamTitleException($error->getErrorMsg());
+                return new VKApiParamTitleException($error);
             case 121:
-                return new VKApiParamHashException($error->getErrorMsg());
+                return new VKApiParamHashException($error);
             case 122:
-                return new VKApiParamPhotosException($error->getErrorMsg());
+                return new VKApiParamPhotosException($error);
             case 125:
-                return new VKApiParamGroupIdException($error->getErrorMsg());
+                return new VKApiParamGroupIdException($error);
             case 129:
-                return new VKApiParamPhotoException($error->getErrorMsg());
+                return new VKApiParamPhotoException($error);
             case 140:
-                return new VKApiParamPageIdException($error->getErrorMsg());
+                return new VKApiParamPageIdException($error);
             case 141:
-                return new VKApiAccessPageException($error->getErrorMsg());
+                return new VKApiAccessPageException($error);
             case 146:
-                return new VKApiMobileNotActivatedException($error->getErrorMsg());
+                return new VKApiMobileNotActivatedException($error);
             case 147:
-                return new VKApiInsufficientFundsException($error->getErrorMsg());
+                return new VKApiInsufficientFundsException($error);
             case 148:
-                return new VKApiAccessMenuException($error->getErrorMsg());
+                return new VKApiAccessMenuException($error);
             case 150:
-                return new VKApiParamTimestampException($error->getErrorMsg());
+                return new VKApiParamTimestampException($error);
             case 171:
-                return new VKApiFriendsListIdException($error->getErrorMsg());
+                return new VKApiFriendsListIdException($error);
             case 173:
-                return new VKApiFriendsListLimitException($error->getErrorMsg());
+                return new VKApiFriendsListLimitException($error);
             case 174:
-                return new VKApiFriendsAddYourselfException($error->getErrorMsg());
+                return new VKApiFriendsAddYourselfException($error);
             case 175:
-                return new VKApiFriendsAddInEnemyException($error->getErrorMsg());
+                return new VKApiFriendsAddInEnemyException($error);
             case 176:
-                return new VKApiFriendsAddEnemyException($error->getErrorMsg());
+                return new VKApiFriendsAddEnemyException($error);
             case 180:
-                return new VKApiParamNoteIdException($error->getErrorMsg());
+                return new VKApiParamNoteIdException($error);
             case 181:
-                return new VKApiAccessNoteException($error->getErrorMsg());
+                return new VKApiAccessNoteException($error);
             case 182:
-                return new VKApiAccessNoteCommentException($error->getErrorMsg());
+                return new VKApiAccessNoteCommentException($error);
             case 183:
-                return new VKApiAccessCommentException($error->getErrorMsg());
+                return new VKApiAccessCommentException($error);
             case 190:
-                return new VKApiSameCheckinException($error->getErrorMsg());
+                return new VKApiSameCheckinException($error);
             case 191:
-                return new VKApiAccessCheckinException($error->getErrorMsg());
+                return new VKApiAccessCheckinException($error);
             case 200:
-                return new VKApiAccessAlbumException($error->getErrorMsg());
+                return new VKApiAccessAlbumException($error);
             case 201:
-                return new VKApiAccessAudioException($error->getErrorMsg());
+                return new VKApiAccessAudioException($error);
             case 203:
-                return new VKApiAccessGroupException($error->getErrorMsg());
+                return new VKApiAccessGroupException($error);
             case 204:
-                return new VKApiAccessVideoException($error->getErrorMsg());
+                return new VKApiAccessVideoException($error);
             case 205:
-                return new VKApiAccessMarketException($error->getErrorMsg());
+                return new VKApiAccessMarketException($error);
             case 210:
-                return new VKApiWallAccessPostException($error->getErrorMsg());
+                return new VKApiWallAccessPostException($error);
             case 211:
-                return new VKApiWallAccessCommentException($error->getErrorMsg());
+                return new VKApiWallAccessCommentException($error);
             case 212:
-                return new VKApiWallAccessRepliesException($error->getErrorMsg());
+                return new VKApiWallAccessRepliesException($error);
             case 213:
-                return new VKApiWallAccessAddReplyException($error->getErrorMsg());
+                return new VKApiWallAccessAddReplyException($error);
             case 214:
-                return new VKApiWallAddPostException($error->getErrorMsg());
+                return new VKApiWallAddPostException($error);
             case 219:
-                return new VKApiWallAdsPublishedException($error->getErrorMsg());
+                return new VKApiWallAdsPublishedException($error);
             case 220:
-                return new VKApiWallTooManyRecipientsException($error->getErrorMsg());
+                return new VKApiWallTooManyRecipientsException($error);
             case 221:
-                return new VKApiStatusNoAudioException($error->getErrorMsg());
+                return new VKApiStatusNoAudioException($error);
             case 222:
-                return new VKApiWallLinksForbiddenException($error->getErrorMsg());
+                return new VKApiWallLinksForbiddenException($error);
             case 224:
-                return new VKApiWallAdsPostLimitReachedException($error->getErrorMsg());
+                return new VKApiWallAdsPostLimitReachedException($error);
             case 250:
-                return new VKApiPollsAccessException($error->getErrorMsg());
+                return new VKApiPollsAccessException($error);
             case 251:
-                return new VKApiPollsPollIdException($error->getErrorMsg());
+                return new VKApiPollsPollIdException($error);
             case 252:
-                return new VKApiPollsAnswerIdException($error->getErrorMsg());
+                return new VKApiPollsAnswerIdException($error);
             case 260:
-                return new VKApiAccessGroupsException($error->getErrorMsg());
+                return new VKApiAccessGroupsException($error);
             case 300:
-                return new VKApiAlbumFullException($error->getErrorMsg());
+                return new VKApiAlbumFullException($error);
             case 302:
-                return new VKApiAlbumsLimitException($error->getErrorMsg());
+                return new VKApiAlbumsLimitException($error);
             case 500:
-                return new VKApiVotesPermissionException($error->getErrorMsg());
+                return new VKApiVotesPermissionException($error);
             case 503:
-                return new VKApiVotesException($error->getErrorMsg());
+                return new VKApiVotesException($error);
             case 600:
-                return new VKApiAdsPermissionException($error->getErrorMsg());
+                return new VKApiAdsPermissionException($error);
             case 601:
-                return new VKApiWeightedFloodException($error->getErrorMsg());
+                return new VKApiWeightedFloodException($error);
             case 602:
-                return new VKApiAdsPartialSuccessException($error->getErrorMsg());
+                return new VKApiAdsPartialSuccessException($error);
             case 603:
-                return new VKApiAdsSpecificException($error->getErrorMsg());
+                return new VKApiAdsSpecificException($error);
             case 700:
-                return new VKApiGroupChangeCreatorException($error->getErrorMsg());
+                return new VKApiGroupChangeCreatorException($error);
             case 701:
-                return new VKApiGroupNotInClubException($error->getErrorMsg());
+                return new VKApiGroupNotInClubException($error);
             case 702:
-                return new VKApiGroupTooManyOfficersException($error->getErrorMsg());
+                return new VKApiGroupTooManyOfficersException($error);
             case 800:
-                return new VKApiVideoAlreadyAddedException($error->getErrorMsg());
+                return new VKApiVideoAlreadyAddedException($error);
             case 801:
-                return new VKApiVideoCommentsClosedException($error->getErrorMsg());
+                return new VKApiVideoCommentsClosedException($error);
             case 900:
-                return new VKApiMessagesUserBlockedException($error->getErrorMsg());
+                return new VKApiMessagesUserBlockedException($error);
             case 901:
-                return new VKApiMessagesDenySendException($error->getErrorMsg());
+                return new VKApiMessagesDenySendException($error);
             case 902:
-                return new VKApiMessagesPrivacyException($error->getErrorMsg());
+                return new VKApiMessagesPrivacyException($error);
             case 913:
-                return new VKApiMessagesForwardAmountExceededException($error->getErrorMsg());
+                return new VKApiMessagesForwardAmountExceededException($error);
             case 921:
-                return new VKApiMessagesForwardException($error->getErrorMsg());
+                return new VKApiMessagesForwardException($error);
             case 1000:
-                return new VKApiParamPhoneException($error->getErrorMsg());
+                return new VKApiParamPhoneException($error);
             case 1004:
-                return new VKApiPhoneAlreadyUsedException($error->getErrorMsg());
+                return new VKApiPhoneAlreadyUsedException($error);
             case 1105:
-                return new VKApiAuthFloodException($error->getErrorMsg());
+                return new VKApiAuthFloodException($error);
             case 1110:
-                return new VKApiAuthParamCodeException($error->getErrorMsg());
+                return new VKApiAuthParamCodeException($error);
             case 1111:
-                return new VKApiAuthParamPasswordException($error->getErrorMsg());
+                return new VKApiAuthParamPasswordException($error);
             case 1112:
-                return new VKApiAuthDelayException($error->getErrorMsg());
+                return new VKApiAuthDelayException($error);
             case 1150:
-                return new VKApiParamDocIdException($error->getErrorMsg());
+                return new VKApiParamDocIdException($error);
             case 1151:
-                return new VKApiParamDocDeleteAccessException($error->getErrorMsg());
+                return new VKApiParamDocDeleteAccessException($error);
             case 1152:
-                return new VKApiParamDocTitleException($error->getErrorMsg());
+                return new VKApiParamDocTitleException($error);
             case 1153:
-                return new VKApiParamDocAccessException($error->getErrorMsg());
+                return new VKApiParamDocAccessException($error);
             case 1160:
-                return new VKApiPhotoChangedException($error->getErrorMsg());
+                return new VKApiPhotoChangedException($error);
             case 1170:
-                return new VKApiTooManyListsException($error->getErrorMsg());
+                return new VKApiTooManyListsException($error);
             case 1251:
-                return new VKApiAppsAlreadyUnlockedException($error->getErrorMsg());
+                return new VKApiAppsAlreadyUnlockedException($error);
             case 1260:
-                return new VKApiInvalidAddressException($error->getErrorMsg());
+                return new VKApiInvalidAddressException($error);
             case 1310:
-                return new VKApiCommunitiesCatalogDisabledException($error->getErrorMsg());
+                return new VKApiCommunitiesCatalogDisabledException($error);
             case 1311:
-                return new VKApiCommunitiesCategoriesDisabledException($error->getErrorMsg());
+                return new VKApiCommunitiesCategoriesDisabledException($error);
             case 1400:
-                return new VKApiMarketRestoreTooLateException($error->getErrorMsg());
+                return new VKApiMarketRestoreTooLateException($error);
             case 1401:
-                return new VKApiMarketCommentsClosedException($error->getErrorMsg());
+                return new VKApiMarketCommentsClosedException($error);
             case 1402:
-                return new VKApiMarketAlbumNotFoundException($error->getErrorMsg());
+                return new VKApiMarketAlbumNotFoundException($error);
             case 1403:
-                return new VKApiMarketItemNotFoundException($error->getErrorMsg());
+                return new VKApiMarketItemNotFoundException($error);
             case 1404:
-                return new VKApiMarketItemAlreadyAddedException($error->getErrorMsg());
+                return new VKApiMarketItemAlreadyAddedException($error);
             case 1405:
-                return new VKApiMarketTooManyItemsException($error->getErrorMsg());
+                return new VKApiMarketTooManyItemsException($error);
             case 1406:
-                return new VKApiMarketTooManyItemsInAlbumException($error->getErrorMsg());
+                return new VKApiMarketTooManyItemsInAlbumException($error);
             case 1407:
-                return new VKApiMarketTooManyAlbumsException($error->getErrorMsg());
+                return new VKApiMarketTooManyAlbumsException($error);
             case 1600:
-                return new VKApiStoryExpiredException($error->getErrorMsg());
+                return new VKApiStoryExpiredException($error);
             case 1602:
-                return new VKApiIncorrectReplyPrivacyException($error->getErrorMsg());
+                return new VKApiIncorrectReplyPrivacyException($error);
             default:
-                return new VKApiException($error->getErrorCode(), $error->getErrorMsg(), 'Unknown error');
+                return new VKApiException($error->getErrorCode(), $error->getErrorMsg(),  $error);
         }
     }
 }

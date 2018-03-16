@@ -3,7 +3,7 @@
 namespace VK\Client;
 
 use VK\Exceptions\Api\ExceptionMapper;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 use VK\TransportClient\Curl\CurlHttpClient;
 use VK\TransportClient\TransportClientResponse;

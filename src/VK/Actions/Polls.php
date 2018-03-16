@@ -4,7 +4,7 @@ namespace VK\Actions;
 
 use VK\Actions\Enums\PollsGetVotersNameCase;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiPollsAccessException;
 use VK\Exceptions\Api\VKApiPollsAnswerIdException;
 use VK\Exceptions\Api\VKApiPollsPollIdException;

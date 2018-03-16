@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiUnknownException extends VKApiException {
     /**
      * VKApiUnknownException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(1, 'Unknown error occurred', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(1, 'Unknown error occurred', $error);
     }
 }

@@ -3,7 +3,7 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiParamDocAccessException;
 use VK\Exceptions\Api\VKApiParamDocDeleteAccessException;
 use VK\Exceptions\Api\VKApiParamDocIdException;

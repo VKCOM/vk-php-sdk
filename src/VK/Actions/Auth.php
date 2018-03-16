@@ -8,7 +8,7 @@ use VK\Exceptions\Api\VKApiAuthDelayException;
 use VK\Exceptions\Api\VKApiAuthFloodException;
 use VK\Exceptions\Api\VKApiAuthParamCodeException;
 use VK\Exceptions\Api\VKApiAuthParamPasswordException;
-use VK\Exceptions\Api\VKApiException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiParamPhoneException;
 use VK\Exceptions\Api\VKApiPhoneAlreadyUsedException;
 use VK\Exceptions\VKClientException;

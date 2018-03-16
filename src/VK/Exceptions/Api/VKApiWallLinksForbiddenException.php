@@ -2,12 +2,15 @@
 
 namespace VK\Exceptions\Api;
 
+use VK\Client\VKApiError;
+use VK\Exceptions\VKApiException;
+
 class VKApiWallLinksForbiddenException extends VKApiException {
     /**
      * VKApiWallLinksForbiddenException constructor.
-     * @param string $message
+     * @param VKApiError $error
      */
-    public function __construct(string $message) {
-        parent::__construct(222, 'Hyperlinks are forbidden', $message);
+    public function __construct(VKApiError $error) {
+        parent::__construct(222, 'Hyperlinks are forbidden', $error);
     }
 }
