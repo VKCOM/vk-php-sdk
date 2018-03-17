@@ -40,9 +40,9 @@ class GenerateActions {
     protected const VK_API_REQUEST_VAR_NAME = 'request';
     protected const VK_API_REQUEST = 'VKApiRequest';
     protected const VK_API_CLIENT = 'VKApiClient';
-    protected const VK_API_HOST = 'VK_API_HOST';
-    protected const VK_API_VERSION = 'VK_API_VERSION';
-    protected const VK_API_VERSION_VALUE = '5.69';
+    protected const VK_API_HOST = 'API_HOST';
+    protected const VK_API_VERSION = 'API_VERSION';
+    protected const VK_API_VERSION_VALUE = '5.73';
     protected const PHP = '.php';
     protected const ARG_ACCESS_TOKEN = 'access_token';
     protected const ARG_PARAMS = 'params';
@@ -64,7 +64,7 @@ class GenerateActions {
 
     protected const USE_VK = self::KEYWORD_USE . self::SPACE . self::VK_NAMESPACE . self::BACKSLASH;
     protected const USE_VK_API_EXCEPTIONS = self::USE_VK . 'Exceptions\Api\\';
-    protected const USE_VK_API_EXCEPTION = self::USE_VK_API_EXCEPTIONS . 'VKApiException;';
+    protected const USE_VK_API_EXCEPTION = self::USE_VK . 'Exceptions\VKApiException;';
     protected const USE_VK_CLIENT_EXCEPTION = self::USE_VK . 'Exceptions\VKClientException;';
     protected const USE_VK_API_REQUEST = self::USE_VK . self::KEYWORD_CLIENT . self::BACKSLASH . self::VK_API_REQUEST . ';';
 
@@ -129,13 +129,14 @@ class GenerateActions {
 
         $this->api_client_members .= $this->wrapConstant(static::VK_API_VERSION, static::VK_API_VERSION_VALUE,
             '', 'protected ');
+        $this->api_client_members .= $this->wrapConstant(static::VK_API_HOST, static::LINK_VK_API_HOST,
+            '', 'protected ');
         $this->api_client_members .= $this->api_request_member;
         $this->api_client_construct_code = $this->wrapConstructAssignment(static::VK_API_REQUEST_VAR_NAME,
-            static::KEYWORD_NEW . self::VK_API_REQUEST . '($default_language, $api_version)');
+            static::KEYWORD_NEW . self::VK_API_REQUEST . '($api_version, $language, self::' . self::VK_API_HOST . ')');
 
         $this->api_client_gets = PHP_EOL . $this->wrapComment(array('@return ' . static::VK_API_REQUEST));
-        $this->api_client_gets .= $this->wrapGetActionMethod(static::VK_API_REQUEST_VAR_NAME);
-        $this->api_client_use = $this->wrapClassUse(self::VK_CLIENT . self::BACKSLASH . self::KEYWORD_ENUMS, self::VK_LANGUAGE);
+        $this->api_client_gets .= $this->wrapGetActionMethod(static::VK_API_REQUEST_VAR_NAME, static::VK_API_REQUEST);
 
         foreach ($mapped_methods as $action_name => &$action_methods) {
             $class_name = ucwords($action_name);
@@ -167,7 +168,8 @@ class GenerateActions {
         }
 
         $api_client_class_name = static::VK_API_CLIENT;
-        $api_client_construct = $this->wrapConstruct($api_client_class_name, 'string $default_language = VKLanguage::RUSSIAN, string $api_version = self::VK_API_VERSION', $this->api_client_construct_code);
+        $api_client_params = 'string $api_version = self::' . static::VK_API_VERSION . ', ?string $language = null';
+        $api_client_construct = $this->wrapConstruct($api_client_class_name, $api_client_params, $this->api_client_construct_code);
 
         $api_client_class = $this->wrapClass($api_client_class_name, static::VK_CLIENT,
             $this->api_client_use, $this->api_client_members, $api_client_construct, $this->api_client_gets);
@@ -201,7 +203,7 @@ class GenerateActions {
         $this->api_client_construct_code .= $this->wrapConstructAssignment($action_name, $value);
 
         $this->api_client_gets .= PHP_EOL . $this->wrapComment(array('@return ' . $class_name));
-        $this->api_client_gets .= $this->wrapGetActionMethod($action_name);
+        $this->api_client_gets .= $this->wrapGetActionMethod($action_name, $class_name);
     }
 
     protected function wrapClass($name, $namespace, $use, $members, $construct, $code) {
@@ -251,7 +253,8 @@ class GenerateActions {
 
             $result .= static::COLON;
 
-            if (isset($param[static::KEY_DESCRIPTION])) {
+            if (!empty($param[static::KEY_DESCRIPTION])) {
+
                 if ($need_space) {
                     $result .= static::SPACE;
                 }
@@ -261,7 +264,7 @@ class GenerateActions {
                 $this->tab(1) . static::SPACE3);
             $result = explode(PHP_EOL, $result);
             if (isset($description_end)) {
-                $result[] = $this->tab(1) . static::SPACE3 . $description_end;
+                $result[] = $description_end;
             }
             return $result;
         };
@@ -281,7 +284,7 @@ class GenerateActions {
 
         $method_errors = array('', '@return mixed',
             '@throws VKClientException in case of network error',
-            '@throws VKApiException in case of network error');
+            '@throws VKApiException in case of API error');
         if (isset($method[static::KEY_ERRORS])) {
             foreach ($method[static::KEY_ERRORS] as $error) {
                 $exception_name = static::parseErrorName($error['name']);
@@ -409,7 +412,7 @@ class GenerateActions {
     protected function wrapComment($comment) {
         $result = $this->tab(1) . static::COMMENT_START;
         $format = function ($line) {
-            return PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . $line;
+            return PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . ($line  ? static::SPACE . $line : '');
         };
         $result .= implode(array_map($format, $comment));
         $result .= PHP_EOL;
@@ -429,9 +432,10 @@ class GenerateActions {
         return PHP_EOL . $this->tab(2) . static::DOLLAR . static::KEYWORD_THIS . $varName . ' = ' . $value . ';';
     }
 
-    protected function wrapGetActionMethod($var_name) {
+    protected function wrapGetActionMethod($var_name, $return_type = null) {
         $result = PHP_EOL;
-        $result .= $this->tab(1) . 'public function ' . $var_name . '() {' . PHP_EOL;
+        $return_type = $return_type ? ': ' . $return_type : '';
+        $result .= $this->tab(1) . 'public function ' . $var_name . '()' . $return_type . ' {' . PHP_EOL;
         $result .= $this->tab(2) . static::KEYWORD_RETURN . static::DOLLAR . static::KEYWORD_THIS . $var_name . ';' . PHP_EOL;
         $result .= $this->tab(1) . '}' . PHP_EOL;
         return $result;

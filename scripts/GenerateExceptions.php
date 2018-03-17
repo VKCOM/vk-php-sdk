@@ -24,7 +24,7 @@ class GenerateExceptions {
     protected const VK_NAMESPACE = 'VK';
     protected const VK_API_EXCEPTION_CLASS_NAME = 'VKApiException';
     protected const NAMESPACE_API = 'VK\Exceptions\Api';
-    protected const DEFAULT_EXCEPTION_MESSAGE = 'Unknown error';
+    protected const DEFAULT_EXCEPTION_MESSAGE = '$error';
 
     protected const PATH_SCHEMA = '/vendor/vkcom/vk-api-schema/methods.json';
     protected const PATH_EXCEPTIONS = '/src/VK/Exceptions/Api/';
@@ -96,8 +96,8 @@ class GenerateExceptions {
 
             $exception_construct = $this->wrapExceptionConstruct($class_name, $code, $description);
 
-            $exception_content = $this->wrapClass($class_name, static::NAMESPACE_API, null,
-                static::VK_API_EXCEPTION_CLASS_NAME, null, $exception_construct, null);
+            $exception_content = $this->wrapClass($class_name, static::NAMESPACE_API,
+                "use VK\Client\VKApiError;\nuse VK\Exceptions\VKApiException;", static::VK_API_EXCEPTION_CLASS_NAME, null, $exception_construct, null);
 
             file_put_contents($exceptions_path . $class_name . static::PHP, $exception_content);
         }
@@ -116,14 +116,14 @@ class GenerateExceptions {
 
         $mapper_code = PHP_EOL . $this->buildParseFunction($switch_sorted_content);
         $mapper_content = $this->wrapClass(static::EXCEPTION_MAPPER, static::NAMESPACE_API,
-            'use VK\Client\VKApiError;', null, null, null, $mapper_code);
+            "use VK\Client\VKApiError;\nuse VK\Exceptions\VKApiException;", null, null, null, $mapper_code);
 
         file_put_contents($mapper_path . static::EXCEPTION_MAPPER . static::PHP, $mapper_content);
     }
 
     protected function wrapSwitchCase(int $code, string $class_name) {
         $result = $this->tab(3) . 'case ' . $code . '' . static::COLON . PHP_EOL;
-        $result .= $this->tab(4)  . 'return new ' . $class_name . '($error->getErrorMsg());' . PHP_EOL;
+        $result .= $this->tab(4)  . 'return new ' . $class_name . '($error);' . PHP_EOL;
         return $result;
     }
 
@@ -156,22 +156,22 @@ class GenerateExceptions {
     protected function wrapExceptionConstruct(string $class_name, int $code, string $description) {
         $result = $this->tab(1) . static::COMMENT_START . PHP_EOL;
         $result .= $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . $class_name . static::SPACE . 'constructor.';
-        $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . '@param string $message';
+        $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . '@param VKApiError $error';
         $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::COMMENT_END . PHP_EOL;
 
-        $result .= $this->tab(1) . 'public function __construct(string $message) {';
+        $result .= $this->tab(1) . 'public function __construct(VKApiError $error) {';
         $result .= PHP_EOL . $this->tab(2) . 'parent::__construct(' . $code . static::COMMA;
-        $result .= static::QUOTE . $description . static::QUOTE . static::COMMA. '$message);';
+        $result .= static::QUOTE . $description . static::QUOTE . static::COMMA. '$error);';
         $result .= PHP_EOL . $this->tab(1) . static::CLOSING_BRACKET;
         return $result;
     }
 
     protected function buildParseFunction($switch_content) {
         $result = $this->tab(1) . 'public static function parse(VKApiError $error) {';
-        $result .= PHP_EOL . $this->tab(2) . 'switch($error->getErrorCode()) {';
+        $result .= PHP_EOL . $this->tab(2) . 'switch ($error->getErrorCode()) {';
         $result .= PHP_EOL . $switch_content;
         $result .= $this->tab(3) . 'default' . static::COLON;
-        $result .= PHP_EOL . $this->tab(4) . 'return new ' . static::VK_API_EXCEPTION_CLASS_NAME . '($error->getErrorCode(), $error->getErrorMsg(), \'' . static::DEFAULT_EXCEPTION_MESSAGE . '\');';
+        $result .= PHP_EOL . $this->tab(4) . 'return new ' . static::VK_API_EXCEPTION_CLASS_NAME . '($error->getErrorCode(), $error->getErrorMsg(),  ' . static::DEFAULT_EXCEPTION_MESSAGE . ');';
         $result .= PHP_EOL . $this->tab(2) . static::CLOSING_BRACKET;
         $result .= PHP_EOL . $this->tab(1) . static::CLOSING_BRACKET;
         return $result;
