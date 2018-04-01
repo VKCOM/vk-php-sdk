@@ -42,263 +42,199 @@ abstract class VKCallbackApiHandler {
     protected const CALLBACK_EVENT_USER_UNBLOCK = 'user_unblock';
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
-     * @param array $object
+     * @var int
      */
-    public function messageNew(int $group_id, ?string $secret, array $object) {}
+    protected $group_id;
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
-     * @param array $object
+     * @var string|null
      */
-    public function messageReply(int $group_id, ?string $secret, array $object) {}
+    protected $secret;
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function messageAllow(int $group_id, ?string $secret, array $object) {}
+    public function messageNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function messageDeny(int $group_id, ?string $secret, array $object) {}
+    public function messageReply(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function photoNew(int $group_id, ?string $secret, array $object) {}
+    public function messageAllow(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function photoCommentNew(int $group_id, ?string $secret, array $object) {}
+    public function messageDeny(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function photoCommentEdit(int $group_id, ?string $secret, array $object) {}
+    public function photoNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function photoCommentRestore(int $group_id, ?string $secret, array $object) {}
+    public function photoCommentNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function photoCommentDelete(int $group_id, ?string $secret, array $object) {}
+    public function photoCommentEdit(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function audioNew(int $group_id, ?string $secret, array $object) {}
+    public function photoCommentRestore(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function videoNew(int $group_id, ?string $secret, array $object) {}
+    public function photoCommentDelete(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function videoCommentNew(int $group_id, ?string $secret, array $object) {}
+    public function audioNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function videoCommentEdit(int $group_id, ?string $secret, array $object) {}
+    public function videoNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function videoCommentRestore(int $group_id, ?string $secret, array $object) {}
+    public function videoCommentNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function videoCommentDelete(int $group_id, ?string $secret, array $object) {}
+    public function videoCommentEdit(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function wallPostNew(int $group_id, ?string $secret, array $object) {}
+    public function videoCommentRestore(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function wallRepost(int $group_id, ?string $secret, array $object) {}
+    public function videoCommentDelete(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function wallReplyNew(int $group_id, ?string $secret, array $object) {}
+    public function wallPostNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function wallReplyEdit(int $group_id, ?string $secret, array $object) {}
+    public function wallRepost(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function wallReplyRestore(int $group_id, ?string $secret, array $object) {}
+    public function wallReplyNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function wallReplyDelete(int $group_id, ?string $secret, array $object) {}
+    public function wallReplyEdit(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function boardPostNew(int $group_id, ?string $secret, array $object) {}
+    public function wallReplyRestore(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function boardPostEdit(int $group_id, ?string $secret, array $object) {}
+    public function wallReplyDelete(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function boardPostRestore(int $group_id, ?string $secret, array $object) {}
+    public function boardPostNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function boardPostDelete(int $group_id, ?string $secret, array $object) {}
+    public function boardPostEdit(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function marketCommentNew(int $group_id, ?string $secret, array $object) {}
+    public function boardPostRestore(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function marketCommentEdit(int $group_id, ?string $secret, array $object) {}
+    public function boardPostDelete(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function marketCommentRestore(int $group_id, ?string $secret, array $object) {}
+    public function marketCommentNew(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function marketCommentDelete(int $group_id, ?string $secret, array $object) {}
+    public function marketCommentEdit(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function groupLeave(int $group_id, ?string $secret, array $object) {}
+    public function marketCommentRestore(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function groupJoin(int $group_id, ?string $secret, array $object) {}
+    public function marketCommentDelete(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function groupChangeSettings(int $group_id, ?string $secret, array $object) {}
+    public function groupLeave(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function groupChangePhoto(int $group_id, ?string $secret, array $object) {}
+    public function groupJoin(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function groupOfficersEdit(int $group_id, ?string $secret, array $object) {}
+    public function groupChangeSettings(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function pollVoteNew(int $group_id, ?string $secret, array $object) {}
+    public function groupChangePhoto(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function userBlock(int $group_id, ?string $secret, array $object) {}
+    public function groupOfficersEdit(array $object) {}
 
     /**
-     * @param int $group_id
-     * @param null|string $secret
      * @param array $object
      */
-    public function userUnblock(int $group_id, ?string $secret, array $object) {}
+    public function pollVoteNew(array $object) {}
+
+    /**
+     * @param array $object
+     */
+    public function userBlock(array $object) {}
+
+    /**
+     * @param array $object
+     */
+    public function userUnblock(array $object) {}
 
     /**
      * @param int $group_id
@@ -307,117 +243,120 @@ abstract class VKCallbackApiHandler {
      * @param array $object
      */
     public function parseObject(int $group_id, ?string $secret, string $type, array $object) {
+        $this->group_id = $group_id;
+        $this->secret = $secret;
+
         switch ($type) {
             case static::CALLBACK_EVENT_MESSAGE_NEW:
-                $this->messageNew($group_id, $secret, $object);
+                $this->messageNew($object);
                 break;
             case static::CALLBACK_EVENT_MESSAGE_REPLY:
-                $this->messageReply($group_id, $secret, $object);
+                $this->messageReply($object);
                 break;
             case static::CALLBACK_EVENT_MESSAGE_ALLOW:
-                $this->messageAllow($group_id, $secret, $object);
+                $this->messageAllow($object);
                 break;
             case static::CALLBACK_EVENT_MESSAGE_DENY:
-                $this->messageDeny($group_id, $secret, $object);
+                $this->messageDeny($object);
                 break;
             case static::CALLBACK_EVENT_PHOTO_NEW:
-                $this->photoNew($group_id, $secret, $object);
+                $this->photoNew($object);
                 break;
             case static::CALLBACK_EVENT_PHOTO_COMMENT_NEW:
-                $this->photoCommentNew($group_id, $secret, $object);
+                $this->photoCommentNew($object);
                 break;
             case static::CALLBACK_EVENT_PHOTO_COMMENT_EDIT:
-                $this->photoCommentEdit($group_id, $secret, $object);
+                $this->photoCommentEdit($object);
                 break;
             case static::CALLBACK_EVENT_PHOTO_COMMENT_RESTORE:
-                $this->photoCommentRestore($group_id, $secret, $object);
+                $this->photoCommentRestore($object);
                 break;
             case static::CALLBACK_EVENT_PHOTO_COMMENT_DELETE:
-                $this->photoCommentDelete($group_id, $secret, $object);
+                $this->photoCommentDelete($object);
                 break;
             case static::CALLBACK_EVENT_AUDIO_NEW:
-                $this->audioNew($group_id, $secret, $object);
+                $this->audioNew($object);
                 break;
             case static::CALLBACK_EVENT_VIDEO_NEW:
-                $this->videoNew($group_id, $secret, $object);
+                $this->videoNew($object);
                 break;
             case static::CALLBACK_EVENT_VIDEO_COMMENT_NEW:
-                $this->videoCommentNew($group_id, $secret, $object);
+                $this->videoCommentNew($object);
                 break;
             case static::CALLBACK_EVENT_VIDEO_COMMENT_EDIT:
-                $this->videoCommentEdit($group_id, $secret, $object);
+                $this->videoCommentEdit($object);
                 break;
             case static::CALLBACK_EVENT_VIDEO_COMMENT_RESTORE:
-                $this->videoCommentRestore($group_id, $secret, $object);
+                $this->videoCommentRestore($object);
                 break;
             case static::CALLBACK_EVENT_VIDEO_COMMENT_DELETE:
-                $this->videoCommentDelete($group_id, $secret, $object);
+                $this->videoCommentDelete($object);
                 break;
             case static::CALLBACK_EVENT_WALL_POST_NEW:
-                $this->wallPostNew($group_id, $secret, $object);
+                $this->wallPostNew($object);
                 break;
             case static::CALLBACK_EVENT_WALL_REPOST:
-                $this->wallRepost($group_id, $secret, $object);
+                $this->wallRepost($object);
                 break;
             case static::CALLBACK_EVENT_WALL_REPLY_NEW:
-                $this->wallReplyNew($group_id, $secret, $object);
+                $this->wallReplyNew($object);
                 break;
             case static::CALLBACK_EVENT_WALL_REPLY_EDIT:
-                $this->wallReplyEdit($group_id, $secret, $object);
+                $this->wallReplyEdit($object);
                 break;
             case static::CALLBACK_EVENT_WALL_REPLY_RESTORE:
-                $this->wallReplyRestore($group_id, $secret, $object);
+                $this->wallReplyRestore($object);
                 break;
             case static::CALLBACK_EVENT_WALL_REPLY_DELETE:
-                $this->wallReplyDelete($group_id, $secret, $object);
+                $this->wallReplyDelete($object);
                 break;
             case static::CALLBACK_EVENT_BOARD_POST_NEW:
-                $this->boardPostNew($group_id, $secret, $object);
+                $this->boardPostNew($object);
                 break;
             case static::CALLBACK_EVENT_BOARD_POST_EDIT:
-                $this->boardPostEdit($group_id, $secret, $object);
+                $this->boardPostEdit($object);
                 break;
             case static::CALLBACK_EVENT_BOARD_POST_RESTORE:
-                $this->boardPostRestore($group_id, $secret, $object);
+                $this->boardPostRestore($object);
                 break;
             case static::CALLBACK_EVENT_BOARD_POST_DELETE:
-                $this->boardPostDelete($group_id, $secret, $object);
+                $this->boardPostDelete($object);
                 break;
             case static::CALLBACK_EVENT_MARKET_COMMENT_NEW:
-                $this->marketCommentNew($group_id, $secret, $object);
+                $this->marketCommentNew($object);
                 break;
             case static::CALLBACK_EVENT_MARKET_COMMENT_EDIT:
-                $this->marketCommentEdit($group_id, $secret, $object);
+                $this->marketCommentEdit($object);
                 break;
             case static::CALLBACK_EVENT_MARKET_COMMENT_RESTORE:
-                $this->marketCommentRestore($group_id, $secret, $object);
+                $this->marketCommentRestore($object);
                 break;
             case static::CALLBACK_EVENT_MARKET_COMMENT_DELETE:
-                $this->marketCommentDelete($group_id, $secret, $object);
+                $this->marketCommentDelete($object);
                 break;
             case static::CALLBACK_EVENT_GROUP_LEAVE:
-                $this->groupLeave($group_id, $secret, $object);
+                $this->groupLeave($object);
                 break;
             case static::CALLBACK_EVENT_GROUP_JOIN:
-                $this->groupJoin($group_id, $secret, $object);
+                $this->groupJoin($object);
                 break;
             case static::CALLBACK_EVENT_GROUP_CHANGE_SETTINGS:
-                $this->groupChangeSettings($group_id, $secret, $object);
+                $this->groupChangeSettings($object);
                 break;
             case static::CALLBACK_EVENT_GROUP_CHANGE_PHOTO:
-                $this->groupChangePhoto($group_id, $secret, $object);
+                $this->groupChangePhoto($object);
                 break;
             case static::CALLBACK_EVENT_GROUP_OFFICERS_EDIT:
-                $this->groupOfficersEdit($group_id, $secret, $object);
+                $this->groupOfficersEdit($object);
                 break;
             case static::CALLBACK_EVENT_POLL_VOTE_NEW:
-                $this->pollVoteNew($group_id, $secret, $object);
+                $this->pollVoteNew($object);
                 break;
             case static::CALLBACK_EVENT_USER_BLOCK:
-                $this->userBlock($group_id, $secret, $object);
+                $this->userBlock($object);
                 break;
             case static::CALLBACK_EVENT_USER_UNBLOCK:
-                $this->userUnblock($group_id, $secret, $object);
+                $this->userUnblock($object);
                 break;
         }
     }
