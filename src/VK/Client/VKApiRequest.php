@@ -11,6 +11,7 @@ use VK\TransportClient\TransportRequestException;
 
 class VKApiRequest {
     protected const VERSION = '5.69';
+    protected const API_HOST = 'https://api.vk.com/method';
 
     private const PARAM_VERSION = 'v';
     private const PARAM_ACCESS_TOKEN = 'access_token';
@@ -48,7 +49,7 @@ class VKApiRequest {
      * @param string|null $language
      * @param string $host
      */
-    public function __construct(string $api_version, ?string $language, string $host) {
+    public function __construct(string $api_version = self::VERSION, ?string $language, string $host = self::API_HOST) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
         $this->version = $api_version;
         $this->host = $host;
