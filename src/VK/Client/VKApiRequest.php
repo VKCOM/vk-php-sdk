@@ -49,7 +49,7 @@ class VKApiRequest {
      * @param string|null $language
      * @param string $host
      */
-    public function __construct(string $api_version, ?string $language, string $host = self::API_HOST) {
+    public function __construct(string $api_version = self::VERSION, ?string $language, string $host = self::API_HOST) {
         $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
         $this->version = $api_version;
         $this->host = $host;
