@@ -512,4 +512,10 @@ class VKApiClient {
         return $this->widgets;
     }
 
+    /**
+     * @return VKApiRequest
+     */
+    public function getRequest(): VKApiRequest {
+        return $this->request;
+    }
 }

@@ -187,7 +187,7 @@ Then use **upload()** method to send files to the **upload_url** address receive
 
 ```php
 $vk = new VKApiClient();
-$photo = $vk->request()->upload($address['upload_url'], 'photo', 'photo.jpg');
+$photo = $vk->getRequest()->upload($address['upload_url'], 'photo', 'photo.jpg');
 ```
 
 You will get a JSON object with **server**, **photo**, **hash** fields. To save a photo call **photos.saveMessagesPhoto** with these three parameters:
@@ -220,7 +220,7 @@ Send a file to **upload_url** received previously calling **upload()** method:
 
 ```php
 $vk = new VKApiClient();
-$video = $vk->request()->upload($address['upload_url'], 'video_file', 'video.mp4');
+$video = $vk->getRequest()->upload($address['upload_url'], 'video_file', 'video.mp4');
 ```
 
 Videos are processed for some time after uploading.
