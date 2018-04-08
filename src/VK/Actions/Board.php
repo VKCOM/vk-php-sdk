@@ -2,12 +2,12 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\BoardGetCommentsSort;
+use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
 use VK\Actions\Enums\BoardGetTopicsOrder;
 use VK\Actions\Enums\BoardGetTopicsPreview;
-use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\BoardGetCommentsSort;
 
 class Board {
 
@@ -36,14 +36,14 @@ class Board {
      *        — by date created in reverse chronological order. '-1' — by date updated in chronological order. '-2'
      *        — by date created in chronological order. If no sort order is specified, topics are returned in the order
      *        specified by the group administrator. Pinned topics are returned first, regardless of the sorting.
-     * @see BoardGetTopicsOrder
+     *        @see BoardGetTopicsOrder
      *      - integer offset: Offset needed to return a specific subset of topics.
      *      - integer count: Number of topics to return.
      *      - boolean extended: '1' — to return information about users who created topics or who posted there
      *        last, '0' — to return no additional fields (default)
      *      - BoardGetTopicsPreview preview: '1' — to return the first comment in each topic,, '2' — to return
      *        the last comment in each topic,, '0' — to return no comments. By default: '0'.
-     * @see BoardGetTopicsPreview
+     *        @see BoardGetTopicsPreview
      *      - integer preview_length: Number of characters after which to truncate the previewed comment. To
      *        preview the full comment, specify '0'.
      *
@@ -72,7 +72,7 @@ class Board {
      *        additional fields (default)
      *      - BoardGetCommentsSort sort: Sort order: 'asc' — by creation date in chronological order, 'desc' —
      *        by creation date in reverse chronological order,
-     * @see BoardGetCommentsSort
+     *        @see BoardGetCommentsSort
      *
      * @return mixed
      * @throws VKClientException in case of network error

@@ -2,19 +2,19 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\VideoGetCommentsSort;
-use VK\Actions\Enums\VideoReportCommentReason;
-use VK\Actions\Enums\VideoReportReason;
-use VK\Actions\Enums\VideoSearchSort;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessVideoException;
-use VK\Exceptions\Api\VKApiAlbumsLimitException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiAccessVideoException;
 use VK\Exceptions\Api\VKApiVideoAlreadyAddedException;
-use VK\Exceptions\Api\VKApiVideoCommentsClosedException;
 use VK\Exceptions\Api\VKApiWallAddPostException;
 use VK\Exceptions\Api\VKApiWallAdsPublishedException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiAlbumsLimitException;
+use VK\Exceptions\Api\VKApiVideoCommentsClosedException;
+use VK\Actions\Enums\VideoSearchSort;
+use VK\Actions\Enums\VideoGetCommentsSort;
+use VK\Actions\Enums\VideoReportReason;
+use VK\Actions\Enums\VideoReportCommentReason;
 
 class Video {
 
@@ -176,17 +176,17 @@ class Video {
      * @param $params array
      *      - string q: Search query string (e.g., 'The Beatles').
      *      - VideoSearchSort sort: Sort order: '1' — by duration, '2' — by relevance, '0' — by date added
-     * @see VideoSearchSort
+     *        @see VideoSearchSort
      *      - integer hd: If not null, only searches for high-definition videos.
      *      - boolean adult: '1' — to disable the Safe Search filter, '0' — to enable the Safe Search filter
      *      - array filters: Filters to apply: 'youtube' — return YouTube videos only, 'vimeo' — return Vimeo
      *        videos only, 'short' — return short videos only, 'long' — return long videos only
-     *      - boolean search_own:
+     *      - boolean search_own: 
      *      - integer offset: Offset needed to return a specific subset of videos.
      *      - integer longer:
      *      - integer shorter:
      *      - integer count: Number of videos to return.
-     *      - boolean extended:
+     *      - boolean extended: 
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -205,7 +205,7 @@ class Video {
      *      - integer user_id: User ID.
      *      - integer offset: Offset needed to return a specific subset of videos.
      *      - integer count: Number of videos to return.
-     *      - boolean extended:
+     *      - boolean extended: 
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -413,7 +413,7 @@ class Video {
      *      - integer target_id:
      *      - integer owner_id:
      *      - integer video_id:
-     *      - boolean extended:
+     *      - boolean extended: 
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -438,7 +438,7 @@ class Video {
      *      - integer count: Number of comments to return.
      *      - VideoGetCommentsSort sort: Sort order: 'asc' — oldest comment first, 'desc' — newest comment
      *        first
-     * @see VideoGetCommentsSort
+     *        @see VideoGetCommentsSort
      *      - boolean extended:
      *
      * @return mixed
@@ -464,7 +464,7 @@ class Video {
      *        — video, 'audio' — audio, 'doc' — document, '<owner_id>' — ID of the media attachment owner.
      *        '<media_id>' — Media attachment ID. Example: "photo100172_166443618,photo66748_265827614"
      *      - boolean from_group: '1' — to post the comment from a community name (only if 'owner_id'<0)
-     *      - integer reply_to_comment:
+     *      - integer reply_to_comment: 
      *      - integer sticker_id:
      *      - string guid:
      *
@@ -613,7 +613,7 @@ class Video {
      *      - integer video_id: Video ID.
      *      - VideoReportReason reason: Reason for the complaint: '0' – spam, '1' – child pornography, '2' –
      *        extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
-     * @see VideoReportReason
+     *        @see VideoReportReason
      *      - string comment: Comment describing the complaint.
      *      - string search_query: (If the video was found in search results.) Search query string.
      *
@@ -635,7 +635,7 @@ class Video {
      *      - integer comment_id: ID of the comment being reported.
      *      - VideoReportCommentReason reason: Reason for the complaint: , 0 – spam , 1 – child pornography , 2
      *        – extremism , 3 – violence , 4 – drug propaganda , 5 – adult material , 6 – insult, abuse
-     * @see VideoReportCommentReason
+     *        @see VideoReportCommentReason
      *
      * @return mixed
      * @throws VKClientException in case of network error

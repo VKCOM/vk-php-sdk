@@ -241,7 +241,7 @@ class ExceptionMapper {
             case 1602:
                 return new VKApiIncorrectReplyPrivacyException($error);
             default:
-                return new VKApiException($error->getErrorCode(), $error->getErrorMsg(),  $error);
+                return new VKApiException($error->getErrorCode(), $error->getErrorMsg(), $error);
         }
     }
 }

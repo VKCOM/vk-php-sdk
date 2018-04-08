@@ -2,12 +2,12 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\PlacesSearchRadius;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessCheckinException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiSameCheckinException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiAccessCheckinException;
+use VK\Actions\Enums\PlacesSearchRadius;
 
 class Places {
 
@@ -77,7 +77,7 @@ class Places {
      *        '180').
      *      - PlacesSearchRadius radius: Radius of the search zone: '1' — 100 m. (default), '2' — 800 m. '3'
      *        — 6 km. '4' — 50 km.
-     * @see PlacesSearchRadius
+     *        @see PlacesSearchRadius
      *      - integer offset: Offset needed to return a specific subset of locations.
      *      - integer count: Number of locations to return.
      *

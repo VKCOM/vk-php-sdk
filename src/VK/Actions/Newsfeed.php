@@ -2,14 +2,14 @@
 
 namespace VK\Actions;
 
+use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiTooManyListsException;
 use VK\Actions\Enums\NewsfeedGetBannedNameCase;
 use VK\Actions\Enums\NewsfeedIgnoreItemType;
 use VK\Actions\Enums\NewsfeedUnignoreItemType;
 use VK\Actions\Enums\NewsfeedUnsubscribeType;
-use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiTooManyListsException;
-use VK\Exceptions\VKClientException;
 
 class Newsfeed {
 
@@ -144,7 +144,7 @@ class Newsfeed {
      *      - NewsfeedGetBannedNameCase name_case: Case for declension of user name and surname: 'nom' —
      *        nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental ,
      *        'abl' — prepositional
-     * @see NewsfeedGetBannedNameCase
+     *        @see NewsfeedGetBannedNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -196,7 +196,7 @@ class Newsfeed {
      * @param $params array
      *      - NewsfeedIgnoreItemType type: Item type. Possible values: *'wall' – post on the wall,, *'tag' –
      *        tag on a photo,, *'profilephoto' – profile photo,, *'video' – video,, *'audio' – audio.
-     * @see NewsfeedIgnoreItemType
+     *        @see NewsfeedIgnoreItemType
      *      - integer owner_id: Item owner's identifier (user or community), "Note that community id must be
      *        negative. 'owner_id=1' – user , 'owner_id=-1' – community "
      *      - integer item_id: Item identifier
@@ -217,7 +217,7 @@ class Newsfeed {
      * @param $params array
      *      - NewsfeedUnignoreItemType type: Item type. Possible values: *'wall' – post on the wall,, *'tag' –
      *        tag on a photo,, *'profilephoto' – profile photo,, *'video' – video,, *'audio' – audio.
-     * @see NewsfeedUnignoreItemType
+     *        @see NewsfeedUnignoreItemType
      *      - integer owner_id: Item owner's identifier (user or community), "Note that community id must be
      *        negative. 'owner_id=1' – user , 'owner_id=-1' – community "
      *      - integer item_id: Item identifier
@@ -320,7 +320,7 @@ class Newsfeed {
      * @param $params array
      *      - NewsfeedUnsubscribeType type: Type of object from which to unsubscribe: 'note' — note, 'photo' —
      *        photo, 'post' — post on user wall or community wall, 'topic' — topic, 'video' — video
-     * @see NewsfeedUnsubscribeType
+     *        @see NewsfeedUnsubscribeType
      *      - integer owner_id: Object owner ID.
      *      - integer item_id: Object ID.
      *

@@ -3,12 +3,12 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessMenuException;
-use VK\Exceptions\Api\VKApiAppsAlreadyUnlockedException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiInsufficientFundsException;
 use VK\Exceptions\Api\VKApiMobileNotActivatedException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiAccessMenuException;
+use VK\Exceptions\Api\VKApiAppsAlreadyUnlockedException;
 
 class Secure {
 

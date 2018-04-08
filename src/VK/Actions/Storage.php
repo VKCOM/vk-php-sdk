@@ -3,9 +3,9 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiLimitsException;
-use VK\Exceptions\VKClientException;
 
 class Storage {
 

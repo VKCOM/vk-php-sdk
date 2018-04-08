@@ -2,24 +2,24 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\WallGetCommentsSort;
-use VK\Actions\Enums\WallGetFilter;
-use VK\Actions\Enums\WallReportCommentReason;
-use VK\Actions\Enums\WallReportPostReason;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiBlockedException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiBlockedException;
 use VK\Exceptions\Api\VKApiUserDeletedException;
+use VK\Exceptions\Api\VKApiWallAccessPostException;
+use VK\Exceptions\Api\VKApiWallAdsPublishedException;
+use VK\Exceptions\Api\VKApiWallAddPostException;
+use VK\Exceptions\Api\VKApiWallTooManyRecipientsException;
+use VK\Exceptions\Api\VKApiWallLinksForbiddenException;
+use VK\Exceptions\Api\VKApiWallAdsPostLimitReachedException;
+use VK\Exceptions\Api\VKApiWallAccessRepliesException;
 use VK\Exceptions\Api\VKApiWallAccessAddReplyException;
 use VK\Exceptions\Api\VKApiWallAccessCommentException;
-use VK\Exceptions\Api\VKApiWallAccessPostException;
-use VK\Exceptions\Api\VKApiWallAccessRepliesException;
-use VK\Exceptions\Api\VKApiWallAddPostException;
-use VK\Exceptions\Api\VKApiWallAdsPostLimitReachedException;
-use VK\Exceptions\Api\VKApiWallAdsPublishedException;
-use VK\Exceptions\Api\VKApiWallLinksForbiddenException;
-use VK\Exceptions\Api\VKApiWallTooManyRecipientsException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\WallGetFilter;
+use VK\Actions\Enums\WallGetCommentsSort;
+use VK\Actions\Enums\WallReportPostReason;
+use VK\Actions\Enums\WallReportCommentReason;
 
 class Wall {
 
@@ -49,7 +49,7 @@ class Wall {
      *      - WallGetFilter filter: Filter to apply: 'owner' — posts by the wall owner, 'others' — posts by
      *        someone else, 'all' — posts by the wall owner and others (default), 'postponed' — timed posts (only
      *        available for calls with an 'access_token'), 'suggests' — suggested posts on a community wall
-     * @see WallGetFilter
+     *        @see WallGetFilter
      *      - boolean extended: '1' — to return 'wall', 'profiles', and 'groups' fields, '0' — to return no
      *        additional fields (default)
      *      - array fields:
@@ -324,7 +324,7 @@ class Wall {
      *      - integer offset: Offset needed to return a specific subset of comments.
      *      - integer count: Number of comments to return (maximum 100).
      *      - WallGetCommentsSort sort: Sort order: 'asc' — chronological, 'desc' — reverse chronological
-     * @see WallGetCommentsSort
+     *        @see WallGetCommentsSort
      *      - integer preview_length: Number of characters at which to truncate comments when previewed. By
      *        default, '90'. Specify '0' if you do not want to truncate comments.
      *      - boolean extended:
@@ -433,7 +433,7 @@ class Wall {
      *      - integer post_id: Post ID.
      *      - WallReportPostReason reason: Reason for the complaint: '0' – spam, '1' – child pornography, '2'
      *        – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
-     * @see WallReportPostReason
+     *        @see WallReportPostReason
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -453,7 +453,7 @@ class Wall {
      *      - integer comment_id: Comment ID.
      *      - WallReportCommentReason reason: Reason for the complaint: '0' – spam, '1' – child pornography,
      *        '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
-     * @see WallReportCommentReason
+     *        @see WallReportCommentReason
      *
      * @return mixed
      * @throws VKClientException in case of network error

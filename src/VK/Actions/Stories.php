@@ -2,14 +2,14 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\StoriesGetPhotoUploadServerLinkText;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiBlockedException;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiIncorrectReplyPrivacyException;
-use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
-use VK\Exceptions\Api\VKApiStoryExpiredException;
 use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiStoryExpiredException;
+use VK\Exceptions\Api\VKApiBlockedException;
+use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
+use VK\Exceptions\Api\VKApiIncorrectReplyPrivacyException;
+use VK\Actions\Enums\StoriesGetPhotoUploadServerLinkText;
 
 class Stories {
 
@@ -122,7 +122,7 @@ class Stories {
      *      - array user_ids: List of users IDs who can see the story.
      *      - string reply_to_story: ID of the story to reply with the current.
      *      - StoriesGetPhotoUploadServerLinkText link_text: Link text (for community's stories only).
-     * @see StoriesGetPhotoUploadServerLinkText
+     *        @see StoriesGetPhotoUploadServerLinkText
      *      - string link_url: Link URL. Internal links on https://vk.com only.
      *      - integer group_id: ID of the community to upload the story (should be verified or with the "fire"
      *        icon).
@@ -164,7 +164,7 @@ class Stories {
      *
      * @param $access_token string
      * @param $params array
-     *      - integer owner_id: Story owner ID.
+     *      - integer owner_id: Story owner ID. 
      *      - integer story_id: Story ID.
      *
      * @return mixed
@@ -208,7 +208,7 @@ class Stories {
      * @param $params array
      *      - integer owner_id: Story owner ID.
      *      - integer story_id: Story ID.
-     *      - count: Maximum number of results.
+     *      - integer count: Maximum number of results.
      *      - integer offset: Offset needed to return a specific subset of results.
      *      - boolean extended: '1' — to return detailed information about photos
      *

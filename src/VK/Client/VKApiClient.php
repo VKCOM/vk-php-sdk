@@ -2,6 +2,7 @@
 
 namespace VK\Client;
 
+use VK\Client\Enums\VKLanguage;
 use VK\Actions\Account;
 use VK\Actions\Ads;
 use VK\Actions\Apps;
@@ -229,6 +230,13 @@ class VKApiClient {
      */
     public function __construct(string $api_version = self::API_VERSION, ?string $language = null) {
         $this->request = new VKApiRequest($api_version, $language, self::API_HOST);
+    }
+
+    /**
+     * @return VKApiRequest
+     */
+    public function getRequest(): VKApiRequest {
+        return $this->request;
     }
 
     /**
@@ -616,10 +624,4 @@ class VKApiClient {
         return $this->widgets;
     }
 
-    /**
-     * @return VKApiRequest
-     */
-    public function getRequest(): VKApiRequest {
-        return $this->request;
-    }
 }

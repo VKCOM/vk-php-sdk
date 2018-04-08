@@ -2,16 +2,16 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\AppsGetCatalogSort;
-use VK\Actions\Enums\AppsGetFriendsListType;
-use VK\Actions\Enums\AppsGetLeaderboardType;
-use VK\Actions\Enums\AppsGetNameCase;
-use VK\Actions\Enums\AppsGetPlatform;
-use VK\Actions\Enums\AppsSendRequestType;
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiFloodException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\AppsGetCatalogSort;
+use VK\Actions\Enums\AppsGetPlatform;
+use VK\Actions\Enums\AppsGetNameCase;
+use VK\Actions\Enums\AppsSendRequestType;
+use VK\Actions\Enums\AppsGetFriendsListType;
+use VK\Actions\Enums\AppsGetLeaderboardType;
 
 class Apps {
 
@@ -36,7 +36,7 @@ class Apps {
      *      - AppsGetCatalogSort sort: Sort order: 'popular_today' — popular for one day (default), 'visitors'
      *        — by visitors number , 'create_date' — by creation date, 'growth_rate' — by growth rate,
      *        'popular_week' — popular for one week
-     * @see AppsGetCatalogSort
+     *        @see AppsGetCatalogSort
      *      - integer offset: Offset required to return a specific subset of apps.
      *      - integer count: Number of apps to return.
      *      - string platform:
@@ -68,7 +68,7 @@ class Apps {
      *      - array app_ids: List of application ID
      *      - AppsGetPlatform platform: platform. Possible values: *'ios' — iOS,, *'android' — Android,,
      *        *'winphone' — Windows Phone,, *'web' — приложения на vk.com. By default: 'web'.
-     * @see AppsGetPlatform
+     *        @see AppsGetPlatform
      *      - array fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate'
      *        (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'contacts',
      *        'education', 'online', 'counters', 'relation', 'last_seen', 'activity', 'can_write_private_message',
@@ -76,7 +76,7 @@ class Apps {
      *      - AppsGetNameCase name_case: Case for declension of user name and surname: 'nom' — nominative
      *        (default),, 'gen' — genitive,, 'dat' — dative,, 'acc' — accusative,, 'ins' — instrumental,, 'abl'
      *        — prepositional. (only if 'return_friends' = '1')
-     * @see AppsGetNameCase
+     *        @see AppsGetNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -96,7 +96,7 @@ class Apps {
      *      - string text: request text
      *      - AppsSendRequestType type: request type. Values: 'invite' – if the request is sent to a user who
      *        does not have the app installed,, 'request' – if a user has already installed the app
-     * @see AppsSendRequestType
+     *        @see AppsSendRequestType
      *      - string name:
      *      - string key: special string key to be sent with the request
      *      - boolean separate:
@@ -134,7 +134,7 @@ class Apps {
      *      - integer count: List size.
      *      - AppsGetFriendsListType type: List type. Possible values: * 'invite' — available for invites (don't
      *        play the game),, * 'request' — available for request (play the game). By default: 'invite'.
-     * @see AppsGetFriendsListType
+     *        @see AppsGetFriendsListType
      *      - array fields: Additional profile fields, see [vk.com/dev/fields|description].
      *
      * @return mixed
@@ -153,7 +153,7 @@ class Apps {
      * @param $params array
      *      - AppsGetLeaderboardType type: Leaderboard type. Possible values: *'level' — by level,, *'points' —
      *        by mission points,, *'score' — by score ().
-     * @see AppsGetLeaderboardType
+     *        @see AppsGetLeaderboardType
      *      - boolean global: Rating type. Possible values: *'1' — global rating among all players,, *'0' —
      *        rating among user friends.
      *      - boolean extended: 1 — to return additional info about users

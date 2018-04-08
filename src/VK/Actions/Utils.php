@@ -2,10 +2,10 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\UtilsGetLinkStatsInterval;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Actions\Enums\UtilsGetLinkStatsInterval;
 
 class Utils {
 
@@ -79,7 +79,7 @@ class Utils {
      *      - string key: Link key (characters after vk.cc/).
      *      - string access_key: Access key for private link stats.
      *      - UtilsGetLinkStatsInterval interval: Interval.
-     * @see UtilsGetLinkStatsInterval
+     *        @see UtilsGetLinkStatsInterval
      *      - integer intervals_count: Number of intervals to return.
      *      - boolean extended: 1 — to return extended stats data (sex, age, geo). 0 — to return views number
      *        only.

@@ -2,17 +2,17 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\UsersGetFollowersNameCase;
-use VK\Actions\Enums\UsersGetNameCase;
-use VK\Actions\Enums\UsersGetNearbyNameCase;
-use VK\Actions\Enums\UsersGetNearbyRadius;
-use VK\Actions\Enums\UsersReportType;
-use VK\Actions\Enums\UsersSearchSex;
-use VK\Actions\Enums\UsersSearchSort;
-use VK\Actions\Enums\UsersSearchStatus;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Actions\Enums\UsersGetNameCase;
+use VK\Actions\Enums\UsersSearchSort;
+use VK\Actions\Enums\UsersSearchSex;
+use VK\Actions\Enums\UsersSearchStatus;
+use VK\Actions\Enums\UsersGetFollowersNameCase;
+use VK\Actions\Enums\UsersReportType;
+use VK\Actions\Enums\UsersGetNearbyRadius;
+use VK\Actions\Enums\UsersGetNearbyNameCase;
 
 class Users {
 
@@ -42,7 +42,7 @@ class Users {
      *      - UsersGetNameCase name_case: Case for declension of user name and surname: 'nom' — nominative
      *        (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' —
      *        prepositional
-     * @see UsersGetNameCase
+     *        @see UsersGetNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -60,7 +60,7 @@ class Users {
      * @param $params array
      *      - string q: Search query string (e.g., 'Vasya Babich').
      *      - UsersSearchSort sort: Sort order: '1' — by date registered, '0' — by rating
-     * @see UsersSearchSort
+     *        @see UsersSearchSort
      *      - integer offset: Offset needed to return a specific subset of users.
      *      - integer count: Number of users to return.
      *      - array fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate'
@@ -75,10 +75,10 @@ class Users {
      *      - integer university_faculty: Faculty ID.
      *      - integer university_chair: Chair ID.
      *      - UsersSearchSex sex: '1' — female, '2' — male, '0' — any (default)
-     * @see UsersSearchSex
+     *        @see UsersSearchSex
      *      - UsersSearchStatus status: Relationship status: '1' — Not married, '2' — In a relationship, '3'
      *        — Engaged, '4' — Married, '5' — It's complicated, '6' — Actively searching, '7' — In love
-     * @see UsersSearchStatus
+     *        @see UsersSearchStatus
      *      - integer age_from: Minimum age.
      *      - integer age_to: Maximum age.
      *      - integer birth_day: Day of birth.
@@ -158,7 +158,7 @@ class Users {
      *      - UsersGetFollowersNameCase name_case: Case for declension of user name and surname: 'nom' —
      *        nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental ,
      *        'abl' — prepositional
-     * @see UsersGetFollowersNameCase
+     *        @see UsersGetFollowersNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -177,7 +177,7 @@ class Users {
      *      - integer user_id: ID of the user about whom a complaint is being made.
      *      - UsersReportType type: Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' –
      *        abusive behavior, 'advertisment' – disruptive advertisements
-     * @see UsersReportType
+     *        @see UsersReportType
      *      - string comment: Comment describing the complaint.
      *
      * @return mixed
@@ -200,7 +200,7 @@ class Users {
      *      - integer timeout: time when a user disappears from location search results, in seconds
      *      - UsersGetNearbyRadius radius: search zone radius type (1 to 4), :* 1 – 300 m,, :* 2 – 2400 m,, :*
      *        3 – 18 km,, :* 4 – 150 km.
-     * @see UsersGetNearbyRadius
+     *        @see UsersGetNearbyRadius
      *      - array fields: list of additional fields to return. Available values: sex, bdate, city, country,
      *        photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online,
      *        online_mobile, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post,
@@ -209,7 +209,7 @@ class Users {
      *      - UsersGetNearbyNameCase name_case: Case for declension of user name and surname: , nom –nominative
      *        (default) , gen – genitive , dat – dative , acc – accusative , ins – instrumental , abl –
      *        prepositional
-     * @see UsersGetNearbyNameCase
+     *        @see UsersGetNearbyNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error

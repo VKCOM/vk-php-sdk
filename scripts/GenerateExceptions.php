@@ -22,6 +22,7 @@ class GenerateExceptions {
     protected const EXCEPTION_MAPPER = 'ExceptionMapper';
 
     protected const VK_NAMESPACE = 'VK';
+    protected const VK_API_ERROR_CLASS_NAME = 'VKApiError';
     protected const VK_API_EXCEPTION_CLASS_NAME = 'VKApiException';
     protected const NAMESPACE_API = 'VK\Exceptions\Api';
     protected const DEFAULT_EXCEPTION_MESSAGE = 'Unknown error';
@@ -96,11 +97,18 @@ class GenerateExceptions {
 
             $exception_construct = $this->wrapExceptionConstruct($class_name, $code, $description);
 
-            $exception_content = $this->wrapClass($class_name, static::NAMESPACE_API, null,
+            $use = $this->wrapClassUse('VK\Client', static::VK_API_ERROR_CLASS_NAME);
+            $use .= $this->wrapClassUse('VK\Exceptions', static::VK_API_EXCEPTION_CLASS_NAME);
+
+            $exception_content = $this->wrapClass($class_name, static::NAMESPACE_API, $use,
                 static::VK_API_EXCEPTION_CLASS_NAME, null, $exception_construct, null);
 
             file_put_contents($exceptions_path . $class_name . static::PHP, $exception_content);
         }
+    }
+
+    protected function wrapClassUse($vk_namespace, $class_name) {
+        return 'use' . static::SPACE . $vk_namespace . '\\' . $class_name . ';' . PHP_EOL;
     }
 
     public function writeMapper(string $mapper_path = null) {
@@ -114,16 +122,19 @@ class GenerateExceptions {
             $switch_sorted_content .= $this->wrapSwitchCase($code, $class_name);
         }
 
+        $use = $this->wrapClassUse('VK\Client', static::VK_API_ERROR_CLASS_NAME);
+        $use .= $this->wrapClassUse('VK\Exceptions', static::VK_API_EXCEPTION_CLASS_NAME);
+
         $mapper_code = PHP_EOL . $this->buildParseFunction($switch_sorted_content);
         $mapper_content = $this->wrapClass(static::EXCEPTION_MAPPER, static::NAMESPACE_API,
-            'use VK\Client\VKApiError;', null, null, null, $mapper_code);
+            $use, null, null, null, $mapper_code);
 
         file_put_contents($mapper_path . static::EXCEPTION_MAPPER . static::PHP, $mapper_content);
     }
 
     protected function wrapSwitchCase(int $code, string $class_name) {
         $result = $this->tab(3) . 'case ' . $code . '' . static::COLON . PHP_EOL;
-        $result .= $this->tab(4)  . 'return new ' . $class_name . '($error->getErrorMsg());' . PHP_EOL;
+        $result .= $this->tab(4) . 'return new ' . $class_name . '($error);' . PHP_EOL;
         return $result;
     }
 
@@ -133,7 +144,7 @@ class GenerateExceptions {
             $result .= 'namespace ' . $namespace . ';' . PHP_EOL;
         }
         if (isset($use)) {
-            $result .= PHP_EOL . $use . PHP_EOL;
+            $result .= PHP_EOL . $use;
         }
         $result .= PHP_EOL . 'class ' . $name;
         if (isset($extends)) {
@@ -156,22 +167,22 @@ class GenerateExceptions {
     protected function wrapExceptionConstruct(string $class_name, int $code, string $description) {
         $result = $this->tab(1) . static::COMMENT_START . PHP_EOL;
         $result .= $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . $class_name . static::SPACE . 'constructor.';
-        $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . '@param string $message';
+        $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::ASTERISK . static::SPACE . '@param ' . static::VK_API_ERROR_CLASS_NAME . ' $error';
         $result .= PHP_EOL . $this->tab(1) . static::SPACE . static::COMMENT_END . PHP_EOL;
 
-        $result .= $this->tab(1) . 'public function __construct(string $message) {';
+        $result .= $this->tab(1) . 'public function __construct(' . static::VK_API_ERROR_CLASS_NAME . ' $error) {';
         $result .= PHP_EOL . $this->tab(2) . 'parent::__construct(' . $code . static::COMMA;
-        $result .= static::QUOTE . $description . static::QUOTE . static::COMMA. '$message);';
+        $result .= static::QUOTE . $description . static::QUOTE . static::COMMA . '$error);';
         $result .= PHP_EOL . $this->tab(1) . static::CLOSING_BRACKET;
         return $result;
     }
 
     protected function buildParseFunction($switch_content) {
-        $result = $this->tab(1) . 'public static function parse(VKApiError $error) {';
-        $result .= PHP_EOL . $this->tab(2) . 'switch($error->getErrorCode()) {';
+        $result = $this->tab(1) . 'public static function parse(' . static::VK_API_ERROR_CLASS_NAME . ' $error) {';
+        $result .= PHP_EOL . $this->tab(2) . 'switch ($error->getErrorCode()) {';
         $result .= PHP_EOL . $switch_content;
         $result .= $this->tab(3) . 'default' . static::COLON;
-        $result .= PHP_EOL . $this->tab(4) . 'return new ' . static::VK_API_EXCEPTION_CLASS_NAME . '($error->getErrorCode(), $error->getErrorMsg(), \'' . static::DEFAULT_EXCEPTION_MESSAGE . '\');';
+        $result .= PHP_EOL . $this->tab(4) . 'return new ' . static::VK_API_EXCEPTION_CLASS_NAME . '($error->getErrorCode(), $error->getErrorMsg(), $error);';
         $result .= PHP_EOL . $this->tab(2) . static::CLOSING_BRACKET;
         $result .= PHP_EOL . $this->tab(1) . static::CLOSING_BRACKET;
         return $result;

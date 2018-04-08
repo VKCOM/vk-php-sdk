@@ -2,14 +2,14 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\LeadsGetUsersStatus;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiActionFailedException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiLimitsException;
-use VK\Exceptions\Api\VKApiParamException;
 use VK\Exceptions\Api\VKApiVotesException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiActionFailedException;
+use VK\Exceptions\Api\VKApiParamException;
+use VK\Actions\Enums\LeadsGetUsersStatus;
 
 class Leads {
 
@@ -94,7 +94,7 @@ class Leads {
      *      - integer count: Number of results to return.
      *      - LeadsGetUsersStatus status: Action type. Possible values: *'0' — start,, *'1' — finish,, *'2' —
      *        blocking users,, *'3' — start in a test mode,, *'4' — finish in a test mode.
-     * @see LeadsGetUsersStatus
+     *        @see LeadsGetUsersStatus
      *      - boolean reverse: Sort order. Possible values: *'1' — chronological,, *'0' — reverse
      *        chronological.
      *

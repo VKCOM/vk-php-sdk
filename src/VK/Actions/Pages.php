@@ -2,14 +2,14 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\PagesSaveAccessEdit;
-use VK\Actions\Enums\PagesSaveAccessView;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessPageException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiAccessPageException;
 use VK\Exceptions\Api\VKApiParamPageIdException;
 use VK\Exceptions\Api\VKApiParamTitleException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\PagesSaveAccessView;
+use VK\Actions\Enums\PagesSaveAccessEdit;
 
 class Pages {
 
@@ -56,7 +56,7 @@ class Pages {
      *      - string text: Text of the wiki page in wiki-format.
      *      - integer page_id: Wiki page ID. The 'title' parameter can be passed instead of 'pid'.
      *      - integer group_id: ID of the community that owns the wiki page.
-     *      - integer user_id:
+     *      - integer user_id: 
      *      - string title: Wiki page title.
      *
      * @return mixed
@@ -78,13 +78,13 @@ class Pages {
      * @param $params array
      *      - integer page_id: Wiki page ID.
      *      - integer group_id: ID of the community that owns the wiki page.
-     *      - integer user_id:
+     *      - integer user_id: 
      *      - PagesSaveAccessView view: Who can view the wiki page: '1' — only community members, '2' — all
      *        users can view the page, '0' — only community managers
-     * @see PagesSaveAccessView
+     *        @see PagesSaveAccessView
      *      - PagesSaveAccessEdit edit: Who can edit the wiki page: '1' — only community members, '2' — all
      *        users can edit the page, '0' — only community managers
-     * @see PagesSaveAccessEdit
+     *        @see PagesSaveAccessEdit
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -104,7 +104,7 @@ class Pages {
      * @param $params array
      *      - integer page_id: Wiki page ID.
      *      - integer group_id: ID of the community that owns the wiki page.
-     *      - integer user_id:
+     *      - integer user_id: 
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -139,9 +139,9 @@ class Pages {
      *
      * @param $access_token string
      * @param $params array
-     *      - integer version_id:
+     *      - integer version_id: 
      *      - integer group_id: ID of the community that owns the wiki page.
-     *      - integer user_id:
+     *      - integer user_id: 
      *      - boolean need_html: '1' — to return the page as HTML
      *
      * @return mixed

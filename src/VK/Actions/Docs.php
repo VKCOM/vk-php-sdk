@@ -3,13 +3,13 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiParamDocAccessException;
+use VK\Exceptions\Api\VKApiSaveFileException;
 use VK\Exceptions\Api\VKApiParamDocDeleteAccessException;
 use VK\Exceptions\Api\VKApiParamDocIdException;
+use VK\Exceptions\Api\VKApiParamDocAccessException;
 use VK\Exceptions\Api\VKApiParamDocTitleException;
-use VK\Exceptions\Api\VKApiSaveFileException;
-use VK\Exceptions\VKClientException;
 
 class Docs {
 
