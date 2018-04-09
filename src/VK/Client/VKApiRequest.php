@@ -10,8 +10,6 @@ use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
 
 class VKApiRequest {
-    protected const VERSION = '5.69';
-
     private const PARAM_VERSION = 'v';
     private const PARAM_ACCESS_TOKEN = 'access_token';
     private const PARAM_LANG = 'lang';

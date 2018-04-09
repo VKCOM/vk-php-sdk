@@ -2,13 +2,13 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\PollsGetVotersNameCase;
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiPollsAccessException;
 use VK\Exceptions\Api\VKApiPollsAnswerIdException;
 use VK\Exceptions\Api\VKApiPollsPollIdException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\PollsGetVotersNameCase;
 
 class Polls {
 
@@ -112,7 +112,7 @@ class Polls {
      *      - PollsGetVotersNameCase name_case: Case for declension of user name and surname: , 'nom' —
      *        nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental
      *        , 'abl' — prepositional
-     * @see PollsGetVotersNameCase
+     *        @see PollsGetVotersNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error

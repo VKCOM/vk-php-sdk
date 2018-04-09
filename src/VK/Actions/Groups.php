@@ -2,39 +2,39 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\GroupsBanUserReason;
-use VK\Actions\Enums\GroupsCreateSubtype;
-use VK\Actions\Enums\GroupsCreateType;
-use VK\Actions\Enums\GroupsEditAccess;
-use VK\Actions\Enums\GroupsEditAgeLimits;
-use VK\Actions\Enums\GroupsEditAudio;
-use VK\Actions\Enums\GroupsEditDocs;
-use VK\Actions\Enums\GroupsEditManagerRole;
-use VK\Actions\Enums\GroupsEditMarketCurrency;
-use VK\Actions\Enums\GroupsEditPhotos;
-use VK\Actions\Enums\GroupsEditSubject;
-use VK\Actions\Enums\GroupsEditTopics;
-use VK\Actions\Enums\GroupsEditVideo;
-use VK\Actions\Enums\GroupsEditWall;
-use VK\Actions\Enums\GroupsEditWiki;
-use VK\Actions\Enums\GroupsGetInvitedUsersNameCase;
-use VK\Actions\Enums\GroupsGetMembersFilter;
-use VK\Actions\Enums\GroupsGetMembersSort;
-use VK\Actions\Enums\GroupsSearchSort;
-use VK\Actions\Enums\GroupsSearchType;
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiAccessGroupsException;
+use VK\Exceptions\Api\VKApiParamGroupIdException;
+use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiCommunitiesCatalogDisabledException;
 use VK\Exceptions\Api\VKApiCommunitiesCategoriesDisabledException;
-use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiNotFoundException;
+use VK\Exceptions\Api\VKApiInvalidAddressException;
 use VK\Exceptions\Api\VKApiGroupChangeCreatorException;
 use VK\Exceptions\Api\VKApiGroupNotInClubException;
 use VK\Exceptions\Api\VKApiGroupTooManyOfficersException;
-use VK\Exceptions\Api\VKApiInvalidAddressException;
-use VK\Exceptions\Api\VKApiLimitsException;
-use VK\Exceptions\Api\VKApiNotFoundException;
-use VK\Exceptions\Api\VKApiParamGroupIdException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\GroupsGetMembersSort;
+use VK\Actions\Enums\GroupsGetMembersFilter;
+use VK\Actions\Enums\GroupsSearchType;
+use VK\Actions\Enums\GroupsSearchSort;
+use VK\Actions\Enums\GroupsGetInvitedUsersNameCase;
+use VK\Actions\Enums\GroupsBanUserReason;
+use VK\Actions\Enums\GroupsCreateType;
+use VK\Actions\Enums\GroupsCreateSubtype;
+use VK\Actions\Enums\GroupsEditAccess;
+use VK\Actions\Enums\GroupsEditSubject;
+use VK\Actions\Enums\GroupsEditWall;
+use VK\Actions\Enums\GroupsEditTopics;
+use VK\Actions\Enums\GroupsEditPhotos;
+use VK\Actions\Enums\GroupsEditVideo;
+use VK\Actions\Enums\GroupsEditAudio;
+use VK\Actions\Enums\GroupsEditDocs;
+use VK\Actions\Enums\GroupsEditWiki;
+use VK\Actions\Enums\GroupsEditAgeLimits;
+use VK\Actions\Enums\GroupsEditMarketCurrency;
+use VK\Actions\Enums\GroupsEditManagerRole;
 
 class Groups {
 
@@ -123,7 +123,7 @@ class Groups {
      *      - GroupsGetMembersSort sort: Sort order. Available values: 'id_asc', 'id_desc', 'time_asc',
      *        'time_desc'. 'time_asc' and 'time_desc' are availavle only if the method is called by the group's
      *        'moderator'.
-     * @see GroupsGetMembersSort
+     *        @see GroupsGetMembersSort
      *      - integer offset: Offset needed to return a specific subset of community members.
      *      - integer count: Number of community members to return.
      *      - array fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country,
@@ -133,7 +133,7 @@ class Groups {
      *        relation, relatives, counters'.
      *      - GroupsGetMembersFilter filter: *'friends' – only friends in this community will be returned,,
      *        *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
-     * @see GroupsGetMembersFilter
+     *        @see GroupsGetMembersFilter
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -187,7 +187,7 @@ class Groups {
      * @param $params array
      *      - string q: Search query string.
      *      - GroupsSearchType type: Community type. Possible values: 'group, page, event.'
-     * @see GroupsSearchType
+     *        @see GroupsSearchType
      *      - integer country_id: Country ID.
      *      - integer city_id: City ID. If this parameter is transmitted, country_id is ignored.
      *      - boolean future: '1' — to return only upcoming events. Works with the 'type' = 'event' only.
@@ -196,7 +196,7 @@ class Groups {
      *        version of the site),, *'1' — by growth speed,, *'2'— by the "day attendance/members number" ratio,,
      *        *'3' — by the "Likes number/members number" ratio,, *'4' — by the "comments number/members number"
      *        ratio,, *'5' — by the "boards entries number/members number" ratio.
-     * @see GroupsSearchSort
+     *        @see GroupsSearchSort
      *      - integer offset: Offset needed to return a specific subset of results.
      *      - integer count: Number of communities to return. "Note that you can not receive more than first
      *        thousand of results, regardless of 'count' and 'offset' values."
@@ -282,7 +282,7 @@ class Groups {
      *      - GroupsGetInvitedUsersNameCase name_case: Case for declension of user name and surname. Possible
      *        values: *'nom' — nominative (default),, *'gen' — genitive,, *'dat' — dative,, *'acc' — accusative, ,
      *        *'ins' — instrumental,, *'abl' — prepositional.
-     * @see GroupsGetInvitedUsersNameCase
+     *        @see GroupsGetInvitedUsersNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -303,7 +303,7 @@ class Groups {
      *      - integer end_date: Date (in Unix time) when the user will be removed from the blacklist.
      *      - GroupsBanUserReason reason: Reason for ban: '1' — spam, '2' — verbal abuse, '3' — strong
      *        language, '4' — irrelevant messages, '0' — other (default)
-     * @see GroupsBanUserReason
+     *        @see GroupsBanUserReason
      *      - string comment: Text of comment to ban.
      *      - boolean comment_visible: '1' — text of comment will be visible to the user,, '0' — text of
      *        comment will be invisible to the user. By default: '0'.
@@ -364,12 +364,12 @@ class Groups {
      *      - string description: Community description (ignored for 'type' = 'public').
      *      - GroupsCreateType type: Community type. Possible values: *'group' – group,, *'event' – event,,
      *        *'public' – public page
-     * @see GroupsCreateType
+     *        @see GroupsCreateType
      *      - integer public_category: Category ID (for 'type' = 'public' only).
      *      - GroupsCreateSubtype subtype: Public page subtype. Possible values: *'1' – place or small business,,
      *        *'2' – company, organization or website,, *'3' – famous person or group of people,, *'4' – product or
      *        work of art.
-     * @see GroupsCreateSubtype
+     *        @see GroupsCreateSubtype
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -392,7 +392,7 @@ class Groups {
      *      - string screen_name: Community screen name.
      *      - GroupsEditAccess access: Community type. Possible values: *'0' – open,, *'1' – closed,, *'2' –
      *        private.
-     * @see GroupsEditAccess
+     *        @see GroupsEditAccess
      *      - string website: Website that will be displayed in the community information field.
      *      - GroupsEditSubject subject: Community subject. Possible values: , *'1' – auto/moto,, *'2' –
      *        activity holidays,, *'3' – business,, *'4' – pets,, *'5' – health,, *'6' – dating and communication,
@@ -405,7 +405,7 @@ class Groups {
      *        goods and services,, *'34' – hobbies,, *'35' – finance,, *'36' – photo,, *'37' – esoterics,, *'38'
      *        – electronics and appliances,, *'39' – erotic,, *'40' – humor,, *'41' – society, humanities,, *'42'
      *        – design and graphics.
-     * @see GroupsEditSubject
+     *        @see GroupsEditSubject
      *      - string email: Organizer email (for events).
      *      - string phone: Organizer phone number (for events).
      *      - string rss: RSS feed address for import (available only to communities with special permission.
@@ -419,19 +419,19 @@ class Groups {
      *        format.
      *      - GroupsEditWall wall: Wall settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' –
      *        limited (groups and events only),, *'3' – closed (groups and events only).
-     * @see GroupsEditWall
+     *        @see GroupsEditWall
      *      - GroupsEditTopics topics: Board topics settings. Possbile values: , *'0' – disabled,, *'1' –
      *        open,, *'2' – limited (for groups and events only).
-     * @see GroupsEditTopics
+     *        @see GroupsEditTopics
      *      - GroupsEditPhotos photos: Photos settings. Possible values: *'0' – disabled,, *'1' – open,, *'2'
      *        – limited (for groups and events only).
-     * @see GroupsEditPhotos
+     *        @see GroupsEditPhotos
      *      - GroupsEditVideo video: Video settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' –
      *        limited (for groups and events only).
-     * @see GroupsEditVideo
+     *        @see GroupsEditVideo
      *      - GroupsEditAudio audio: Audio settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' –
      *        limited (for groups and events only).
-     * @see GroupsEditAudio
+     *        @see GroupsEditAudio
      *      - boolean links: Links settings (for public pages only). Possible values: *'0' – disabled,, *'1' –
      *        enabled.
      *      - boolean events: Events settings (for public pages only). Possible values: *'0' – disabled,, *'1'
@@ -442,14 +442,14 @@ class Groups {
      *        *'1' – enabled.
      *      - GroupsEditDocs docs: Documents settings. Possible values: *'0' – disabled,, *'1' – open,, *'2'
      *        – limited (for groups and events only).
-     * @see GroupsEditDocs
+     *        @see GroupsEditDocs
      *      - GroupsEditWiki wiki: Wiki pages settings. Possible values: *'0' – disabled,, *'1' – open,, *'2'
      *        – limited (for groups and events only).
-     * @see GroupsEditWiki
+     *        @see GroupsEditWiki
      *      - boolean messages: Community messages. Possible values: *'0' — disabled,, *'1' — enabled.
      *      - GroupsEditAgeLimits age_limits: Community age limits. Possible values: *'1' — no limits,, *'2' —
      *        16+,, *'3' — 18+.
-     * @see GroupsEditAgeLimits
+     *        @see GroupsEditAgeLimits
      *      - boolean market: Market settings. Possible values: *'0' – disabled,, *'1' – enabled.
      *      - boolean market_comments: market comments settings. Possible values: *'0' – disabled,, *'1' –
      *        enabled.
@@ -458,7 +458,7 @@ class Groups {
      *      - GroupsEditMarketCurrency market_currency: Market currency settings. Possbile values: , *'643' –
      *        Russian rubles,, *'980' – Ukrainian hryvnia,, *'398' – Kazakh tenge,, *'978' – Euro,, *'840' – US
      *        dollars
-     * @see GroupsEditMarketCurrency
+     *        @see GroupsEditMarketCurrency
      *      - integer market_contact: Seller contact for market. Set '0' for community messages.
      *      - integer market_wiki: ID of a wiki page with market description.
      *      - boolean obscene_filter: Obscene expressions filter in comments. Possible values: , *'0' –
@@ -543,7 +543,7 @@ class Groups {
      *      - integer user_id: User ID.
      *      - GroupsEditManagerRole role: Manager role. Possible values: *'moderator',, *'editor',,
      *        *'administrator'.
-     * @see GroupsEditManagerRole
+     *        @see GroupsEditManagerRole
      *      - boolean is_contact: '1' — to show the manager in Contacts block of the community.
      *      - string contact_position: Position to show in Contacts block.
      *      - string contact_phone: Contact phone.
@@ -809,7 +809,7 @@ class Groups {
      * @param $access_token string
      * @param $params array
      *      - integer group_id: Community ID.
-     *      - boolean enabled: Enable Bots Long Poll ('0' — disabled, '1' — enabled).
+     *      - boolean enabled: Sets whether Long Poll is enabled ('0' — disabled, '1' — enabled).
      *      - boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
      *      - boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
      *      - boolean message_edit: A message has been edited ('0' — disabled, '1' — enabled).

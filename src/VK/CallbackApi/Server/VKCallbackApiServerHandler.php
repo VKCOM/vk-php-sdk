@@ -25,7 +25,7 @@ abstract class VKCallbackApiServerHandler extends VKCallbackApiHandler {
         if ($event->type == static::CALLBACK_EVENT_CONFIRMATION) {
             $this->confirmation($event->group_id, $event->secret);
         } else {
-            parent::parseObject($event->group_id, $event->secret, $event->type, $event->object);
+            parent::parseObject($event->group_id, $event->secret, $event->type, (array)$event->object);
         }
     }
 }

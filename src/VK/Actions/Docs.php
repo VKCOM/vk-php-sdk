@@ -3,13 +3,14 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiParamDocAccessException;
+use VK\Exceptions\Api\VKApiSaveFileException;
 use VK\Exceptions\Api\VKApiParamDocDeleteAccessException;
 use VK\Exceptions\Api\VKApiParamDocIdException;
+use VK\Exceptions\Api\VKApiParamDocAccessException;
 use VK\Exceptions\Api\VKApiParamDocTitleException;
-use VK\Exceptions\Api\VKApiSaveFileException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\DocsGetMessagesUploadServerType;
 
 class Docs {
 
@@ -91,6 +92,25 @@ class Docs {
      */
     public function getWallUploadServer(string $access_token, array $params = array()) {
         return $this->request->post('docs.getWallUploadServer', $access_token, $params);
+    }
+
+    /**
+     * Returns the server address for document upload.
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - DocsGetMessagesUploadServerType type: Document type.
+     *        @see DocsGetMessagesUploadServerType
+     *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat
+     *        ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
+    public function getMessagesUploadServer(string $access_token, array $params = array()) {
+        return $this->request->post('docs.getMessagesUploadServer', $access_token, $params);
     }
 
     /**

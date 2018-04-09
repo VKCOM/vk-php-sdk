@@ -2,20 +2,20 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\FriendsGetAvailableForCallNameCase;
-use VK\Actions\Enums\FriendsGetNameCase;
+use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiFriendsAddInEnemyException;
+use VK\Exceptions\Api\VKApiFriendsAddEnemyException;
+use VK\Exceptions\Api\VKApiFriendsAddYourselfException;
+use VK\Exceptions\Api\VKApiFriendsListLimitException;
+use VK\Exceptions\Api\VKApiFriendsListIdException;
 use VK\Actions\Enums\FriendsGetOrder;
+use VK\Actions\Enums\FriendsGetNameCase;
 use VK\Actions\Enums\FriendsGetRequestsSort;
 use VK\Actions\Enums\FriendsGetSuggestionsNameCase;
+use VK\Actions\Enums\FriendsGetAvailableForCallNameCase;
 use VK\Actions\Enums\FriendsSearchNameCase;
-use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiFriendsAddEnemyException;
-use VK\Exceptions\Api\VKApiFriendsAddInEnemyException;
-use VK\Exceptions\Api\VKApiFriendsAddYourselfException;
-use VK\Exceptions\Api\VKApiFriendsListIdException;
-use VK\Exceptions\Api\VKApiFriendsListLimitException;
-use VK\Exceptions\VKClientException;
 
 class Friends {
 
@@ -41,7 +41,7 @@ class Friends {
      *      - FriendsGetOrder order: Sort order: , 'name' — by name (enabled only if the 'fields' parameter is
      *        used), 'hints' — by rating, similar to how friends are sorted in My friends section, , This parameter is
      *        available only for [vk.com/dev/standalone|desktop applications].
-     * @see FriendsGetOrder
+     *        @see FriendsGetOrder
      *      - integer list_id: ID of the friend list returned by the [vk.com/dev/friends.getLists|friends.getLists]
      *        method to be used as the source. This parameter is taken into account only when the uid parameter is set to
      *        the current user ID. This parameter is available only for [vk.com/dev/standalone|desktop applications].
@@ -53,7 +53,7 @@ class Friends {
      *      - FriendsGetNameCase name_case: Case for declension of user name and surname: , 'nom' — nominative
      *        (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental , 'abl'
      *        — prepositional
-     * @see FriendsGetNameCase
+     *        @see FriendsGetNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -138,7 +138,7 @@ class Friends {
      *      - boolean need_mutual: '1' — to return a list of mutual friends (up to 20), if any
      *      - boolean out: '1' — to return outgoing requests, '0' — to return incoming requests (default)
      *      - FriendsGetRequestsSort sort: Sort order: '1' — by number of mutual friends, '0' — by date
-     * @see FriendsGetRequestsSort
+     *        @see FriendsGetRequestsSort
      *      - boolean suggested: '1' — to return a list of suggested friends, '0' — to return friend requests
      *        (default)
      *
@@ -350,7 +350,7 @@ class Friends {
      *      - FriendsGetSuggestionsNameCase name_case: Case for declension of user name and surname: , 'nom' —
      *        nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental
      *        , 'abl' — prepositional
-     * @see FriendsGetSuggestionsNameCase
+     *        @see FriendsGetSuggestionsNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -391,7 +391,7 @@ class Friends {
      *      - FriendsGetAvailableForCallNameCase name_case: Case for declension of user name and surname: , 'nom'
      *        — nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' —
      *        instrumental , 'abl' — prepositional
-     * @see FriendsGetAvailableForCallNameCase
+     *        @see FriendsGetAvailableForCallNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -415,7 +415,7 @@ class Friends {
      *      - FriendsSearchNameCase name_case: Case for declension of user name and surname: 'nom' — nominative
      *        (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' —
      *        prepositional
-     * @see FriendsSearchNameCase
+     *        @see FriendsSearchNameCase
      *      - integer offset: Offset needed to return a specific subset of friends.
      *      - integer count: Number of friends to return.
      *

@@ -3,12 +3,12 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessCommentException;
-use VK\Exceptions\Api\VKApiAccessNoteCommentException;
-use VK\Exceptions\Api\VKApiAccessNoteException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiParamNoteIdException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiAccessNoteException;
+use VK\Exceptions\Api\VKApiAccessNoteCommentException;
+use VK\Exceptions\Api\VKApiAccessCommentException;
 
 class Notes {
 

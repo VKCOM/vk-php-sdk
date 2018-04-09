@@ -2,20 +2,20 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\PhotosGetAlbumId;
-use VK\Actions\Enums\PhotosGetCommentsSort;
-use VK\Actions\Enums\PhotosReportCommentReason;
-use VK\Actions\Enums\PhotosReportReason;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAlbumsLimitException;
-use VK\Exceptions\Api\VKApiBlockedException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiAlbumsLimitException;
 use VK\Exceptions\Api\VKApiParamAlbumIdException;
 use VK\Exceptions\Api\VKApiParamHashException;
 use VK\Exceptions\Api\VKApiParamPhotoException;
-use VK\Exceptions\Api\VKApiParamPhotosException;
 use VK\Exceptions\Api\VKApiParamServerException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiParamPhotosException;
+use VK\Exceptions\Api\VKApiBlockedException;
+use VK\Actions\Enums\PhotosGetAlbumId;
+use VK\Actions\Enums\PhotosReportReason;
+use VK\Actions\Enums\PhotosReportCommentReason;
+use VK\Actions\Enums\PhotosGetCommentsSort;
 
 class Photos {
 
@@ -110,7 +110,7 @@ class Photos {
      *        a community ID.
      *      - PhotosGetAlbumId album_id: Photo album ID. To return information about photos from service albums,
      *        use the following string values: 'profile, wall, saved'.
-     * @see PhotosGetAlbumId
+     *        @see PhotosGetAlbumId
      *      - array photo_ids: Photo IDs.
      *      - boolean rev: Sort order: '1' — reverse chronological, '0' — chronological
      *      - boolean extended: '1' — to return additional 'likes', 'comments', and 'tags' fields, '0' —
@@ -232,8 +232,8 @@ class Photos {
      * @param $access_token string
      * @param $params array
      *      - integer chat_id: ID of the chat for which you want to upload a cover photo.
-     *      - integer crop_x:
-     *      - integer crop_y:
+     *      - integer crop_x: 
+     *      - integer crop_y: 
      *      - integer crop_width: Width (in pixels) of the photo after cropping.
      *
      * @return mixed
@@ -411,6 +411,8 @@ class Photos {
      *
      * @param $access_token string
      * @param $params array
+     *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat
+     *        ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -452,7 +454,7 @@ class Photos {
      *      - integer photo_id: Photo ID.
      *      - PhotosReportReason reason: Reason for the complaint: '0' – spam, '1' – child pornography, '2' –
      *        extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
-     * @see PhotosReportReason
+     *        @see PhotosReportReason
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -472,7 +474,7 @@ class Photos {
      *      - integer comment_id: ID of the comment being reported.
      *      - PhotosReportCommentReason reason: Reason for the complaint: '0' – spam, '1' – child pornography,
      *        '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
-     * @see PhotosReportCommentReason
+     *        @see PhotosReportCommentReason
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -491,8 +493,8 @@ class Photos {
      *      - string q: Search query string.
      *      - number lat: Geographical latitude, in degrees (from '-90' to '90').
      *      - number long: Geographical longitude, in degrees (from '-180' to '180').
-     *      - integer start_time:
-     *      - integer end_time:
+     *      - integer start_time: 
+     *      - integer end_time: 
      *      - integer sort: Sort order:
      *      - integer offset: Offset needed to return a specific subset of photos.
      *      - integer count: Number of photos to return.
@@ -782,7 +784,7 @@ class Photos {
      *      - integer offset: Offset needed to return a specific subset of comments. By default, '0'.
      *      - integer count: Number of comments to return.
      *      - PhotosGetCommentsSort sort: Sort order: 'asc' — old first, 'desc' — new first
-     * @see PhotosGetCommentsSort
+     *        @see PhotosGetCommentsSort
      *      - string access_key:
      *      - boolean extended:
      *      - array fields:
@@ -832,7 +834,7 @@ class Photos {
      *        — photo, 'video' — video, 'audio' — audio, 'doc' — document, '<owner_id>' — Media attachment owner
      *        ID. '<media_id>' — Media attachment ID. Example: "photo100172_166443618,photo66748_265827614"
      *      - boolean from_group: '1' — to post a comment from the community
-     *      - integer reply_to_comment:
+     *      - integer reply_to_comment: 
      *      - integer sticker_id:
      *      - string access_key:
      *      - string guid:

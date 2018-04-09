@@ -2,16 +2,16 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\AuthSignupSex;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAuthDelayException;
-use VK\Exceptions\Api\VKApiAuthFloodException;
-use VK\Exceptions\Api\VKApiAuthParamCodeException;
-use VK\Exceptions\Api\VKApiAuthParamPasswordException;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiParamPhoneException;
-use VK\Exceptions\Api\VKApiPhoneAlreadyUsedException;
 use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiPhoneAlreadyUsedException;
+use VK\Exceptions\Api\VKApiAuthDelayException;
+use VK\Exceptions\Api\VKApiParamPhoneException;
+use VK\Exceptions\Api\VKApiAuthParamPasswordException;
+use VK\Exceptions\Api\VKApiAuthParamCodeException;
+use VK\Exceptions\Api\VKApiAuthFloodException;
+use VK\Actions\Enums\AuthSignupSex;
 
 class Auth {
 
@@ -69,7 +69,7 @@ class Auth {
      *      - boolean voice: '1' — call the phone number and leave a voice message of the authorization code, '0'
      *        — send the code by SMS (default)
      *      - AuthSignupSex sex: '1' — female, '2' — male
-     * @see AuthSignupSex
+     *        @see AuthSignupSex
      *      - string sid: Session ID required for method recall when SMS was not delivered.
      *
      * @return mixed

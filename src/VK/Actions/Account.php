@@ -2,15 +2,15 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\AccountLookupContactsService;
-use VK\Actions\Enums\AccountSaveProfileInfoBdateVisibility;
-use VK\Actions\Enums\AccountSaveProfileInfoRelation;
-use VK\Actions\Enums\AccountSaveProfileInfoSex;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessMenuException;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiInvalidAddressException;
 use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiAccessMenuException;
+use VK\Exceptions\Api\VKApiInvalidAddressException;
+use VK\Actions\Enums\AccountLookupContactsService;
+use VK\Actions\Enums\AccountSaveProfileInfoSex;
+use VK\Actions\Enums\AccountSaveProfileInfoRelation;
+use VK\Actions\Enums\AccountSaveProfileInfoBdateVisibility;
 
 class Account {
 
@@ -101,7 +101,7 @@ class Account {
      *      - AccountLookupContactsService service: String identifier of a service which contacts are used for
      *        searching. Possible values: , * email, * phone, * twitter, * facebook, * odnoklassniki, * instagram, *
      *        google
-     * @see AccountLookupContactsService
+     *        @see AccountLookupContactsService
      *      - string mycontact: Contact of a current user on a specified service
      *      - boolean return_all: '1' – also return contacts found using this service before, '0' – return only
      *        contacts found using 'contacts' field.
@@ -379,16 +379,16 @@ class Account {
      *      - integer cancel_request_id: ID of the name change request to be canceled. If this parameter is sent,
      *        all the others are ignored.
      *      - AccountSaveProfileInfoSex sex: User sex. Possible values: , * '1' – female,, * '2' – male.
-     * @see AccountSaveProfileInfoSex
+     *        @see AccountSaveProfileInfoSex
      *      - AccountSaveProfileInfoRelation relation: User relationship status. Possible values: , * '1' –
      *        single,, * '2' – in a relationship,, * '3' – engaged,, * '4' – married,, * '5' – it's complicated,,
      *        * '6' – actively searching,, * '7' – in love,, * '0' – not specified.
-     * @see AccountSaveProfileInfoRelation
+     *        @see AccountSaveProfileInfoRelation
      *      - integer relation_partner_id: ID of the relationship partner.
      *      - string bdate: User birth date, format: DD.MM.YYYY.
      *      - AccountSaveProfileInfoBdateVisibility bdate_visibility: Birth date visibility. Returned values: , *
      *        '1' – show birth date,, * '2' – show only month and day,, * '0' – hide birth date.
-     * @see AccountSaveProfileInfoBdateVisibility
+     *        @see AccountSaveProfileInfoBdateVisibility
      *      - string home_town: User home town.
      *      - integer country_id: User country.
      *      - integer city_id: User city.

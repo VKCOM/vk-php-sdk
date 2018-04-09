@@ -2,22 +2,22 @@
 
 namespace VK\Actions;
 
+use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\Api\VKApiMarketCommentsClosedException;
+use VK\Exceptions\Api\VKApiAccessMarketException;
+use VK\Exceptions\Api\VKApiMarketTooManyItemsException;
+use VK\Exceptions\Api\VKApiMarketItemNotFoundException;
+use VK\Exceptions\Api\VKApiMarketRestoreTooLateException;
+use VK\Exceptions\Api\VKApiMarketAlbumNotFoundException;
+use VK\Exceptions\Api\VKApiMarketTooManyAlbumsException;
+use VK\Exceptions\Api\VKApiMarketTooManyItemsInAlbumException;
+use VK\Exceptions\Api\VKApiMarketItemAlreadyAddedException;
+use VK\Actions\Enums\MarketSearchRev;
 use VK\Actions\Enums\MarketGetCommentsSort;
 use VK\Actions\Enums\MarketReportCommentReason;
 use VK\Actions\Enums\MarketReportReason;
-use VK\Actions\Enums\MarketSearchRev;
-use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAccessMarketException;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiMarketAlbumNotFoundException;
-use VK\Exceptions\Api\VKApiMarketCommentsClosedException;
-use VK\Exceptions\Api\VKApiMarketItemAlreadyAddedException;
-use VK\Exceptions\Api\VKApiMarketItemNotFoundException;
-use VK\Exceptions\Api\VKApiMarketRestoreTooLateException;
-use VK\Exceptions\Api\VKApiMarketTooManyAlbumsException;
-use VK\Exceptions\Api\VKApiMarketTooManyItemsException;
-use VK\Exceptions\Api\VKApiMarketTooManyItemsInAlbumException;
-use VK\Exceptions\VKClientException;
 
 class Market {
 
@@ -85,7 +85,7 @@ class Market {
      *      - integer price_to: Maximum item price value.
      *      - array tags: Comma-separated tag IDs list.
      *      - MarketSearchRev rev: '0' — do not use reverse order, '1' — use reverse order
-     * @see MarketSearchRev
+     *        @see MarketSearchRev
      *      - integer offset: Offset needed to return a specific subset of results.
      *      - integer count: Number of items to return.
      *      - boolean extended: '1' – to return additional fields: 'likes, can_comment, car_repost, photos'. By
@@ -175,7 +175,7 @@ class Market {
      *      - integer start_comment_id: ID of a comment to start a list from (details below).
      *      - integer count: Number of results to return.
      *      - MarketGetCommentsSort sort: Sort order ('asc' — from old to new, 'desc' — from new to old)
-     * @see MarketGetCommentsSort
+     *        @see MarketGetCommentsSort
      *      - boolean extended: '1' — comments will be returned as numbered objects, in addition lists of
      *        'profiles' and 'groups' objects will be returned.
      *      - array fields: List of additional profile fields to return. See the [vk.com/dev/fields|details]
@@ -261,7 +261,7 @@ class Market {
      *      - MarketReportCommentReason reason: Complaint reason. Possible values: *'0' — spam,, *'1' — child
      *        porn,, *'2' — extremism,, *'3' — violence,, *'4' — drugs propaganda,, *'5' — adult materials,, *'6'
      *        — insult.
-     * @see MarketReportCommentReason
+     *        @see MarketReportCommentReason
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -299,7 +299,7 @@ class Market {
      *      - MarketReportReason reason: Complaint reason. Possible values: *'0' — spam,, *'1' — child porn,,
      *        *'2' — extremism,, *'3' — violence,, *'4' — drugs propaganda,, *'5' — adult materials,, *'6' —
      *        insult.
-     * @see MarketReportReason
+     *        @see MarketReportReason
      *
      * @return mixed
      * @throws VKClientException in case of network error

@@ -3,8 +3,8 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
 
 class Search {
 
@@ -29,8 +29,8 @@ class Search {
      *      - string q: Search query string.
      *      - integer offset: Offset for querying specific result subset
      *      - integer limit: Maximum number of results to return.
-     *      - array filters:
-     *      - boolean search_global:
+     *      - array filters: 
+     *      - boolean search_global: 
      *
      * @return mixed
      * @throws VKClientException in case of network error

@@ -2,21 +2,21 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\AdsCheckLinkLinkType;
-use VK\Actions\Enums\AdsGetDemographicsIdsType;
-use VK\Actions\Enums\AdsGetDemographicsPeriod;
-use VK\Actions\Enums\AdsGetStatisticsIdsType;
-use VK\Actions\Enums\AdsGetStatisticsPeriod;
-use VK\Actions\Enums\AdsGetSuggestionsLang;
-use VK\Actions\Enums\AdsGetSuggestionsSection;
-use VK\Actions\Enums\AdsGetTargetingStatsAdFormat;
-use VK\Actions\Enums\AdsGetUploadURLAdFormat;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiAdsPartialSuccessException;
-use VK\Exceptions\Api\VKApiAdsPermissionException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiWeightedFloodException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiAdsPartialSuccessException;
+use VK\Exceptions\Api\VKApiAdsPermissionException;
+use VK\Actions\Enums\AdsCheckLinkLinkType;
+use VK\Actions\Enums\AdsGetStatisticsIdsType;
+use VK\Actions\Enums\AdsGetStatisticsPeriod;
+use VK\Actions\Enums\AdsGetDemographicsIdsType;
+use VK\Actions\Enums\AdsGetDemographicsPeriod;
+use VK\Actions\Enums\AdsGetTargetingStatsAdFormat;
+use VK\Actions\Enums\AdsGetSuggestionsSection;
+use VK\Actions\Enums\AdsGetSuggestionsLang;
+use VK\Actions\Enums\AdsGetUploadURLAdFormat;
 
 class Ads {
 
@@ -351,7 +351,7 @@ class Ads {
      *      - integer account_id: Advertising account ID.
      *      - AdsCheckLinkLinkType link_type: Object type: *'community' — community,, *'post' — community
      *        post,, *'application' — VK application,, *'video' — video,, *'site' — external site.
-     * @see AdsCheckLinkLinkType
+     *        @see AdsCheckLinkLinkType
      *      - string link_url: Object URL.
      *      - integer campaign_id: Campaign ID
      *
@@ -372,13 +372,13 @@ class Ads {
      *      - integer account_id: Advertising account ID.
      *      - AdsGetStatisticsIdsType ids_type: Type of requested objects listed in 'ids' parameter: *ad — ads,,
      *        *campaign — campaigns,, *client — clients,, *office — account.
-     * @see AdsGetStatisticsIdsType
+     *        @see AdsGetStatisticsIdsType
      *      - string ids: IDs requested ads, campaigns, clients or account, separated with a comma, depending on
      *        the value set in 'ids_type'. Maximum 2000 objects.
      *      - AdsGetStatisticsPeriod period: Data grouping by dates: *day — statistics by days,, *month —
      *        statistics by months,, *overall — overall statistics. 'date_from' and 'date_to' parameters set temporary
      *        limits.
-     * @see AdsGetStatisticsPeriod
+     *        @see AdsGetStatisticsPeriod
      *      - string date_from: Date to show statistics from. For different value of 'period' different date format
      *        is used: *day: YYYY-MM-DD, example: 2011-09-27 — September 27, 2011, **0 — day it was created on,,
      *        *month: YYYY-MM, example: 2011-09 — September 2011, **0 — month it was created in,, *overall: 0.
@@ -404,13 +404,13 @@ class Ads {
      *      - integer account_id: Advertising account ID.
      *      - AdsGetDemographicsIdsType ids_type: Type of requested objects listed in 'ids' parameter: *ad —
      *        ads,, *campaign — campaigns.
-     * @see AdsGetDemographicsIdsType
+     *        @see AdsGetDemographicsIdsType
      *      - string ids: IDs requested ads or campaigns, separated with a comma, depending on the value set in
      *        'ids_type'. Maximum 2000 objects.
      *      - AdsGetDemographicsPeriod period: Data grouping by dates: *day — statistics by days,, *month —
      *        statistics by months,, *overall — overall statistics. 'date_from' and 'date_to' parameters set temporary
      *        limits.
-     * @see AdsGetDemographicsPeriod
+     *        @see AdsGetDemographicsPeriod
      *      - string date_from: Date to show statistics from. For different value of 'period' different date format
      *        is used: *day: YYYY-MM-DD, example: 2011-09-27 — September 27, 2011, **0 — day it was created on,,
      *        *month: YYYY-MM, example: 2011-09 — September 2011, **0 — month it was created in,, *overall: 0.
@@ -530,7 +530,7 @@ class Ads {
      *      - AdsGetTargetingStatsAdFormat ad_format: Ad format. Possible values: *'1' — image and text,, *'2'
      *        — big image,, *'3' — exclusive format,, *'4' — community, square image,, *'7' — special app format,,
      *        *'8' — special community format,, *'9' — post in community,, *'10' — app board.
-     * @see AdsGetTargetingStatsAdFormat
+     *        @see AdsGetTargetingStatsAdFormat
      *      - string ad_platform: Platforms to use for ad showing. Possible values: (for 'ad_format' = '1'), *'0'
      *        — VK and partner sites,, *'1' — VK only. (for 'ad_format' = '9'), *'all' — all platforms,, *'desktop'
      *        — desktop version,, *'mobile' — mobile version and apps.
@@ -562,7 +562,7 @@ class Ads {
      *        of interests. *positions — requested list of positions (professions). *group_types — requested list of
      *        group types. *religions — requested list of religious commitments. *browsers — requested list of
      *        browsers and mobile devices.
-     * @see AdsGetSuggestionsSection
+     *        @see AdsGetSuggestionsSection
      *      - string ids: Objects IDs separated by commas. If the parameter is passed, 'q, country, cities' should
      *        not be passed.
      *      - string q: Filter-line of the request (for countries, regions, cities, streets, schools, interests,
@@ -571,7 +571,7 @@ class Ads {
      *      - string cities: IDs of cities where objects are searched in, separated with a comma.
      *      - AdsGetSuggestionsLang lang: Language of the returned string values. Supported languages: *ru —
      *        Russian,, *ua — Ukrainian,, *en — English.
-     * @see AdsGetSuggestionsLang
+     *        @see AdsGetSuggestionsLang
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -605,7 +605,7 @@ class Ads {
      * @param $params array
      *      - AdsGetUploadURLAdFormat ad_format: Ad format: *1 — image and text,, *2 — big image,, *3 —
      *        exclusive format,, *4 — community, square image,, *7 — special app format.
-     * @see AdsGetUploadURLAdFormat
+     *        @see AdsGetUploadURLAdFormat
      *
      * @return mixed
      * @throws VKClientException in case of network error

@@ -2,14 +2,14 @@
 
 namespace VK\Actions;
 
+use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
+use VK\Exceptions\VKApiException;
+use VK\Actions\Enums\LikesGetListType;
+use VK\Actions\Enums\LikesGetListFilter;
 use VK\Actions\Enums\LikesAddType;
 use VK\Actions\Enums\LikesDeleteType;
-use VK\Actions\Enums\LikesGetListFilter;
-use VK\Actions\Enums\LikesGetListType;
 use VK\Actions\Enums\LikesIsLikedType;
-use VK\Client\VKApiRequest;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\VKClientException;
 
 class Likes {
 
@@ -36,7 +36,7 @@ class Likes {
      *        'photo_comment' — comment on the photo, 'video_comment' — comment on the video, 'topic_comment' —
      *        comment in the discussion, 'sitepage' — page of the site where the [vk.com/dev/Like|Like widget] is
      *        installed
-     * @see LikesGetListType
+     *        @see LikesGetListType
      *      - integer owner_id: ID of the user, community, or application that owns the object. If the 'type'
      *        parameter is set as 'sitepage', the application ID is passed as 'owner_id'. Use negative value for a
      *        community id. If the 'type' parameter is not set, the 'owner_id' is assumed to be either the current user or
@@ -48,7 +48,7 @@ class Likes {
      *      - LikesGetListFilter filter: Filters to apply: 'likes' — returns information about all users who
      *        liked the object (default), 'copies' — returns information only about users who told their friends about
      *        the object
-     * @see LikesGetListFilter
+     *        @see LikesGetListFilter
      *      - boolean friends_only: Specifies which users are returned: '1' — to return only the current user's
      *        friends, '0' — to return all users (default)
      *      - boolean extended: Specifies whether extended information will be returned. '1' — to return extended
@@ -77,7 +77,7 @@ class Likes {
      *        wall post, 'photo' — photo, 'audio' — audio, 'video' — video, 'note' — note, 'photo_comment' —
      *        comment on the photo, 'video_comment' — comment on the video, 'topic_comment' — comment in the
      *        discussion, 'sitepage' — page of the site where the [vk.com/dev/Like|Like widget] is installed
-     * @see LikesAddType
+     *        @see LikesAddType
      *      - integer owner_id: ID of the user or community that owns the object.
      *      - integer item_id: Object ID.
      *      - string access_key: Access key required for an object owned by a private entity.
@@ -100,7 +100,7 @@ class Likes {
      *        on a wall post, 'photo' — photo, 'audio' — audio, 'video' — video, 'note' — note, 'photo_comment'
      *        — comment on the photo, 'video_comment' — comment on the video, 'topic_comment' — comment in the
      *        discussion, 'sitepage' — page of the site where the [vk.com/dev/Like|Like widget] is installed
-     * @see LikesDeleteType
+     *        @see LikesDeleteType
      *      - integer owner_id: ID of the user or community that owns the object.
      *      - integer item_id: Object ID.
      *
@@ -123,7 +123,7 @@ class Likes {
      *        on a wall post, 'photo' — photo, 'audio' — audio, 'video' — video, 'note' — note, 'photo_comment'
      *        — comment on the photo, 'video_comment' — comment on the video, 'topic_comment' — comment in the
      *        discussion
-     * @see LikesIsLikedType
+     *        @see LikesIsLikedType
      *      - integer owner_id: ID of the user or community that owns the object.
      *      - integer item_id: Object ID.
      *

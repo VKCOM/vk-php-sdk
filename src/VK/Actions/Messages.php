@@ -2,22 +2,22 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\MessagesGetChatNameCase;
-use VK\Actions\Enums\MessagesGetChatUsersNameCase;
-use VK\Actions\Enums\MessagesGetHistoryAttachmentsMediaType;
-use VK\Actions\Enums\MessagesGetHistoryRev;
 use VK\Client\VKApiRequest;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
-use VK\Exceptions\Api\VKApiFloodException;
-use VK\Exceptions\Api\VKApiLimitsException;
+use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
 use VK\Exceptions\Api\VKApiMessagesDenySendException;
+use VK\Exceptions\Api\VKApiMessagesPrivacyException;
 use VK\Exceptions\Api\VKApiMessagesForwardAmountExceededException;
 use VK\Exceptions\Api\VKApiMessagesForwardException;
-use VK\Exceptions\Api\VKApiMessagesPrivacyException;
-use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
-use VK\Exceptions\Api\VKApiPhotoChangedException;
+use VK\Exceptions\Api\VKApiFloodException;
+use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiUploadException;
-use VK\Exceptions\VKClientException;
+use VK\Exceptions\Api\VKApiPhotoChangedException;
+use VK\Actions\Enums\MessagesGetHistoryRev;
+use VK\Actions\Enums\MessagesGetHistoryAttachmentsMediaType;
+use VK\Actions\Enums\MessagesGetChatNameCase;
+use VK\Actions\Enums\MessagesGetChatUsersNameCase;
 
 class Messages {
 
@@ -137,7 +137,7 @@ class Messages {
      *      - integer start_message_id: Starting message ID from which to return history.
      *      - MessagesGetHistoryRev rev: Sort order: '1' — return messages in chronological order. '0' — return
      *        messages in reverse chronological order.
-     * @see MessagesGetHistoryRev
+     *        @see MessagesGetHistoryRev
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -157,11 +157,11 @@ class Messages {
      *        ID'"
      *      - MessagesGetHistoryAttachmentsMediaType media_type: Type of media files to return: *'photo',,
      *        *'video',, *'audio',, *'doc',, *'link'.,*'market'.,*'wall'.,*'share'
-     * @see MessagesGetHistoryAttachmentsMediaType
+     *        @see MessagesGetHistoryAttachmentsMediaType
      *      - string start_from: Message ID to start return results from.
      *      - integer count: Number of objects to return.
      *      - boolean photo_sizes: '1' — to return photo sizes in a
-     *      - array fields: Additional profile [vk.com/dev/fields|fields] to return.
+     *      - array fields: Additional profile [vk.com/dev/fields|fields] to return. 
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -393,7 +393,7 @@ class Messages {
      *      - MessagesGetChatNameCase name_case: Case for declension of user name and surname: 'nom' — nominative
      *        (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' —
      *        prepositional
-     * @see MessagesGetChatNameCase
+     *        @see MessagesGetChatNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -450,7 +450,7 @@ class Messages {
      *      - MessagesGetChatUsersNameCase name_case: Case for declension of user name and surname: 'nom' —
      *        nominative (default), 'gen' — genitive, 'dat' — dative, 'acc' — accusative, 'ins' — instrumental,
      *        'abl' — prepositional
-     * @see MessagesGetChatUsersNameCase
+     *        @see MessagesGetChatUsersNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error

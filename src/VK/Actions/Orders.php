@@ -2,13 +2,13 @@
 
 namespace VK\Actions;
 
-use VK\Actions\Enums\OrdersChangeStateAction;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiActionFailedException;
+use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiLimitsException;
+use VK\Exceptions\Api\VKApiActionFailedException;
 use VK\Exceptions\Api\VKApiParamException;
-use VK\Exceptions\VKClientException;
+use VK\Actions\Enums\OrdersChangeStateAction;
 
 class Orders {
 
@@ -71,7 +71,7 @@ class Orders {
      *      - OrdersChangeStateAction action: action to be done with the order. Available actions: *cancel — to
      *        cancel unconfirmed order. *charge — to confirm unconfirmed order. Applies only if processing of
      *        [vk.com/dev/payments_status|order_change_state] notification failed. *refund — to cancel confirmed order.
-     * @see OrdersChangeStateAction
+     *        @see OrdersChangeStateAction
      *      - integer app_order_id: internal ID of the order in the application.
      *      - boolean test_mode: if this parameter is set to 1, this method returns a list of test mode orders. By
      *        default — 0.
