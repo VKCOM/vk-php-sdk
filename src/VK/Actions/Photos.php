@@ -411,6 +411,8 @@ class Photos {
      *
      * @param $access_token string
      * @param $params array
+     *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat
+     *        ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
      *
      * @return mixed
      * @throws VKClientException in case of network error

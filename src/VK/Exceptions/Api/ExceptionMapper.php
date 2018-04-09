@@ -52,6 +52,8 @@ class ExceptionMapper {
                 return new VKApiMethodDisabledException($error);
             case 24:
                 return new VKApiNeedConfirmationException($error);
+            case 29:
+                return new VKApiRateLimitException($error);
             case 100:
                 return new VKApiParamException($error);
             case 101:
