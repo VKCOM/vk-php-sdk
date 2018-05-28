@@ -33,7 +33,7 @@ $vk = new VKApiClient('5.74');
 ```
 
 ```php
-$vk = new VKApiClient('5.74', VK\Client\Eums\VKLanguage::ENGLISH);
+$vk = new VKApiClient('5.74', VK\Client\Enums\VKLanguage::ENGLISH);
 ```
 
 ## 4. Authorization
