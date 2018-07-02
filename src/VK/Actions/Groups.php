@@ -761,6 +761,7 @@ class Groups {
      *      - boolean group_leave: Left community notifications ('0' — disabled, '1' — enabled).
      *      - boolean user_block: User added to community blacklist
      *      - boolean user_unblock: User removed from community blacklist
+     *      - boolean lead_forms_new: New form in lead forms
      *
      * @return mixed
      * @throws VKClientException in case of network error

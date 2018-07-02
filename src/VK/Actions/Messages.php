@@ -8,16 +8,22 @@ use VK\Exceptions\VKApiException;
 use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
 use VK\Exceptions\Api\VKApiMessagesDenySendException;
 use VK\Exceptions\Api\VKApiMessagesPrivacyException;
+use VK\Exceptions\Api\VKApiMessagesKeyboardInvalidException;
+use VK\Exceptions\Api\VKApiMessagesChatBotFeatureException;
 use VK\Exceptions\Api\VKApiMessagesForwardAmountExceededException;
+use VK\Exceptions\Api\VKApiMessagesTooLongMessageException;
+use VK\Exceptions\Api\VKApiMessagesChatUserNoAccessException;
 use VK\Exceptions\Api\VKApiMessagesForwardException;
+use VK\Exceptions\Api\VKApiMessagesTooBigException;
+use VK\Exceptions\Api\VKApiMessagesEditKindDisallowedException;
 use VK\Exceptions\Api\VKApiFloodException;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiUploadException;
 use VK\Exceptions\Api\VKApiPhotoChangedException;
+use VK\Actions\Enums\MessagesGetConversationsFilter;
 use VK\Actions\Enums\MessagesGetHistoryRev;
 use VK\Actions\Enums\MessagesGetHistoryAttachmentsMediaType;
-use VK\Actions\Enums\MessagesGetChatNameCase;
-use VK\Actions\Enums\MessagesGetChatUsersNameCase;
+use VK\Actions\Enums\MessagesGetConversationMembersNameCase;
 
 class Messages {
 
@@ -35,54 +41,48 @@ class Messages {
     }
 
     /**
-     * Returns a list of the current user's incoming or outgoing private messages.
-     *
-     * @param $access_token string
-     * @param $params array
-     *      - boolean out: '1' — to return outgoing messages, '0' — to return incoming messages (default)
-     *      - integer offset: Offset needed to return a specific subset of messages.
-     *      - integer count: Number of messages to return.
-     *      - integer filter: 8 - important messages
-     *      - integer time_offset: Maximum time since a message was sent, in seconds. To return messages without a
-     *        time limitation, set as '0'.
-     *      - integer preview_length: Number of characters after which to truncate a previewed message. To preview
-     *        the full message, specify '0'. "NOTE: Messages are not truncated by default. Messages are truncated by
-     *        words."
-     *      - integer last_message_id: ID of the message received before the message that will be returned last
-     *        (provided that no more than 'count' messages were received before it, otherwise 'offset' parameter shall be
-     *        used).
-     *
-     * @return mixed
-     * @throws VKClientException in case of network error
-     * @throws VKApiException in case of API error
-     *
-     */
-    public function get(string $access_token, array $params = array()) {
-        return $this->request->post('messages.get', $access_token, $params);
-    }
-
-    /**
      * Returns a list of the current user's conversations.
      *
      * @param $access_token string
      * @param $params array
+     *      - integer group_id: Group ID (for group messages with group access token)
      *      - integer offset: Offset needed to return a specific subset of conversations.
      *      - integer count: Number of conversations to return.
+     *      - MessagesGetConversationsFilter filter: Filter to apply: 'all' — all conversations, 'unread' —
+     *        conversations with unread messages, 'important' — conversations, marked as important (only for community
+     *        messages), 'unanswered' — conversations, marked as unanswered (only for community messages)
+     *        @see MessagesGetConversationsFilter
+     *      - boolean extended: '1' — return extra information about users and communities
      *      - integer start_message_id: ID of the message from what to return dialogs.
-     *      - integer preview_length: Number of characters after which to truncate a previewed message. To preview
-     *        the full message, specify '0'. "NOTE: Messages are not truncated by default. Messages are truncated by
-     *        words."
-     *      - boolean unread: '1' — return conversations with unread messages only.
-     *      - boolean important: '1' — return important conversations only.
-     *      - boolean unanswered: '1' — return unanswered conversations only.
+     *      - array fields: Profile and communities fields to return.
      *
      * @return mixed
      * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
      */
-    public function getDialogs(string $access_token, array $params = array()) {
-        return $this->request->post('messages.getDialogs', $access_token, $params);
+    public function getConversations(string $access_token, array $params = array()) {
+        return $this->request->post('messages.getConversations', $access_token, $params);
+    }
+
+    /**
+     * Returns conversations by their IDs
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - array peer_ids: Destination IDs. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
+     *        'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+     *      - boolean extended: Return extended properties
+     *      - array fields: Profile and communities fields to return.
+     *      - integer group_id: Group ID (for group messages with group access token)
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
+    public function getConversationsById(string $access_token, array $params = array()) {
+        return $this->request->post('messages.getConversationsById', $access_token, $params);
     }
 
     /**
@@ -91,6 +91,12 @@ class Messages {
      * @param $access_token string
      * @param $params array
      *      - array message_ids: Message IDs.
+     *      - integer preview_length: Number of characters after which to truncate a previewed message. To preview
+     *        the full message, specify '0'. "NOTE: Messages are not truncated by default. Messages are truncated by
+     *        words."
+     *      - boolean extended: Information whether the response should be extended
+     *      - array fields: Profile fields to return.
+     *      - integer group_id: Group ID (for group messages with group access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -99,6 +105,27 @@ class Messages {
      */
     public function getById(string $access_token, array $params = array()) {
         return $this->request->post('messages.getById', $access_token, $params);
+    }
+
+    /**
+     * Returns messages by their IDs within the conversation.
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
+     *        'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+     *      - array conversation_message_ids: Conversation message IDs.
+     *      - boolean extended: Information whether the response should be extended
+     *      - array fields: Profile fields to return.
+     *      - integer group_id: Group ID (for group messages with group access token)
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
+    public function getByConversationMessageId(string $access_token, array $params = array()) {
+        return $this->request->post('messages.getByConversationMessageId', $access_token, $params);
     }
 
     /**
@@ -115,6 +142,7 @@ class Messages {
      *        words."
      *      - integer offset: Offset needed to return a specific subset of messages.
      *      - integer count: Number of messages to return.
+     *      - integer group_id: Group ID (for group messages with group access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -135,6 +163,9 @@ class Messages {
      *      - integer user_id: ID of the user whose message history you want to return.
      *      - integer peer_id:
      *      - integer start_message_id: Starting message ID from which to return history.
+     *      - boolean extended: Information whether the response should be extended
+     *      - array fields: Profile fields to return.
+     *      - integer group_id: Group ID (for group messages with group access token)
      *      - MessagesGetHistoryRev rev: Sort order: '1' — return messages in chronological order. '0' — return
      *        messages in reverse chronological order.
      *        @see MessagesGetHistoryRev
@@ -162,6 +193,7 @@ class Messages {
      *      - integer count: Number of objects to return.
      *      - boolean photo_sizes: '1' — to return photo sizes in a
      *      - array fields: Additional profile [vk.com/dev/fields|fields] to return. 
+     *      - integer group_id: Group ID (for group messages with group access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -187,7 +219,7 @@ class Messages {
      *      - string message: (Required if 'attachments' is not set.) Text of the message.
      *      - number lat: Geographical latitude of a check-in, in degrees (from -90 to 90).
      *      - number long: Geographical longitude of a check-in, in degrees (from -180 to 180).
-     *      - string attachment: (Required if 'message' is not set.) List of objects attached to the message,
+     *      - array attachment: (Required if 'message' is not set.) List of objects attached to the message,
      *        separated by commas, in the following format: "<owner_id>_<media_id>", '' — Type of media attachment:
      *        'photo' — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'wall' — wall post,
      *        '<owner_id>' — ID of the media attachment owner. '<media_id>' — media attachment ID. Example:
@@ -196,6 +228,7 @@ class Messages {
      *        sender will be shown in the message body at the recipient's. Example: "123,431,544"
      *      - integer sticker_id: Sticker id.
      *      - boolean notification: '1' if the message is a notification (for community messages).
+     *      - integer group_id: Group ID (for group messages with group access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -203,12 +236,51 @@ class Messages {
      * @throws VKApiMessagesUserBlockedException Can't send messages for users from blacklist
      * @throws VKApiMessagesDenySendException Can't send messages for users without dialogs
      * @throws VKApiMessagesPrivacyException Can't send messages to this user due to their privacy settings
+     * @throws VKApiMessagesKeyboardInvalidException Keyboard format is invalid
+     * @throws VKApiMessagesChatBotFeatureException This is a chat bot feature, change this status in settings
      * @throws VKApiMessagesForwardAmountExceededException Too many forwarded messages
+     * @throws VKApiMessagesTooLongMessageException Message is too long
+     * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
      * @throws VKApiMessagesForwardException Can't forward these messages
      *
      */
     public function send(string $access_token, array $params = array()) {
         return $this->request->post('messages.send', $access_token, $params);
+    }
+
+    /**
+     * Edits the message.
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
+     *        'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+     *      - string message: (Required if 'attachments' is not set.) Text of the message.
+     *      - number lat: Geographical latitude of a check-in, in degrees (from -90 to 90).
+     *      - number long: Geographical longitude of a check-in, in degrees (from -180 to 180).
+     *      - array attachment: (Required if 'message' is not set.) List of objects attached to the message,
+     *        separated by commas, in the following format: "<owner_id>_<media_id>", '' — Type of media attachment:
+     *        'photo' — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'wall' — wall post,
+     *        '<owner_id>' — ID of the media attachment owner. '<media_id>' — media attachment ID. Example:
+     *        "photo100172_166443618"
+     *      - boolean keep_forward_messages: '1' — to keep forwarded, messages.
+     *      - boolean keep_snippets: '1' — to keep attached snippets.
+     *      - integer group_id: Group ID (for group messages with user access token)
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiMessagesDenySendException Can't send messages for users without dialogs
+     * @throws VKApiMessagesPrivacyException Can't send messages to this user due to their privacy settings
+     * @throws VKApiMessagesTooBigException Can't sent this message, because it's too big
+     * @throws VKApiMessagesKeyboardInvalidException Keyboard format is invalid
+     * @throws VKApiMessagesTooLongMessageException Message is too long
+     * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
+     * @throws VKApiMessagesEditKindDisallowedException Can't edit this kind of message
+     *
+     */
+    public function edit(string $access_token, array $params = array()) {
+        return $this->request->post('messages.edit', $access_token, $params);
     }
 
     /**
@@ -218,6 +290,8 @@ class Messages {
      * @param $params array
      *      - array message_ids: Message IDs.
      *      - boolean spam: '1' — to mark message as spam.
+     *      - boolean delete_for_all: '1' — delete message for for all.
+     *      - integer group_id: Group ID (for group messages with user access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -234,19 +308,20 @@ class Messages {
      * @param $access_token string
      * @param $params array
      *      - string user_id: User ID. To clear a chat history use 'chat_id'
+     *      - integer group_id: Group ID (for group messages with user access token)
      *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
      *        'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
-     *      - integer offset: Offset needed to return a specific subset of messages.
-     *      - integer count: Number of messages to delete. "NOTE: If the number of messages exceeds the maximum,
-     *        the method shall be called several times."
+     *      - integer offset: Offset needed to delete a specific subset of conversations.
+     *      - integer count: Number of conversations to delete. "NOTE: If the number of messages exceeds the
+     *        maximum, the method shall be called several times."
      *
      * @return mixed
      * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
      */
-    public function deleteDialog(string $access_token, array $params = array()) {
-        return $this->request->post('messages.deleteDialog', $access_token, $params);
+    public function deleteConversation(string $access_token, array $params = array()) {
+        return $this->request->post('messages.deleteConversation', $access_token, $params);
     }
 
     /**
@@ -255,6 +330,7 @@ class Messages {
      * @param $access_token string
      * @param $params array
      *      - integer message_id: ID of a previously-deleted message to restore.
+     *      - integer group_id: Group ID (for group messages with user access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -271,9 +347,10 @@ class Messages {
      * @param $access_token string
      * @param $params array
      *      - array message_ids: IDs of messages to mark as read.
-     *      - string peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
+     *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
      *        'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
      *      - integer start_message_id: Message ID to start from.
+     *      - integer group_id: Group ID (for group messages with user access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -302,11 +379,12 @@ class Messages {
     }
 
     /**
-     * Marks and unmarks dialogs as important.
+     * Marks and unmarks conversations as important.
      *
      * @param $access_token string
      * @param $params array
-     *      - array peer_id: IDs of messages to mark as important.
+     *      - integer group_id: Group ID (for group messages with group access token)
+     *      - integer peer_id: ID of conversation to mark as important.
      *      - boolean important: '1' — to add a star (mark as important), '0' — to remove the star
      *
      * @return mixed
@@ -314,25 +392,26 @@ class Messages {
      * @throws VKApiException in case of API error
      *
      */
-    public function markAsImportantDialog(string $access_token, array $params = array()) {
-        return $this->request->post('messages.markAsImportantDialog', $access_token, $params);
+    public function markAsImportantConversation(string $access_token, array $params = array()) {
+        return $this->request->post('messages.markAsImportantConversation', $access_token, $params);
     }
 
     /**
-     * Marks and unmarks dialogs as unanswered.
+     * Marks and unmarks conversations as unanswered.
      *
      * @param $access_token string
      * @param $params array
-     *      - array peer_id: IDs of messages to mark as important.
-     *      - boolean important: '1' — to add a star (mark as important), '0' — to remove the star
+     *      - integer group_id: Group ID (for group messages with group access token)
+     *      - integer peer_id: ID of conversation to mark as important.
+     *      - boolean answered: '1' — to mark as answered, '0' — to remove the mark
      *
      * @return mixed
      * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
      */
-    public function markAsUnansweredDialog(string $access_token, array $params = array()) {
-        return $this->request->post('messages.markAsUnansweredDialog', $access_token, $params);
+    public function markAsAnsweredConversation(string $access_token, array $params = array()) {
+        return $this->request->post('messages.markAsAnsweredConversation', $access_token, $params);
     }
 
     /**
@@ -343,6 +422,7 @@ class Messages {
      *      - integer lp_version: Long poll version
      *      - boolean need_pts: '1' — to return the 'pts' field, needed for the
      *        [vk.com/dev/messages.getLongPollHistory|messages.getLongPollHistory] method.
+     *      - integer group_id: Group ID (for group messages with user access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -372,6 +452,7 @@ class Messages {
      *      - integer max_msg_id: Maximum ID of the message among existing ones in the local copy. Both messages
      *        received with API methods (for example, , ), and data received from a Long Poll server (events with code 4)
      *        are taken into account.
+     *      - integer group_id: Group ID (for group messages with user access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -380,28 +461,6 @@ class Messages {
      */
     public function getLongPollHistory(string $access_token, array $params = array()) {
         return $this->request->post('messages.getLongPollHistory', $access_token, $params);
-    }
-
-    /**
-     * Returns information about a chat.
-     *
-     * @param $access_token string
-     * @param $params array
-     *      - integer chat_id: Chat ID.
-     *      - array chat_ids: Chat IDs.
-     *      - array fields: Profile fields to return.
-     *      - MessagesGetChatNameCase name_case: Case for declension of user name and surname: 'nom' — nominative
-     *        (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' —
-     *        prepositional
-     *        @see MessagesGetChatNameCase
-     *
-     * @return mixed
-     * @throws VKClientException in case of network error
-     * @throws VKApiException in case of API error
-     *
-     */
-    public function getChat(string $access_token, array $params = array()) {
-        return $this->request->post('messages.getChat', $access_token, $params);
     }
 
     /**
@@ -444,21 +503,21 @@ class Messages {
      *
      * @param $access_token string
      * @param $params array
-     *      - integer chat_id: Chat ID.
-     *      - array chat_ids: Chat IDs.
+     *      - integer group_id: Group ID (for group messages with group access token)
+     *      - integer peer_id: Peer ID.
      *      - array fields: Profile fields to return.
-     *      - MessagesGetChatUsersNameCase name_case: Case for declension of user name and surname: 'nom' —
-     *        nominative (default), 'gen' — genitive, 'dat' — dative, 'acc' — accusative, 'ins' — instrumental,
-     *        'abl' — prepositional
-     *        @see MessagesGetChatUsersNameCase
+     *      - MessagesGetConversationMembersNameCase name_case: Case for declension of user name and surname: 'nom'
+     *        — nominative (default), 'gen' — genitive, 'dat' — dative, 'acc' — accusative, 'ins' —
+     *        instrumental, 'abl' — prepositional
+     *        @see MessagesGetConversationMembersNameCase
      *
      * @return mixed
      * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
      */
-    public function getChatUsers(string $access_token, array $params = array()) {
-        return $this->request->post('messages.getChatUsers', $access_token, $params);
+    public function getConversationMembers(string $access_token, array $params = array()) {
+        return $this->request->post('messages.getConversationMembers', $access_token, $params);
     }
 
     /**
@@ -470,6 +529,7 @@ class Messages {
      *      - string type: 'typing' — user has started to type.
      *      - integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' +
      *        'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+     *      - integer group_id: Group ID (for group messages with group access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
@@ -486,16 +546,18 @@ class Messages {
      * @param $access_token string
      * @param $params array
      *      - string q: Search query string.
-     *      - integer limit: Maximum number of results.
+     *      - integer count: Maximum number of results.
+     *      - boolean extended: '1' — return extra information about users and communities
      *      - array fields: Profile fields to return.
+     *      - integer group_id: Group ID (for group messages with user access token)
      *
      * @return mixed
      * @throws VKClientException in case of network error
      * @throws VKApiException in case of API error
      *
      */
-    public function searchDialogs(string $access_token, array $params = array()) {
-        return $this->request->post('messages.searchDialogs', $access_token, $params);
+    public function searchConversations(string $access_token, array $params = array()) {
+        return $this->request->post('messages.searchConversations', $access_token, $params);
     }
 
     /**
