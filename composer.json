@@ -10,7 +10,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6",
-        "vkcom/vk-api-schema": "^5.80.0"
+        "vkcom/vk-api-schema": "^5.80.1"
     },
     "repositories": [
         {
