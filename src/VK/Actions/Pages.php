@@ -56,7 +56,7 @@ class Pages {
      *      - string text: Text of the wiki page in wiki-format.
      *      - integer page_id: Wiki page ID. The 'title' parameter can be passed instead of 'pid'.
      *      - integer group_id: ID of the community that owns the wiki page.
-     *      - integer user_id: 
+     *      - integer user_id: User ID
      *      - string title: Wiki page title.
      *
      * @return mixed

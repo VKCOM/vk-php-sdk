@@ -43,7 +43,7 @@ class GenerateActions {
     protected const VK_API_CLIENT = 'VKApiClient';
     protected const VK_API_HOST = 'API_HOST';
     protected const VK_API_VERSION = 'API_VERSION';
-    protected const VK_API_VERSION_VALUE = '5.74';
+    protected const VK_API_VERSION_VALUE = '5.80';
     protected const PHP = '.php';
     protected const ARG_ACCESS_TOKEN = 'access_token';
     protected const ARG_PARAMS = 'params';

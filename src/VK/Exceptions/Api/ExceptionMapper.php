@@ -186,8 +186,22 @@ class ExceptionMapper {
                 return new VKApiMessagesDenySendException($error);
             case 902:
                 return new VKApiMessagesPrivacyException($error);
+            case 909:
+                return new VKApiMessagesPrivacyException($error);
+            case 910:
+                return new VKApiMessagesTooBigException($error);
+            case 911:
+                return new VKApiMessagesKeyboardInvalidException($error);
+            case 912:
+                return new VKApiMessagesChatBotFeatureException($error);
             case 913:
                 return new VKApiMessagesForwardAmountExceededException($error);
+            case 914:
+                return new VKApiMessagesTooLongMessageException($error);
+            case 917:
+                return new VKApiMessagesChatUserNoAccessException($error);
+            case 920:
+                return new VKApiMessagesEditKindDisallowedException($error);
             case 921:
                 return new VKApiMessagesForwardException($error);
             case 1000:

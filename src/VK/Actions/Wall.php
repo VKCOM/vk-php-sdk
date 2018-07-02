@@ -158,6 +158,45 @@ class Wall {
     }
 
     /**
+     * Allows to create hidden post which will not be shown on the community's wall and can be used for creating an ad
+     * with type "Community post".
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - integer owner_id: User ID or community ID. Use a negative value to designate a community ID.
+     *      - string message: (Required if 'attachments' is not set.) Text of the post.
+     *      - array attachments: (Required if 'message' is not set.) List of objects attached to the post, in the
+     *        following format: "<owner_id>_<media_id>,<owner_id>_<media_id>", '' — Type of media attachment: 'photo'
+     *        — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'page' — wiki-page, 'note' — note,
+     *        'poll' — poll, 'album' — photo album, '<owner_id>' — ID of the media application owner. '<media_id>'
+     *        — Media application ID. Example: "photo100172_166443618,photo66748_265827614", May contain a link to an
+     *        external page to include in the post. Example: "photo66748_265827614,http://habrahabr.ru", "NOTE: If more
+     *        than one link is being attached, an error will be thrown."
+     *      - boolean signed: Only for posts in communities with 'from_group' set to '1': '1' — post will be
+     *        signed with the name of the posting user, '0' — post will not be signed (default)
+     *      - number lat: Geographical latitude of a check-in, in degrees (from -90 to 90).
+     *      - number long: Geographical longitude of a check-in, in degrees (from -180 to 180).
+     *      - integer place_id: ID of the location where the user was tagged.
+     *      - integer post_id: Post ID. Used for publishing of scheduled and suggested posts.
+     *      - string guid: Unique identifier to avoid duplication the same post.
+     *      - string link_button: Link button ID
+     *      - string link_title: Link title
+     *      - string link_image: Link image url
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiWallAdsPublishedException Advertisement post was recently added
+     * @throws VKApiWallAddPostException Access to adding post denied
+     * @throws VKApiWallTooManyRecipientsException Too many recipients
+     * @throws VKApiWallLinksForbiddenException Hyperlinks are forbidden
+     *
+     */
+    public function postAdsStealth(string $access_token, array $params = array()) {
+        return $this->request->post('wall.postAdsStealth', $access_token, $params);
+    }
+
+    /**
      * Reposts (copies) an object to a user wall or community wall.
      *
      * @param $access_token string
@@ -235,6 +274,41 @@ class Wall {
      */
     public function edit(string $access_token, array $params = array()) {
         return $this->request->post('wall.edit', $access_token, $params);
+    }
+
+    /**
+     * Allows to edit hidden post.
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - integer owner_id: User ID or community ID. Use a negative value to designate a community ID.
+     *      - integer post_id: Post ID
+     *      - string message: (Required if 'attachments' is not set.) Text of the post.
+     *      - array attachments: (Required if 'message' is not set.) List of objects attached to the post, in the
+     *        following format: "<owner_id>_<media_id>,<owner_id>_<media_id>", '' — Type of media attachment: 'photo'
+     *        — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'page' — wiki-page, 'note' — note,
+     *        'poll' — poll, 'album' — photo album, '<owner_id>' — ID of the media application owner. '<media_id>'
+     *        — Media application ID. Example: "photo100172_166443618,photo66748_265827614", May contain a link to an
+     *        external page to include in the post. Example: "photo66748_265827614,http://habrahabr.ru", "NOTE: If more
+     *        than one link is being attached, an error will be thrown."
+     *      - boolean signed: Only for posts in communities with 'from_group' set to '1': '1' — post will be
+     *        signed with the name of the posting user, '0' — post will not be signed (default)
+     *      - number lat: Geographical latitude of a check-in, in degrees (from -90 to 90).
+     *      - number long: Geographical longitude of a check-in, in degrees (from -180 to 180).
+     *      - integer place_id: ID of the location where the user was tagged.
+     *      - integer post_id: Post ID. Used for publishing of scheduled and suggested posts.
+     *      - string link_button: Link button ID
+     *      - string link_title: Link title
+     *      - string link_image: Link image url
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     * @throws VKApiWallAdsPostLimitReachedException Too many ads posts
+     *
+     */
+    public function editAdsStealth(string $access_token, array $params = array()) {
+        return $this->request->post('wall.editAdsStealth', $access_token, $params);
     }
 
     /**
