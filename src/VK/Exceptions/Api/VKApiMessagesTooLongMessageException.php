@@ -1,16 +1,19 @@
 <?php
-
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
 use VK\Exceptions\VKApiException;
 
+/**
+ */
 class VKApiMessagesTooLongMessageException extends VKApiException {
-    /**
-     * VKApiMessagesTooLongMessageException constructor.
-     * @param VKApiError $error
-     */
-    public function __construct(VKApiError $error) {
-        parent::__construct(914, 'Message is too long', $error);
-    }
+
+	/**
+	 * VKApiMessagesTooLongMessageException constructor.
+	 *
+	 * @param VkApiError $error
+	 */
+	public function __construct(VkApiError $error) {
+		return parent::__construct(914, 'Message is too long', $error);
+	}
 }

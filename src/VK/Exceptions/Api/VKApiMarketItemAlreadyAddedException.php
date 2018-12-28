@@ -1,16 +1,19 @@
 <?php
-
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
 use VK\Exceptions\VKApiException;
 
+/**
+ */
 class VKApiMarketItemAlreadyAddedException extends VKApiException {
-    /**
-     * VKApiMarketItemAlreadyAddedException constructor.
-     * @param VKApiError $error
-     */
-    public function __construct(VKApiError $error) {
-        parent::__construct(1404, 'Item already added to album', $error);
-    }
+
+	/**
+	 * VKApiMarketItemAlreadyAddedException constructor.
+	 *
+	 * @param VkApiError $error
+	 */
+	public function __construct(VkApiError $error) {
+		return parent::__construct(1404, 'Item already added to album', $error);
+	}
 }
