@@ -96,6 +96,7 @@ class CurlHttpClient implements TransportClient {
         curl_setopt_array($curl, $this->initial_opts + $opts);
 
         $response = curl_exec($curl);
+        $curl_http_status_code = (int)curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 
         $curl_error_code = curl_errno($curl);
         $curl_error = curl_error($curl);
@@ -113,19 +114,20 @@ class CurlHttpClient implements TransportClient {
             throw new TransportRequestException($error_msg);
         }
 
-        return $this->parseRawResponse($response);
+        return $this->parseRawResponse($response, $curl_http_status_code);
     }
 
     /**
-     * Breaks the raw response down into its headers, body and http status code.
+     * Breaks the raw response down into its headers, body.
      *
      * @param string $response
+     * @param int $http_status
      *
      * @return TransportClientResponse
      */
-    protected function parseRawResponse(string $response) {
+    protected function parseRawResponse(string $response, int $http_status) {
         list($raw_headers, $body) = $this->extractResponseHeadersAndBody($response);
-        list($http_status, $headers) = $this->getHeaders($raw_headers);
+        $headers = $this->getHeaders($raw_headers);
         return new TransportClientResponse($http_status, $headers, $body);
     }
 
@@ -163,28 +165,13 @@ class CurlHttpClient implements TransportClient {
 
         $header_components = explode("\n", $raw_header);
         $result = array();
-        $http_status = 0;
         foreach ($header_components as $line) {
-            if (strpos($line, ': ') === false) {
-                $http_status = $this->getHttpStatus($line);
-            } else {
+            if (strpos($line, ': ') !== false) {
                 list($key, $value) = explode(': ', $line, 2);
                 $result[$key] = $value;
             }
         }
 
-        return array($http_status, $result);
-    }
-
-    /**
-     * Sets the HTTP response code from a raw header.
-     *
-     * @param string $raw_response_header
-     *
-     * @return int
-     */
-    protected function getHttpStatus(string $raw_response_header): int {
-        preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $raw_response_header, $match);
-        return (int)$match[1];
+        return $result;
     }
 }
