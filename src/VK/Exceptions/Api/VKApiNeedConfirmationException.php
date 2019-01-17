@@ -1,16 +1,19 @@
 <?php
-
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
 use VK\Exceptions\VKApiException;
 
+/**
+ */
 class VKApiNeedConfirmationException extends VKApiException {
-    /**
-     * VKApiNeedConfirmationException constructor.
-     * @param VKApiError $error
-     */
-    public function __construct(VKApiError $error) {
-        parent::__construct(24, 'Confirmation required', $error);
-    }
+
+	/**
+	 * VKApiNeedConfirmationException constructor.
+	 *
+	 * @param VkApiError $error
+	 */
+	public function __construct(VkApiError $error) {
+		return parent::__construct(24, 'Confirmation required', $error);
+	}
 }

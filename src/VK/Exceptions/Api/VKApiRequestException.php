@@ -1,16 +1,19 @@
 <?php
-
 namespace VK\Exceptions\Api;
 
 use VK\Client\VKApiError;
 use VK\Exceptions\VKApiException;
 
+/**
+ */
 class VKApiRequestException extends VKApiException {
-    /**
-     * VKApiRequestException constructor.
-     * @param VKApiError $error
-     */
-    public function __construct(VKApiError $error) {
-        parent::__construct(8, 'Invalid request', $error);
-    }
+
+	/**
+	 * VKApiRequestException constructor.
+	 *
+	 * @param VkApiError $error
+	 */
+	public function __construct(VkApiError $error) {
+		return parent::__construct(8, 'Invalid request', $error);
+	}
 }
