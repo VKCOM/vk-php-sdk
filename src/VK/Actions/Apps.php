@@ -182,4 +182,20 @@ class Apps {
     public function getScore(string $access_token, array $params = array()) {
         return $this->request->post('apps.getScore', $access_token, $params);
     }
+
+    /**
+     * Returns the only is_allowed field (true or false).
+     *
+     * @param $access_token string
+     * @param $params array
+     *      - integer user_id:
+     *
+     * @return mixed
+     * @throws VKClientException in case of network error
+     * @throws VKApiException in case of API error
+     *
+     */
+    public function isNotificationsAllowed(string $access_token, array $params = array()) {
+        return $this->request->post('apps.isNotificationsAllowed', $access_token, $params);
+    }
 }
