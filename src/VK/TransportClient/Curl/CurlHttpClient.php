@@ -99,9 +99,10 @@ class CurlHttpClient implements TransportClient {
 
         $curl_error_code = curl_errno($curl);
         $curl_error = curl_error($curl);
-
+      
+        $http_status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         curl_close($curl);
-
+        
         if ($curl_error || $curl_error_code) {
             $error_msg = "Failed curl request. Curl error {$curl_error_code}";
             if ($curl_error) {
@@ -113,19 +114,20 @@ class CurlHttpClient implements TransportClient {
             throw new TransportRequestException($error_msg);
         }
 
-        return $this->parseRawResponse($response);
+        return $this->parseRawResponse($http_status, $response);
     }
 
-    /**
-     * Breaks the raw response down into its headers, body and http status code.
-     *
-     * @param string $response
-     *
-     * @return TransportClientResponse
-     */
-    protected function parseRawResponse(string $response) {
+  /**
+   * Breaks the raw response down into its headers, body and http status code.
+   *
+   * @param int $http_status
+   * @param string $response
+   *
+   * @return TransportClientResponse
+   */
+    protected function parseRawResponse(int $http_status, string $response) {
         list($raw_headers, $body) = $this->extractResponseHeadersAndBody($response);
-        list($http_status, $headers) = $this->getHeaders($raw_headers);
+        $headers = $this->getHeaders($raw_headers);
         return new TransportClientResponse($http_status, $headers, $body);
     }
 
