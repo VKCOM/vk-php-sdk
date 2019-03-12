@@ -3,9 +3,9 @@
 namespace VK\OAuth\Scopes;
 
 class VKOAuthGroupScope {
-    const PHOTOS = 4;
-    const APP_WIDGET = 64;
-    const MESSAGES = 4096;
-    const DOCS = 131072;
-    const MANAGE = 262144;
+  public const PHOTOS     = 4;
+  public const APP_WIDGET = 64;
+  public const MESSAGES   = 4096;
+  public const DOCS       = 131072;
+  public const MANAGE     = 262144;
 }

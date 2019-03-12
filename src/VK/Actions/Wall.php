@@ -228,7 +228,7 @@ class Wall {
 	 * - @var WallSort sort: Sort order: 'asc' — chronological, 'desc' — reverse chronological
 	 * - @var integer preview_length: Number of characters at which to truncate comments when previewed. By default, '90'. Specify '0' if you do not want to truncate comments.
 	 * - @var boolean extended
-	 * - @var array[string] fields
+	 * - @var array[WallFields] fields
 	 * - @var integer comment_id: Comment ID.
 	 * - @var integer thread_items_count: Count items in threads.
 	 * @throws VKClientException

@@ -3,7 +3,7 @@
 namespace VK\OAuth;
 
 class VKOAuthDisplay {
-    const PAGE = 'page';
-    const POPUP = 'popup';
-    const MOBILE = 'mobile';
+  public const PAGE   = 'page';
+  public const POPUP  = 'popup';
+  public const MOBILE = 'mobile';
 }

@@ -3,23 +3,23 @@
 namespace VK\OAuth\Scopes;
 
 class VKOAuthUserScope {
-    const NOTIFY = 1;
-    const FRIENDS = 2;
-    const PHOTOS = 4;
-    const AUDIO = 8;
-    const VIDEO = 16;
-    const PAGES = 32;
-    const LINK = 256;
-    const STATUS = 1024;
-    const NOTES = 2048;
-    const MESSAGES = 4096;
-    const WALL = 8192;
-    const ADS = 32768;
-    const OFFLINE = 65536;
-    const DOCS = 131072;
-    const GROUPS = 262144;
-    const NOTIFICATIONS = 524288;
-    const STATS = 1048576;
-    const EMAIL = 4194304;
-    const MARKET = 134217728;
+  public const NOTIFY        = 1;
+  public const FRIENDS       = 2;
+  public const PHOTOS        = 4;
+  public const AUDIO         = 8;
+  public const VIDEO         = 16;
+  public const PAGES         = 32;
+  public const LINK          = 256;
+  public const STATUS        = 1024;
+  public const NOTES         = 2048;
+  public const MESSAGES      = 4096;
+  public const WALL          = 8192;
+  public const ADS           = 32768;
+  public const OFFLINE       = 65536;
+  public const DOCS          = 131072;
+  public const GROUPS        = 262144;
+  public const NOTIFICATIONS = 524288;
+  public const STATS         = 1048576;
+  public const EMAIL         = 4194304;
+  public const MARKET        = 134217728;
 }

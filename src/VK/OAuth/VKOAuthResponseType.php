@@ -3,6 +3,6 @@
 namespace VK\OAuth;
 
 class VKOAuthResponseType {
-    const CODE = 'code';
-    const TOKEN = 'token';
+  public const CODE  = 'code';
+  public const TOKEN = 'token';
 }

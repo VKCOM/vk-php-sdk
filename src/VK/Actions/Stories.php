@@ -1,7 +1,7 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\StoriesLinkText;
+use VK\Actions\Enum\Stories\UploadLinkText;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiBlockedException;
 use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
@@ -112,7 +112,7 @@ class Stories {
 	 * - @var boolean add_to_news: 1 — to add the story to friend's feed.
 	 * - @var array[integer] user_ids: List of users IDs who can see the story.
 	 * - @var string reply_to_story: ID of the story to reply with the current.
-	 * - @var StoriesLinkText link_text: Link text (for community's stories only).
+	 * - @var UploadLinkText link_text: Link text (for community's stories only).
 	 * - @var string link_url: Link URL. Internal links on https://vk.com only.
 	 * - @var integer group_id: ID of the community to upload the story (should be verified or with the "fire" icon).
 	 * @throws VKClientException
@@ -167,7 +167,7 @@ class Stories {
 	 * - @var boolean add_to_news: 1 — to add the story to friend's feed.
 	 * - @var array[integer] user_ids: List of users IDs who can see the story.
 	 * - @var string reply_to_story: ID of the story to reply with the current.
-	 * - @var string link_text: Link text (for community's stories only).
+	 * - @var UploadLinkText link_text: Link text (for community's stories only).
 	 * - @var string link_url: Link URL. Internal links on https://vk.com only.
 	 * - @var integer group_id: ID of the community to upload the story (should be verified or with the "fire" icon).
 	 * @throws VKClientException
