@@ -1,24 +1,24 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\GroupsAccess;
-use VK\Actions\Enum\GroupsAgeLimits;
-use VK\Actions\Enum\GroupsAudio;
-use VK\Actions\Enum\GroupsDocs;
+use VK\Actions\Enum\Groups\AddressWorkInfoStatus;
+use VK\Actions\Enum\Groups\GroupAccess;
+use VK\Actions\Enum\Groups\GroupAgeLimits;
+use VK\Actions\Enum\Groups\GroupAudio;
+use VK\Actions\Enum\Groups\GroupDocs;
+use VK\Actions\Enum\Groups\GroupMarketCurrency;
+use VK\Actions\Enum\Groups\GroupPhotos;
+use VK\Actions\Enum\Groups\GroupRole;
+use VK\Actions\Enum\Groups\GroupSubject;
+use VK\Actions\Enum\Groups\GroupTopics;
+use VK\Actions\Enum\Groups\GroupVideo;
+use VK\Actions\Enum\Groups\GroupWall;
+use VK\Actions\Enum\Groups\GroupWiki;
 use VK\Actions\Enum\GroupsFilter;
-use VK\Actions\Enum\GroupsMarketCurrency;
 use VK\Actions\Enum\GroupsNameCase;
-use VK\Actions\Enum\GroupsPhotos;
-use VK\Actions\Enum\GroupsRole;
 use VK\Actions\Enum\GroupsSort;
-use VK\Actions\Enum\GroupsSubject;
 use VK\Actions\Enum\GroupsSubtype;
-use VK\Actions\Enum\GroupsTopics;
 use VK\Actions\Enum\GroupsType;
-use VK\Actions\Enum\GroupsVideo;
-use VK\Actions\Enum\GroupsWall;
-use VK\Actions\Enum\GroupsWiki;
-use VK\Actions\Enum\GroupsWorkInfoStatus;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessGroupsException;
 use VK\Exceptions\Api\VKApiCommunitiesCatalogDisabledException;
@@ -67,7 +67,7 @@ class Groups {
 	 * - @var number latitude
 	 * - @var number longitude
 	 * - @var string phone
-	 * - @var GroupsWorkInfoStatus work_info_status
+	 * - @var AddressWorkInfoStatus work_info_status: Status of information about timetable
 	 * - @var string timetable
 	 * - @var boolean is_main_address
 	 * @throws VKClientException
@@ -199,9 +199,9 @@ class Groups {
 	 * - @var string title: Community title.
 	 * - @var string description: Community description.
 	 * - @var string screen_name: Community screen name.
-	 * - @var GroupsAccess access: Community type. Possible values: *'0' – open,, *'1' – closed,, *'2' – private.
+	 * - @var GroupAccess access: Community type. Possible values: *'0' – open,, *'1' – closed,, *'2' – private.
 	 * - @var string website: Website that will be displayed in the community information field.
-	 * - @var GroupsSubject subject: Community subject. Possible values: , *'1' – auto/moto,, *'2' – activity holidays,, *'3' – business,, *'4' – pets,, *'5' – health,, *'6' – dating and communication, , *'7' – games,, *'8' – IT (computers and software),, *'9' – cinema,, *'10' – beauty and fashion,, *'11' – cooking,, *'12' – art and culture,, *'13' – literature,, *'14' – mobile services and internet,, *'15' – music,, *'16' – science and technology,, *'17' – real estate,, *'18' – news and media,, *'19' – security,, *'20' – education,, *'21' – home and renovations,, *'22' – politics,, *'23' – food,, *'24' – industry,, *'25' – travel,, *'26' – work,, *'27' – entertainment,, *'28' – religion,, *'29' – family,, *'30' – sports,, *'31' – insurance,, *'32' – television,, *'33' – goods and services,, *'34' – hobbies,, *'35' – finance,, *'36' – photo,, *'37' – esoterics,, *'38' – electronics and appliances,, *'39' – erotic,, *'40' – humor,, *'41' – society, humanities,, *'42' – design and graphics.
+	 * - @var GroupSubject subject: Community subject. Possible values: , *'1' – auto/moto,, *'2' – activity holidays,, *'3' – business,, *'4' – pets,, *'5' – health,, *'6' – dating and communication, , *'7' – games,, *'8' – IT (computers and software),, *'9' – cinema,, *'10' – beauty and fashion,, *'11' – cooking,, *'12' – art and culture,, *'13' – literature,, *'14' – mobile services and internet,, *'15' – music,, *'16' – science and technology,, *'17' – real estate,, *'18' – news and media,, *'19' – security,, *'20' – education,, *'21' – home and renovations,, *'22' – politics,, *'23' – food,, *'24' – industry,, *'25' – travel,, *'26' – work,, *'27' – entertainment,, *'28' – religion,, *'29' – family,, *'30' – sports,, *'31' – insurance,, *'32' – television,, *'33' – goods and services,, *'34' – hobbies,, *'35' – finance,, *'36' – photo,, *'37' – esoterics,, *'38' – electronics and appliances,, *'39' – erotic,, *'40' – humor,, *'41' – society, humanities,, *'42' – design and graphics.
 	 * - @var string email: Organizer email (for events).
 	 * - @var string phone: Organizer phone number (for events).
 	 * - @var string rss: RSS feed address for import (available only to communities with special permission. Contact vk.com/support to get it.
@@ -211,26 +211,26 @@ class Groups {
 	 * - @var integer public_category: Public page category ID.
 	 * - @var integer public_subcategory: Public page subcategory ID.
 	 * - @var string public_date: Founding date of a company or organization owning the community in "dd.mm.YYYY" format.
-	 * - @var GroupsWall wall: Wall settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (groups and events only),, *'3' – closed (groups and events only).
-	 * - @var GroupsTopics topics: Board topics settings. Possbile values: , *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
-	 * - @var GroupsPhotos photos: Photos settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
-	 * - @var GroupsVideo video: Video settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
-	 * - @var GroupsAudio audio: Audio settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
+	 * - @var GroupWall wall: Wall settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (groups and events only),, *'3' – closed (groups and events only).
+	 * - @var GroupTopics topics: Board topics settings. Possbile values: , *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
+	 * - @var GroupPhotos photos: Photos settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
+	 * - @var GroupVideo video: Video settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
+	 * - @var GroupAudio audio: Audio settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
 	 * - @var boolean links: Links settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.
 	 * - @var boolean events: Events settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.
 	 * - @var boolean places: Places settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.
 	 * - @var boolean contacts: Contacts settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.
-	 * - @var GroupsDocs docs: Documents settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
-	 * - @var GroupsWiki wiki: Wiki pages settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
+	 * - @var GroupDocs docs: Documents settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
+	 * - @var GroupWiki wiki: Wiki pages settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).
 	 * - @var boolean messages: Community messages. Possible values: *'0' — disabled,, *'1' — enabled.
 	 * - @var boolean articles
 	 * - @var boolean addresses
-	 * - @var GroupsAgeLimits age_limits: Community age limits. Possible values: *'1' — no limits,, *'2' — 16+,, *'3' — 18+.
+	 * - @var GroupAgeLimits age_limits: Community age limits. Possible values: *'1' — no limits,, *'2' — 16+,, *'3' — 18+.
 	 * - @var boolean market: Market settings. Possible values: *'0' – disabled,, *'1' – enabled.
 	 * - @var boolean market_comments: market comments settings. Possible values: *'0' – disabled,, *'1' – enabled.
 	 * - @var array[integer] market_country: Market delivery countries.
 	 * - @var array[integer] market_city: Market delivery cities (if only one country is specified).
-	 * - @var GroupsMarketCurrency market_currency: Market currency settings. Possbile values: , *'643' – Russian rubles,, *'980' – Ukrainian hryvnia,, *'398' – Kazakh tenge,, *'978' – Euro,, *'840' – US dollars
+	 * - @var GroupMarketCurrency market_currency: Market currency settings. Possbile values: , *'643' – Russian rubles,, *'980' – Ukrainian hryvnia,, *'398' – Kazakh tenge,, *'978' – Euro,, *'840' – US dollars
 	 * - @var integer market_contact: Seller contact for market. Set '0' for community messages.
 	 * - @var integer market_wiki: ID of a wiki page with market description.
 	 * - @var boolean obscene_filter: Obscene expressions filter in comments. Possible values: , *'0' – disabled,, *'1' – enabled.
@@ -263,7 +263,7 @@ class Groups {
 	 * - @var number latitude
 	 * - @var number longitude
 	 * - @var string phone
-	 * - @var GroupsWorkInfoStatus work_info_status
+	 * - @var AddressWorkInfoStatus work_info_status: Status of information about timetable
 	 * - @var string timetable
 	 * - @var boolean is_main_address
 	 * @throws VKClientException
@@ -317,7 +317,7 @@ class Groups {
 	 * @param array $params 
 	 * - @var integer group_id: Community ID.
 	 * - @var integer user_id: User ID.
-	 * - @var GroupsRole role: Manager role. Possible values: *'moderator',, *'editor',, *'administrator'.
+	 * - @var GroupRole role: Manager role. Possible values: *'moderator',, *'editor',, *'administrator'.
 	 * - @var boolean is_contact: '1' — to show the manager in Contacts block of the community.
 	 * - @var string contact_position: Position to show in Contacts block.
 	 * - @var string contact_phone: Contact phone.

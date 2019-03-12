@@ -10,81 +10,82 @@ class ExceptionMapper {
 
 	/**
 	 * @param VkApiError $error
+	 * @return Exception
 	 */
 	public static function parse(VkApiError $error) {
 		switch ($error->getErrorCode()) {
 		    case 1:
-		        return new VKApiErrorUnknownException($error);
+		        return new VKApiUnknownException($error);
 		    case 2:
-		        return new VKApiErrorDisabledException($error);
+		        return new VKApiDisabledException($error);
 		    case 3:
-		        return new VKApiErrorMethodException($error);
+		        return new VKApiMethodException($error);
 		    case 4:
-		        return new VKApiErrorSignatureException($error);
+		        return new VKApiSignatureException($error);
 		    case 5:
-		        return new VKApiErrorAuthException($error);
+		        return new VKApiAuthException($error);
 		    case 6:
-		        return new VKApiErrorTooManyException($error);
+		        return new VKApiTooManyException($error);
 		    case 7:
-		        return new VKApiErrorPermissionException($error);
+		        return new VKApiPermissionException($error);
 		    case 8:
-		        return new VKApiErrorRequestException($error);
+		        return new VKApiRequestException($error);
 		    case 9:
-		        return new VKApiErrorFloodException($error);
+		        return new VKApiFloodException($error);
 		    case 10:
-		        return new VKApiErrorServerException($error);
+		        return new VKApiServerException($error);
 		    case 11:
-		        return new VKApiErrorEnabledInTestException($error);
+		        return new VKApiEnabledInTestException($error);
 		    case 14:
-		        return new VKApiErrorCaptchaException($error);
+		        return new VKApiCaptchaException($error);
 		    case 15:
-		        return new VKApiErrorAccessException($error);
+		        return new VKApiAccessException($error);
 		    case 16:
-		        return new VKApiErrorAuthHttpsException($error);
+		        return new VKApiAuthHttpsException($error);
 		    case 17:
-		        return new VKApiErrorAuthValidationException($error);
+		        return new VKApiAuthValidationException($error);
 		    case 18:
-		        return new VKApiErrorUserDeletedException($error);
+		        return new VKApiUserDeletedException($error);
 		    case 20:
-		        return new VKApiErrorMethodPermissionException($error);
+		        return new VKApiMethodPermissionException($error);
 		    case 21:
-		        return new VKApiErrorMethodAdsException($error);
+		        return new VKApiMethodAdsException($error);
 		    case 23:
-		        return new VKApiErrorMethodDisabledException($error);
+		        return new VKApiMethodDisabledException($error);
 		    case 24:
-		        return new VKApiErrorNeedConfirmationException($error);
+		        return new VKApiNeedConfirmationException($error);
 		    case 25:
-		        return new VKApiErrorNeedTokenConfirmationException($error);
+		        return new VKApiNeedTokenConfirmationException($error);
 		    case 27:
-		        return new VKApiErrorGroupAuthException($error);
+		        return new VKApiGroupAuthException($error);
 		    case 28:
-		        return new VKApiErrorAppAuthException($error);
+		        return new VKApiAppAuthException($error);
 		    case 29:
-		        return new VKApiErrorRateLimitException($error);
+		        return new VKApiRateLimitException($error);
 		    case 30:
-		        return new VKApiErrorPrivateProfileException($error);
+		        return new VKApiPrivateProfileException($error);
 		    case 100:
-		        return new VKApiErrorParamException($error);
+		        return new VKApiParamException($error);
 		    case 101:
-		        return new VKApiErrorParamApiIdException($error);
+		        return new VKApiParamApiIdException($error);
 		    case 113:
-		        return new VKApiErrorParamUserIdException($error);
+		        return new VKApiParamUserIdException($error);
 		    case 150:
-		        return new VKApiErrorParamTimestampException($error);
+		        return new VKApiParamTimestampException($error);
 		    case 200:
-		        return new VKApiErrorAccessAlbumException($error);
+		        return new VKApiAccessAlbumException($error);
 		    case 201:
-		        return new VKApiErrorAccessAudioException($error);
+		        return new VKApiAccessAudioException($error);
 		    case 203:
-		        return new VKApiErrorAccessGroupException($error);
+		        return new VKApiAccessGroupException($error);
 		    case 300:
-		        return new VKApiErrorAlbumFullException($error);
+		        return new VKApiAlbumFullException($error);
 		    case 500:
-		        return new VKApiErrorVotesPermissionException($error);
+		        return new VKApiVotesPermissionException($error);
 		    case 600:
-		        return new VKApiErrorAdsPermissionException($error);
+		        return new VKApiAdsPermissionException($error);
 		    case 603:
-		        return new VKApiErrorAdsSpecificException($error);
+		        return new VKApiAdsSpecificException($error);
 		    default:
 		        return new VKApiException($error->getErrorCode(), $error->getErrorMsg(), $error);}
 	}

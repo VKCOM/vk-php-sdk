@@ -9,7 +9,7 @@ use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
 
 class VKOAuth {
-    protected const VERSION = '5.69';
+    protected const VERSION = '5.92';
 
     private const PARAM_VERSION = 'v';
     private const PARAM_CLIENT_ID = 'client_id';
@@ -175,8 +175,8 @@ class VKOAuth {
      *
      * @throws VKClientException
      */
-    protected function checkHttpStatus(TransportClientResponse $response) {
-        if ($response->getHttpStatus() != static::HTTP_STATUS_CODE_OK) {
+    protected function checkHttpStatus(TransportClientResponse $response): void {
+        if ((int)$response->getHttpStatus() !== static::HTTP_STATUS_CODE_OK) {
             throw new VKClientException("Invalid http status: {$response->getHttpStatus()}");
         }
     }
