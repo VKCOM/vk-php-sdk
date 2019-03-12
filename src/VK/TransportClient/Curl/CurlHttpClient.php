@@ -186,7 +186,7 @@ class CurlHttpClient implements TransportClient {
      * @return int
      */
     protected function getHttpStatus(string $raw_response_header): int {
-        preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $raw_response_header, $match);
+        preg_match('|HTTP/\d(?:\.\d)?\s+(\d+)\s+.*|', $raw_response_header, $match);
         return (int)$match[1];
     }
 }
