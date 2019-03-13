@@ -259,7 +259,7 @@ class Newsfeed {
 	 *
 	 * @param string $access_token
 	 * @param array $params 
-	 * - @var IgnoreItemType type: Item type. Possible values: *'wall' – post on the wall,, *'tag' – tag on a photo,, *'profilephoto' – profile photo,, *'video' – video,, *'audio' – audio.
+	 * - @var NewsfeedType type: Item type. Possible values: *'wall' – post on the wall,, *'tag' – tag on a photo,, *'profilephoto' – profile photo,, *'video' – video,, *'audio' – audio.
 	 * - @var integer owner_id: Item owner's identifier (user or community), "Note that community id must be negative. 'owner_id=1' – user , 'owner_id=-1' – community "
 	 * - @var integer item_id: Item identifier
 	 * @throws VKClientException
