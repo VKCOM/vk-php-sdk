@@ -57,7 +57,7 @@ $oauth = new VK\OAuth\VKOAuth();
 $client_id = 1234567;
 $redirect_uri = 'https://example.com/vk';
 $display = VK\OAuth\VKOAuthDisplay::PAGE;
-$scope = array(VK\OAuth\Scopes\VKOAuthUserScope::WALL, VK\OAuth\Scopes\VKOAuthUserScope::GROUPS);
+$scope = [VK\OAuth\Scopes\VKOAuthUserScope::WALL, VK\OAuth\Scopes\VKOAuthUserScope::GROUPS];
 $state = 'secret_state_code';
 
 $browser_url = $oauth->getAuthorizeUrl(VK\OAuth\VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
@@ -68,9 +68,9 @@ $oauth = new VK\OAuth\VKOAuth();
 $client_id = 1234567;
 $redirect_uri = 'https://example.com/vk';
 $display = VK\OAuth\VKOAuthDisplay::PAGE;
-$scope = array(VK\OAuth\Scopes\VKOAuthGroupScope::MESSAGES);
+$scope = [VK\OAuth\Scopes\VKOAuthGroupScope::MESSAGES];
 $state = 'secret_state_code';
-$groups_ids = array(1, 2);
+$groups_ids = [1, 2];
 
 $browser_url = $oauth->getAuthorizeUrl(VK\OAuth\VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state, $groups_ids);
 ```
@@ -115,7 +115,7 @@ $oauth = new VK\OAuth\VKOAuth();
 $client_id = 1234567;
 $redirect_uri = 'https://example.com/vk';
 $display = VK\OAuth\VKOAuthDisplay::PAGE;
-$scope = array(VK\OAuth\Scopes\VKOAuthUserScope::WALL, VK\OAuth\Scopes\VKOAuthUserScope::GROUPS);
+$scope = [VK\OAuth\Scopes\VKOAuthUserScope::WALL, VK\OAuth\Scopes\VKOAuthUserScope::GROUPS];
 $state = 'secret_state_code';
 $revoke_auth = true;
 
@@ -130,9 +130,9 @@ $oauth = new VK\OAuth\VKOAuth();
 $client_id = 1234567;
 $redirect_uri = 'https://example.com/vk';
 $display = VK\OAuth\VKOAuthDisplay::PAGE;
-$scope = array(VK\OAuth\Scopes\VKOAuthGroupScope::MESSAGES);
+$scope = [VK\OAuth\Scopes\VKOAuthGroupScope::MESSAGES];
 $state = 'secret_state_code';
-$groups_ids = array(1, 2);
+$groups_ids = [1, 2];
 
 $browser_url = $oauth->getAuthorizeUrl(VK\OAuth\VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, $groups_ids);
 ```
@@ -166,10 +166,10 @@ Example of calling method **users.get**:
  
 ```php
 $vk = new VK\Client\VKApiClient();
-$response = $vk->users()->get($access_token, array(
-    'user_ids'  => array(1, 210700286),
-    'fields'    => array('city', 'photo'),
-));
+$response = $vk->users()->get($access_token, [
+    'user_ids'  => [1, 210700286],
+    'fields'    => ['city', 'photo'],
+]);
 ```
  
 ### 5.2. Uploading Photos into a Private Message
@@ -194,11 +194,11 @@ You will get a JSON object with **server**, **photo**, **hash** fields. To save 
 
 ```php
 $vk = new VK\Client\VKApiClient();
-$response_save_photo = $vk->photos()->saveMessagesPhoto($access_token, array(
+$response_save_photo = $vk->photos()->saveMessagesPhoto($access_token, [
     'server' => $photo['server'],
     'photo'  => $photo['photo'],
     'hash'   => $photo['hash'],
-));
+]);
 ```
 
 Then you can use **owner_id** and **id** parameters from the last response to create an attachment of the uploaded photo. 
@@ -211,9 +211,9 @@ Call **video.save** to get a video upload server address:
 
 ```php
 $vk = new VK\Client\VKApiClient();
-$address = $vk->video()->save($access_token, array(
+$address = $vk->video()->save($access_token, [
     'name' => 'My video',
-));
+]);
 ```
 
 Send a file to **upload_url** received previously calling **upload()** method:
@@ -233,12 +233,12 @@ Enable Long Poll for your group and specify which events should be tracked by ca
 
 ```php
 $vk = new VK\Client\VKApiClient();
-$vk->groups()->setLongPollSettings($access_token, array(
+$vk->groups()->setLongPollSettings($access_token, [
   'group_id'      => 159895463,
   'enabled'       => 1,
   'message_new'   => 1,
   'wall_post_new' => 1,
-));
+]);
 ```
 
 Override methods from VK\CallbackApi\VKCallbackApiHandler class for handling events:
