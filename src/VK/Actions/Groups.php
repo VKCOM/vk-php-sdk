@@ -777,6 +777,7 @@ class Groups {
 	 * @param array $params 
 	 * - @var integer group_id: Community ID.
 	 * - @var boolean enabled: Sets whether Long Poll is enabled ('0' — disabled, '1' — enabled).
+	 * - @var string api_version
 	 * - @var boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
 	 * - @var boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
 	 * - @var boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).

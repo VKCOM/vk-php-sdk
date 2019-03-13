@@ -7,6 +7,10 @@ class AppsFilter {
 
 	/**
 	 */
+	const _NEW = 'new';
+
+	/**
+	 */
 	const FAVORITE = 'favorite';
 
 	/**
@@ -16,8 +20,4 @@ class AppsFilter {
 	/**
 	 */
 	const INSTALLED = 'installed';
-
-	/**
-	 */
-	const NEW = 'new';
 }
