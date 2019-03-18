@@ -30,6 +30,18 @@ class Apps {
 	}
 
 	/**
+	 * Deletes all request notifications from the current app.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function deleteAppRequests($access_token) {
+		return $this->request->post('apps.deleteAppRequests', $access_token);
+	}
+
+	/**
 	 * Returns applications data.
 	 *
 	 * @param string $access_token

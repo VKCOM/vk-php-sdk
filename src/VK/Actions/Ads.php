@@ -208,6 +208,18 @@ class Ads {
 	}
 
 	/**
+	 * Returns a list of advertising accounts.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getAccounts($access_token) {
+		return $this->request->post('ads.getAccounts', $access_token);
+	}
+
+	/**
 	 * Returns number of ads.
 	 *
 	 * @param string $access_token
@@ -490,6 +502,18 @@ class Ads {
 	 */
 	public function getUploadURL($access_token, array $params = []) {
 		return $this->request->post('ads.getUploadURL', $access_token, $params);
+	}
+
+	/**
+	 * Returns URL to upload an ad video to.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getVideoUploadURL($access_token) {
+		return $this->request->post('ads.getVideoUploadURL', $access_token);
 	}
 
 	/**

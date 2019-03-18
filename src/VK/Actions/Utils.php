@@ -86,6 +86,18 @@ class Utils {
 	}
 
 	/**
+	 * Returns the current time of the VK server.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getServerTime($access_token) {
+		return $this->request->post('utils.getServerTime', $access_token);
+	}
+
+	/**
 	 * Allows to receive a link shortened via vk.cc.
 	 *
 	 * @param string $access_token

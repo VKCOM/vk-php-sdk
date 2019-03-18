@@ -25,6 +25,18 @@ class Streaming {
 	}
 
 	/**
+	 * Allows to receive data for the connection to Streaming API.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getServerUrl($access_token) {
+		return $this->request->post('streaming.getServerUrl', $access_token);
+	}
+
+	/**
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var StreamingMonthlyTier monthly_tier

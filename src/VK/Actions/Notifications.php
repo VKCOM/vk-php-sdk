@@ -40,4 +40,16 @@ class Notifications {
 	public function get($access_token, array $params = []) {
 		return $this->request->post('notifications.get', $access_token, $params);
 	}
+
+	/**
+	 * Resets the counter of new notifications about other users' feedback to the current user's wall posts.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function markAsViewed($access_token) {
+		return $this->request->post('notifications.markAsViewed', $access_token);
+	}
 }
