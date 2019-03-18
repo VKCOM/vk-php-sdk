@@ -60,6 +60,18 @@ class Secure {
 	}
 
 	/**
+	 * Returns payment balance of the application in hundredth of a vote.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getAppBalance($access_token) {
+		return $this->request->post('secure.getAppBalance', $access_token);
+	}
+
+	/**
 	 * Shows a list of SMS notifications sent by the application using [vk.com/dev/secure.sendSMSNotification|secure.sendSMSNotification] method.
 	 *
 	 * @param string $access_token

@@ -130,6 +130,18 @@ class Account {
 	}
 
 	/**
+	 * Returns the current account info.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getProfileInfo($access_token) {
+		return $this->request->post('account.getProfileInfo', $access_token);
+	}
+
+	/**
 	 * Gets settings of push notifications.
 	 *
 	 * @param string $access_token
@@ -220,6 +232,18 @@ class Account {
 	 */
 	public function setNameInMenu($access_token, array $params = []) {
 		return $this->request->post('account.setNameInMenu', $access_token, $params);
+	}
+
+	/**
+	 * Marks a current user as offline.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function setOffline($access_token) {
+		return $this->request->post('account.setOffline', $access_token);
 	}
 
 	/**

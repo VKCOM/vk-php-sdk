@@ -141,8 +141,6 @@ class Messages {
 	 * @param array $params 
 	 * - @var integer user_id: User ID. To clear a chat history use 'chat_id'
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
-	 * - @var integer offset: Offset needed to delete a specific subset of conversations.
-	 * - @var integer count: Number of conversations to delete. "NOTE: If the number of messages exceeds the maximum, the method shall be called several times."
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * @throws VKClientException
 	 * @throws VKApiException

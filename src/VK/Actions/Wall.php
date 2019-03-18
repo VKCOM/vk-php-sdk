@@ -125,6 +125,8 @@ class Wall {
 	 * - @var boolean mark_as_ads
 	 * - @var boolean close_comments
 	 * - @var integer poster_bkg_id
+	 * - @var integer poster_bkg_owner_id
+	 * - @var string poster_bkg_access_hash
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiWallAdsPostLimitReachedException Too many ads posts
@@ -150,6 +152,7 @@ class Wall {
 	 * - @var string link_button: Link button ID
 	 * - @var string link_title: Link title
 	 * - @var string link_image: Link image url
+	 * - @var string link_video: Link video ID in format "<owner_id>_<media_id>"
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiWallAdsPostLimitReachedException Too many ads posts
@@ -334,6 +337,7 @@ class Wall {
 	 * - @var string link_button: Link button ID
 	 * - @var string link_title: Link title
 	 * - @var string link_image: Link image url
+	 * - @var string link_video: Link video ID in format "<owner_id>_<media_id>"
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiWallAdsPublishedException Advertisement post was recently added

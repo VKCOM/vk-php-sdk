@@ -98,6 +98,18 @@ class Friends {
 	}
 
 	/**
+	 * Marks all incoming friend requests as viewed.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function deleteAllRequests($access_token) {
+		return $this->request->post('friends.deleteAllRequests', $access_token);
+	}
+
+	/**
 	 * Deletes a friend list of the current user.
 	 *
 	 * @param string $access_token
@@ -164,6 +176,18 @@ class Friends {
 	 */
 	public function get($access_token, array $params = []) {
 		return $this->request->post('friends.get', $access_token, $params);
+	}
+
+	/**
+	 * Returns a list of IDs of the current user's friends who installed the application.
+	 *
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getAppUsers($access_token) {
+		return $this->request->post('friends.getAppUsers', $access_token);
 	}
 
 	/**
