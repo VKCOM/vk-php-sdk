@@ -225,10 +225,10 @@ class Ads {
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer account_id: Advertising account ID.
+	 * - @var string ad_ids: Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
+	 * - @var string campaign_ids: Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
 	 * - @var integer client_id: 'Available and required for advertising agencies.' ID of the client ads are retrieved from.
 	 * - @var boolean include_deleted: Flag that specifies whether archived ads shall be shown: *0 — show only active ads,, *1 — show all ads.
-	 * - @var string campaign_ids: Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
-	 * - @var string ad_ids: Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
 	 * - @var integer limit: Limit of number of returned ads. Used only if ad_ids parameter is null, and 'campaign_ids' parameter contains ID of only one campaign.
 	 * - @var integer offset: Offset. Used in the same cases as 'limit' parameter.
 	 * @throws VKClientException
@@ -246,10 +246,10 @@ class Ads {
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer account_id: Advertising account ID.
+	 * - @var string ad_ids: Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
+	 * - @var string campaign_ids: Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
 	 * - @var integer client_id: 'For advertising agencies.' ID of the client ads are retrieved from.
 	 * - @var boolean include_deleted: Flag that specifies whether archived ads shall be shown. *0 — show only active ads,, *1 — show all ads.
-	 * - @var string campaign_ids: Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
-	 * - @var string ad_ids: Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
 	 * - @var integer limit: Limit of number of returned ads. Used only if 'ad_ids' parameter is null, and 'campaign_ids' parameter contains ID of only one campaign.
 	 * - @var integer offset: Offset. Used in the same cases as 'limit' parameter.
 	 * @throws VKClientException
@@ -267,10 +267,10 @@ class Ads {
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer account_id: Advertising account ID.
+	 * - @var string ad_ids: Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
+	 * - @var string campaign_ids: Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
 	 * - @var integer client_id: 'For advertising agencies.' ID of the client ads are retrieved from.
 	 * - @var boolean include_deleted: flag that specifies whether archived ads shall be shown: *0 — show only active ads,, *1 — show all ads.
-	 * - @var string campaign_ids: Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
-	 * - @var string ad_ids: Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
 	 * - @var integer limit: Limit of number of returned ads. Used only if 'ad_ids' parameter is null, and 'campaign_ids' parameter contains ID of only one campaign.
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * @throws VKClientException
@@ -391,6 +391,23 @@ class Ads {
 	 */
 	public function getOfficeUsers($access_token, array $params = []) {
 		return $this->request->post('ads.getOfficeUsers', $access_token, $params);
+	}
+
+	/**
+	 * Returns detailed statistics of promoted posts reach from campaigns and ads.
+	 *
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer account_id: Advertising account ID.
+	 * - @var AdsIdsType ids_type: Type of requested objects listed in 'ids' parameter: *ad — ads,, *campaign — campaigns.
+	 * - @var string ids: IDs requested ads or campaigns, separated with a comma, depending on the value set in 'ids_type'. Maximum 100 objects.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiWeightedFloodException Permission denied. You have requested too many actions this day. Try later.
+	 * @return mixed
+	 */
+	public function getPostsReach($access_token, array $params = []) {
+		return $this->request->post('ads.getPostsReach', $access_token, $params);
 	}
 
 	/**

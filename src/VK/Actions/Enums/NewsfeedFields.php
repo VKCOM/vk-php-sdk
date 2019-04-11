@@ -83,6 +83,10 @@ class NewsfeedFields {
 
 	/**
 	 */
+	const CAN_SEND_NOTIFY = 'can_send_notify';
+
+	/**
+	 */
 	const CAN_UPLOAD_VIDEO = 'can_upload_video';
 
 	/**
@@ -303,11 +307,11 @@ class NewsfeedFields {
 
 	/**
 	 */
-	const PHOTO_200 = 'photo_200';
+	const PHOTO_200_ORIG = 'photo_200_orig';
 
 	/**
 	 */
-	const PHOTO_200_ORIG = 'photo_200_orig';
+	const PHOTO_200 = 'photo_200';
 
 	/**
 	 */
