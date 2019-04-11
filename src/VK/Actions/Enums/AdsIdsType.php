@@ -12,4 +12,12 @@ class AdsIdsType {
 	/**
 	 */
 	const CAMPAIGN = 'campaign';
+
+	/**
+	 */
+	const CLIENT = 'client';
+
+	/**
+	 */
+	const OFFICE = 'office';
 }

@@ -4,6 +4,8 @@ namespace VK\Actions;
 use VK\Actions\Enum\OrdersAction;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiActionFailedException;
+use VK\Exceptions\Api\VKApiAppsSubscriptionInvalidStatusException;
+use VK\Exceptions\Api\VKApiAppsSubscriptionNotFoundException;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -24,6 +26,22 @@ class Orders {
 	 */
 	public function __construct(VKApiRequest $request) {
 		$this->request = $request;
+	}
+
+	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer user_id
+	 * - @var integer subscription_id
+	 * - @var boolean pending_cancel
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiAppsSubscriptionNotFoundException Subscription not found
+	 * @throws VKApiAppsSubscriptionInvalidStatusException Subscription is in invalid status
+	 * @return mixed
+	 */
+	public function cancelSubscription($access_token, array $params = []) {
+		return $this->request->post('orders.cancelSubscription', $access_token, $params);
 	}
 
 	/**
@@ -88,5 +106,47 @@ class Orders {
 	 */
 	public function getById($access_token, array $params = []) {
 		return $this->request->post('orders.getById', $access_token, $params);
+	}
+
+	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer user_id
+	 * - @var integer subscription_id
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiAppsSubscriptionNotFoundException Subscription not found
+	 * @return mixed
+	 */
+	public function getUserSubscriptionById($access_token, array $params = []) {
+		return $this->request->post('orders.getUserSubscriptionById', $access_token, $params);
+	}
+
+	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer user_id
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getUserSubscriptions($access_token, array $params = []) {
+		return $this->request->post('orders.getUserSubscriptions', $access_token, $params);
+	}
+
+	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer user_id
+	 * - @var integer subscription_id
+	 * - @var integer price
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiAppsSubscriptionNotFoundException Subscription not found
+	 * @throws VKApiAppsSubscriptionInvalidStatusException Subscription is in invalid status
+	 * @return mixed
+	 */
+	public function updateSubscription($access_token, array $params = []) {
+		return $this->request->post('orders.updateSubscription', $access_token, $params);
 	}
 }

@@ -2,7 +2,7 @@
 
 PHP library for VK API interaction, includes OAuth 2.0 authorization and API methods. Full VK API features documentation can be found [here](http://vk.com/dev).
 
-This library has been created using the VK API JSON Schema. It can be found [here](https://github.com/VKCOM/vk-api-schema). It uses VK API [version](https://vk.com/dev/versions) 5.92
+This library has been created using the VK API JSON Schema. It can be found [here](https://github.com/VKCOM/vk-api-schema). It uses VK API [version](https://vk.com/dev/versions) 5.95
 
 [![Packagist](https://img.shields.io/packagist/v/vkcom/vk-php-sdk.svg)](https://packagist.org/packages/vkcom/vk-php-sdk)
 
@@ -29,11 +29,11 @@ $vk = new VK\Client\VKApiClient();
 Also you can initialize `VKApiClient` with different API version and different language like this:
 
 ```php
-$vk = new VKApiClient('5.92');
+$vk = new VKApiClient('5.95');
 ```
 
 ```php
-$vk = new VKApiClient('5.92', VK\Client\Enums\VKLanguage::ENGLISH);
+$vk = new VKApiClient('5.95', VK\Client\Enums\VKLanguage::ENGLISH);
 ```
 
 ## 4. Authorization

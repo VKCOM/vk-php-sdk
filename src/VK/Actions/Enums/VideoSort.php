@@ -7,9 +7,13 @@ class VideoSort {
 
 	/**
 	 */
-	const NEWEST_COMMENT_FIRST = 'desc';
+	const DATE_ADDED = 0;
 
 	/**
 	 */
-	const OLDEST_COMMENT_FIRST = 'asc';
+	const DURATION = 1;
+
+	/**
+	 */
+	const RELEVANCE = 2;
 }

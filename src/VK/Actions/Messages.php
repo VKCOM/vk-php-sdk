@@ -22,6 +22,7 @@ use VK\Exceptions\Api\VKApiMessagesEditExpiredException;
 use VK\Exceptions\Api\VKApiMessagesEditKindDisallowedException;
 use VK\Exceptions\Api\VKApiMessagesGroupPeerAccessException;
 use VK\Exceptions\Api\VKApiMessagesKeyboardInvalidException;
+use VK\Exceptions\Api\VKApiMessagesMessageRequestAlreadySendException;
 use VK\Exceptions\Api\VKApiMessagesPrivacyException;
 use VK\Exceptions\Api\VKApiMessagesTooBigException;
 use VK\Exceptions\Api\VKApiMessagesTooLongForwardsException;
@@ -63,6 +64,8 @@ class Messages {
 	 * @throws VKApiException
 	 * @throws VKApiLimitsException Out of limits
 	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
+	 * @throws VKApiMessagesMessageRequestAlreadySendException Message request already send
+	 * @throws VKApiMessagesContactNotFoundException Contact not found
 	 * @return mixed
 	 */
 	public function addChatUser($access_token, array $params = []) {
@@ -141,6 +144,8 @@ class Messages {
 	 * @param array $params 
 	 * - @var integer user_id: User ID. To clear a chat history use 'chat_id'
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+	 * - @var integer offset: Offset needed to delete a specific subset of conversations.
+	 * - @var integer count: Number of conversations to delete. "NOTE: If the number of messages exceeds the maximum, the method shall be called several times."
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -408,6 +413,7 @@ class Messages {
 	 * - @var integer max_msg_id: Maximum ID of the message among existing ones in the local copy. Both messages received with API methods (for example, , ), and data received from a Long Poll server (events with code 4) are taken into account.
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * - @var integer lp_version
+	 * - @var integer last_n
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiMessagesTooOldPtsException Value of ts or pts is too old

@@ -7,9 +7,9 @@ class AppsType {
 
 	/**
 	 */
-	const GROUP = 'group';
+	const INVITE = 'invite';
 
 	/**
 	 */
-	const USER = 'user';
+	const REQUEST = 'request';
 }
