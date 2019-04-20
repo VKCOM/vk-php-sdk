@@ -454,6 +454,21 @@ class Groups {
 		return $this->request->post('groups.getCallbackConfirmationCode', $access_token, $params);
 	}
 
+    /**
+     * Returns callback servers information.
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer group_id
+     * - @var string server_ids
+     * @return mixed
+     * @throws VKApiException
+     * @throws VKClientException
+     */
+	public function getCallbackServers($access_token, array $params = []) {
+	    return $this->request->post('groups.getCallbackServers', $access_token, $params);
+    }
+
 	/**
 	 * Returns [vk.com/dev/callback_api|Callback API] notifications settings.
 	 *
