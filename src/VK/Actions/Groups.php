@@ -598,6 +598,18 @@ class Groups {
 		return $this->request->post('groups.getSettings', $access_token, $params);
 	}
 
+    /**
+     * Returns community token permissions.
+     *
+     * @param string $access_token
+     * @throws VKApiException
+     * @throws VKClientException
+     * @return mixed
+     */
+	public function getTokenPermissions($access_token) {
+	    return $this->request->post('groups.getTokenPermissions', $access_token);
+    }
+
 	/**
 	 * Allows to invite friends to the community.
 	 *
