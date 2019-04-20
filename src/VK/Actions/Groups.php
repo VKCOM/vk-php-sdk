@@ -81,6 +81,23 @@ class Groups {
 		return $this->request->post('groups.addAddress', $access_token, $params);
 	}
 
+    /**
+     * Add callback server to community.
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer group_id
+     * - @var string url
+     * - @var string title
+     * - @var string secret_key
+     * @throws VKApiException
+     * @throws VKClientException
+     * @return mixed
+     */
+	public function addCallbackServer($access_token, array $params = []) {
+	    return $this->request->post('groups.addCallbackServer', $access_token, $params);
+    }
+
 	/**
 	 * Allows to add a link to the community.
 	 *
