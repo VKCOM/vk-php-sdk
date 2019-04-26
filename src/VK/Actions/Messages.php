@@ -255,6 +255,7 @@ class Messages {
 	/**
 	 * @param string $access_token
 	 * @param array $params 
+	 * - @var integer peer_id
 	 * - @var string link: Invitation link.
 	 * - @var array[MessagesFields] fields: Profile fields to return.
 	 * @throws VKClientException
@@ -360,6 +361,8 @@ class Messages {
 	 * - @var boolean photo_sizes: '1' — to return photo sizes in a
 	 * - @var array[MessagesFields] fields: Additional profile [vk.com/dev/fields|fields] to return. 
 	 * - @var integer group_id: Group ID (for group messages with group access token)
+	 * - @var boolean preserve_order
+	 * - @var integer max_forwards_level
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
@@ -414,6 +417,7 @@ class Messages {
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * - @var integer lp_version
 	 * - @var integer last_n
+	 * - @var boolean credentials
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiMessagesTooOldPtsException Value of ts or pts is too old
@@ -643,6 +647,7 @@ class Messages {
 	 * - @var string keyboard
 	 * - @var string payload
 	 * - @var boolean dont_parse_links
+	 * - @var boolean disable_mentions
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiMessagesUserBlockedException Can't send messages for users from blacklist
