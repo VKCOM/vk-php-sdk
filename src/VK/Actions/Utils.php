@@ -2,7 +2,9 @@
 namespace VK\Actions;
 
 use VK\Actions\Enum\UtilsInterval;
+use VK\Actions\Enum\UtilsSource;
 use VK\Client\VKApiRequest;
+use VK\Exceptions\Api\VKApiNotFoundException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -73,12 +75,14 @@ class Utils {
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var string key: Link key (characters after vk.cc/).
+	 * - @var UtilsSource source: Source of scope
 	 * - @var string access_key: Access key for private link stats.
 	 * - @var UtilsInterval interval: Interval.
 	 * - @var integer intervals_count: Number of intervals to return.
 	 * - @var boolean extended: 1 — to return extended stats data (sex, age, geo). 0 — to return views number only.
 	 * @throws VKClientException
 	 * @throws VKApiException
+	 * @throws VKApiNotFoundException Not found
 	 * @return mixed
 	 */
 	public function getLinkStats($access_token, array $params = []) {

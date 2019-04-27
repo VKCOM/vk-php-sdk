@@ -21,6 +21,7 @@ use VK\Actions\Enum\GroupsSubtype;
 use VK\Actions\Enum\GroupsType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessGroupsException;
+use VK\Exceptions\Api\VKApiCallbackApiServersLimitException;
 use VK\Exceptions\Api\VKApiCommunitiesCatalogDisabledException;
 use VK\Exceptions\Api\VKApiCommunitiesCategoriesDisabledException;
 use VK\Exceptions\Api\VKApiGroupChangeCreatorException;
@@ -79,6 +80,22 @@ class Groups {
 	 */
 	public function addAddress($access_token, array $params = []) {
 		return $this->request->post('groups.addAddress', $access_token, $params);
+	}
+
+	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer group_id
+	 * - @var string url
+	 * - @var string title
+	 * - @var string secret_key
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiCallbackApiServersLimitException Servers number limit is reached
+	 * @return mixed
+	 */
+	public function addCallbackServer($access_token, array $params = []) {
+		return $this->request->post('groups.addCallbackServer', $access_token, $params);
 	}
 
 	/**
@@ -438,6 +455,19 @@ class Groups {
 	}
 
 	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer group_id
+	 * - @var array[integer] server_ids
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getCallbackServers($access_token, array $params = []) {
+		return $this->request->post('groups.getCallbackServers', $access_token, $params);
+	}
+
+	/**
 	 * Returns [vk.com/dev/callback_api|Callback API] notifications settings.
 	 *
 	 * @param string $access_token
@@ -596,6 +626,16 @@ class Groups {
 	 */
 	public function getSettings($access_token, array $params = []) {
 		return $this->request->post('groups.getSettings', $access_token, $params);
+	}
+
+	/**
+	 * @param string $access_token
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getTokenPermissions($access_token) {
+		return $this->request->post('groups.getTokenPermissions', $access_token);
 	}
 
 	/**
