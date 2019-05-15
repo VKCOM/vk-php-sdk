@@ -122,6 +122,21 @@ class Secure {
 	}
 
 	/**
+	 * Opens the game achievement and gives the user a sticker
+	 *
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var array[integer] user_ids
+	 * - @var integer achievement_id
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function giveEventSticker($access_token, array $params = []) {
+		return $this->request->post('secure.giveEventSticker', $access_token, $params);
+	}
+
+	/**
 	 * Sends notification to the user.
 	 *
 	 * @param string $access_token

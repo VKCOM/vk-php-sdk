@@ -68,6 +68,7 @@ class Wall {
 	 * @throws VKApiWallAccessAddReplyException Access to status replies denied
 	 * @throws VKApiWallReplyOwnerFloodException Too many replies
 	 * @throws VKApiWallLinksForbiddenException Hyperlinks are forbidden
+	 * @throws VKApiWallAccessRepliesException Access to post comments denied
 	 * @return mixed
 	 */
 	public function createComment($access_token, array $params = []) {
@@ -308,6 +309,7 @@ class Wall {
 	 * - @var string guid
 	 * - @var boolean mark_as_ads
 	 * - @var boolean close_comments
+	 * - @var boolean mute_notifications
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiWallAdsPublishedException Advertisement post was recently added
@@ -391,6 +393,7 @@ class Wall {
 	 * - @var string message: Comment to be added along with the reposted object.
 	 * - @var integer group_id: Target community ID when reposting to a community.
 	 * - @var boolean mark_as_ads
+	 * - @var boolean mute_notifications
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiWallAdsPublishedException Advertisement post was recently added
