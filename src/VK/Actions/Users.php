@@ -100,7 +100,7 @@ class Users {
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer user_id: ID of the user about whom a complaint is being made.
-	 * - @var UsersType type: Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisment' – disruptive advertisements
+	 * - @var UsersType type: Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisement' – disruptive advertisements
 	 * - @var string comment: Comment describing the complaint.
 	 * @throws VKClientException
 	 * @throws VKApiException

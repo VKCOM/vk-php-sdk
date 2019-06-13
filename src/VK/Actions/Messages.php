@@ -22,11 +22,12 @@ use VK\Exceptions\Api\VKApiMessagesEditExpiredException;
 use VK\Exceptions\Api\VKApiMessagesEditKindDisallowedException;
 use VK\Exceptions\Api\VKApiMessagesGroupPeerAccessException;
 use VK\Exceptions\Api\VKApiMessagesKeyboardInvalidException;
-use VK\Exceptions\Api\VKApiMessagesMessageRequestAlreadySendException;
+use VK\Exceptions\Api\VKApiMessagesMessageRequestAlreadySentException;
 use VK\Exceptions\Api\VKApiMessagesPrivacyException;
 use VK\Exceptions\Api\VKApiMessagesTooBigException;
 use VK\Exceptions\Api\VKApiMessagesTooLongForwardsException;
 use VK\Exceptions\Api\VKApiMessagesTooLongMessageException;
+use VK\Exceptions\Api\VKApiMessagesTooManyPostsException;
 use VK\Exceptions\Api\VKApiMessagesTooNewPtsException;
 use VK\Exceptions\Api\VKApiMessagesTooOldPtsException;
 use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
@@ -64,7 +65,7 @@ class Messages {
 	 * @throws VKApiException
 	 * @throws VKApiLimitsException Out of limits
 	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
-	 * @throws VKApiMessagesMessageRequestAlreadySendException Message request already send
+	 * @throws VKApiMessagesMessageRequestAlreadySentException Message request already sent
 	 * @throws VKApiMessagesContactNotFoundException Contact not found
 	 * @return mixed
 	 */
@@ -525,6 +526,7 @@ class Messages {
 	 *
 	 * @param string $access_token
 	 * @param array $params 
+	 * - @var array[integer] message_ids: IDs of messages to mark as read.
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
 	 * - @var integer start_message_id: Message ID to start from.
 	 * - @var integer group_id: Group ID (for group messages with user access token)
@@ -660,6 +662,7 @@ class Messages {
 	 * @throws VKApiMessagesKeyboardInvalidException Keyboard format is invalid
 	 * @throws VKApiMessagesChatBotFeatureException This is a chat bot feature, change this status in settings
 	 * @throws VKApiMessagesContactNotFoundException Contact not found
+	 * @throws VKApiMessagesTooManyPostsException Too many posts in messages
 	 * @return mixed
 	 */
 	public function send($access_token, array $params = []) {

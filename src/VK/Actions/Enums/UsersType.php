@@ -7,7 +7,7 @@ class UsersType {
 
 	/**
 	 */
-	const ADVERTISMENT = 'advertisment';
+	const ADVERTISEMENT = 'advertisement';
 
 	/**
 	 */
