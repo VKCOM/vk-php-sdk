@@ -1,5 +1,5 @@
 <?php
-namespace VK\Actions\Enum;
+namespace VK\Actions\Enums;
 
 /**
  */
@@ -19,11 +19,11 @@ class FriendsFields {
 
 	/**
 	 */
-	const BLACKLISTED = 'blacklisted';
+	const BLACKLISTED_BY_ME = 'blacklisted_by_me';
 
 	/**
 	 */
-	const BLACKLISTED_BY_ME = 'blacklisted_by_me';
+	const BLACKLISTED = 'blacklisted';
 
 	/**
 	 */
@@ -84,6 +84,10 @@ class FriendsFields {
 	/**
 	 */
 	const CROP_PHOTO = 'crop_photo';
+
+	/**
+	 */
+	const DESCRIPTIONS = 'descriptions';
 
 	/**
 	 */
@@ -163,6 +167,10 @@ class FriendsFields {
 
 	/**
 	 */
+	const MUTUAL = 'mutual';
+
+	/**
+	 */
 	const NICKNAME = 'nickname';
 
 	/**
@@ -203,11 +211,11 @@ class FriendsFields {
 
 	/**
 	 */
-	const PHOTO_MAX = 'photo_max';
+	const PHOTO_MAX_ORIG = 'photo_max_orig';
 
 	/**
 	 */
-	const PHOTO_MAX_ORIG = 'photo_max_orig';
+	const PHOTO_MAX = 'photo_max';
 
 	/**
 	 */
@@ -244,6 +252,10 @@ class FriendsFields {
 	/**
 	 */
 	const TIMEZONE = 'timezone';
+
+	/**
+	 */
+	const TRENDING = 'trending';
 
 	/**
 	 */

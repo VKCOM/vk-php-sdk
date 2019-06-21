@@ -1,8 +1,8 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\PhotosReason;
-use VK\Actions\Enum\PhotosSort;
+use VK\Actions\Enums\PhotosReason;
+use VK\Actions\Enums\PhotosSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAlbumsLimitException;
 use VK\Exceptions\Api\VKApiBlockedException;

@@ -1,7 +1,7 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\OrdersAction;
+use VK\Actions\Enums\OrdersAction;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiActionFailedException;
 use VK\Exceptions\Api\VKApiAppsSubscriptionInvalidStatusException;

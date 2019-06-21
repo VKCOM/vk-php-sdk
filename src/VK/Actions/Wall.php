@@ -1,9 +1,9 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\WallFilter;
-use VK\Actions\Enum\WallReason;
-use VK\Actions\Enum\WallSort;
+use VK\Actions\Enums\WallFilter;
+use VK\Actions\Enums\WallReason;
+use VK\Actions\Enums\WallSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiBlockedException;
 use VK\Exceptions\Api\VKApiWallAccessAddReplyException;

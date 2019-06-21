@@ -1,5 +1,5 @@
 <?php
-namespace VK\Actions\Enum\Stories;
+namespace VK\Actions\Enums\Stories;
 
 /**
  */

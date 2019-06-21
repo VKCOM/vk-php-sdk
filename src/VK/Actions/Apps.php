@@ -1,11 +1,11 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\AppsFilter;
-use VK\Actions\Enum\AppsNameCase;
-use VK\Actions\Enum\AppsPlatform;
-use VK\Actions\Enum\AppsSort;
-use VK\Actions\Enum\AppsType;
+use VK\Actions\Enums\AppsFilter;
+use VK\Actions\Enums\AppsNameCase;
+use VK\Actions\Enums\AppsPlatform;
+use VK\Actions\Enums\AppsSort;
+use VK\Actions\Enums\AppsType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiFloodException;
 use VK\Exceptions\VKApiException;

@@ -1,5 +1,5 @@
 <?php
-namespace VK\Actions\Enum;
+namespace VK\Actions\Enums;
 
 /**
  */
@@ -7,7 +7,7 @@ class UsersType {
 
 	/**
 	 */
-	const ADVERTISMENT = 'advertisment';
+	const ADVERTISEMENT = 'advertisement';
 
 	/**
 	 */

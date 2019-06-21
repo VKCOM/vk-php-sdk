@@ -1,8 +1,8 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\UtilsInterval;
-use VK\Actions\Enum\UtilsSource;
+use VK\Actions\Enums\UtilsInterval;
+use VK\Actions\Enums\UtilsSource;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiNotFoundException;
 use VK\Exceptions\VKApiException;

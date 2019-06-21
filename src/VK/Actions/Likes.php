@@ -1,9 +1,9 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\LikesFilter;
-use VK\Actions\Enum\LikesFriendsOnly;
-use VK\Actions\Enum\LikesType;
+use VK\Actions\Enums\LikesFilter;
+use VK\Actions\Enums\LikesFriendsOnly;
+use VK\Actions\Enums\LikesType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;

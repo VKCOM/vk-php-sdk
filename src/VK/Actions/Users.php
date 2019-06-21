@@ -1,11 +1,11 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\UsersNameCase;
-use VK\Actions\Enum\UsersSex;
-use VK\Actions\Enum\UsersSort;
-use VK\Actions\Enum\UsersStatus;
-use VK\Actions\Enum\UsersType;
+use VK\Actions\Enums\UsersNameCase;
+use VK\Actions\Enums\UsersSex;
+use VK\Actions\Enums\UsersSort;
+use VK\Actions\Enums\UsersStatus;
+use VK\Actions\Enums\UsersType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -100,7 +100,7 @@ class Users {
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer user_id: ID of the user about whom a complaint is being made.
-	 * - @var UsersType type: Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisment' – disruptive advertisements
+	 * - @var UsersType type: Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisement' – disruptive advertisements
 	 * - @var string comment: Comment describing the complaint.
 	 * @throws VKClientException
 	 * @throws VKApiException

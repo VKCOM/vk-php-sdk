@@ -1,7 +1,7 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\Stories\UploadLinkText;
+use VK\Actions\Enums\Stories\UploadLinkText;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiBlockedException;
 use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
