@@ -1,5 +1,5 @@
 <?php
-namespace VK\Actions\Enum;
+namespace VK\Actions\Enums;
 
 /**
  */

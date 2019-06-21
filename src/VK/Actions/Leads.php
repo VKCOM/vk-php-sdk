@@ -1,7 +1,7 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\LeadsStatus;
+use VK\Actions\Enums\LeadsStatus;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiActionFailedException;
 use VK\Exceptions\Api\VKApiLimitsException;

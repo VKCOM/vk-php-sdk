@@ -1,8 +1,8 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\VideoReason;
-use VK\Actions\Enum\VideoSort;
+use VK\Actions\Enums\VideoReason;
+use VK\Actions\Enums\VideoSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessVideoException;
 use VK\Exceptions\Api\VKApiAlbumsLimitException;

@@ -1,8 +1,8 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\PollsBackgroundId;
-use VK\Actions\Enum\PollsNameCase;
+use VK\Actions\Enums\PollsBackgroundId;
+use VK\Actions\Enums\PollsNameCase;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiPollsAccessException;
 use VK\Exceptions\Api\VKApiPollsAccessWithoutVoteException;

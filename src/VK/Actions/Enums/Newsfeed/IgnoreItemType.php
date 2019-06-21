@@ -1,5 +1,5 @@
 <?php
-namespace VK\Actions\Enum\Newsfeed;
+namespace VK\Actions\Enums\Newsfeed;
 
 /**
  */

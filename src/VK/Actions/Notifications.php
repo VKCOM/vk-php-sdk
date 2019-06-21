@@ -52,4 +52,18 @@ class Notifications {
 	public function markAsViewed($access_token) {
 		return $this->request->post('notifications.markAsViewed', $access_token);
 	}
+
+	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var array[integer] user_ids
+	 * - @var string message
+	 * - @var string fragment
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function sendMessage($access_token, array $params = []) {
+		return $this->request->post('notifications.sendMessage', $access_token, $params);
+	}
 }

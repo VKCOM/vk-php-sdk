@@ -1,7 +1,7 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\DocsType;
+use VK\Actions\Enums\DocsType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiMessagesDenySendException;
 use VK\Exceptions\Api\VKApiParamDocAccessException;

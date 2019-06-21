@@ -1,9 +1,9 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\Newsfeed\IgnoreItemType;
-use VK\Actions\Enum\NewsfeedNameCase;
-use VK\Actions\Enum\NewsfeedType;
+use VK\Actions\Enums\Newsfeed\IgnoreItemType;
+use VK\Actions\Enums\NewsfeedNameCase;
+use VK\Actions\Enums\NewsfeedType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiTooManyListsException;
 use VK\Exceptions\VKApiException;

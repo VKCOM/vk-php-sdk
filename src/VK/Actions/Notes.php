@@ -1,7 +1,7 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\NotesSort;
+use VK\Actions\Enums\NotesSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessCommentException;
 use VK\Exceptions\Api\VKApiAccessNoteCommentException;

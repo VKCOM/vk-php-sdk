@@ -1,9 +1,9 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\AccountBdateVisibility;
-use VK\Actions\Enum\AccountRelation;
-use VK\Actions\Enum\AccountSex;
+use VK\Actions\Enums\AccountBdateVisibility;
+use VK\Actions\Enums\AccountRelation;
+use VK\Actions\Enums\AccountSex;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessMenuException;
 use VK\Exceptions\Api\VKApiInvalidAddressException;

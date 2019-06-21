@@ -1,9 +1,9 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\FriendsNameCase;
-use VK\Actions\Enum\FriendsOrder;
-use VK\Actions\Enum\FriendsSort;
+use VK\Actions\Enums\FriendsNameCase;
+use VK\Actions\Enums\FriendsOrder;
+use VK\Actions\Enums\FriendsSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiFriendsAddEnemyException;
 use VK\Exceptions\Api\VKApiFriendsAddInEnemyException;
@@ -170,6 +170,7 @@ class Friends {
 	 * - @var integer offset: Offset needed to return a specific subset of friends.
 	 * - @var array[FriendsFields] fields: Profile fields to return. Sample values: 'uid', 'first_name', 'last_name', 'nickname', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'domain', 'has_mobile', 'rate', 'contacts', 'education'.
 	 * - @var FriendsNameCase name_case: Case for declension of user name and surname: , 'nom' — nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
+	 * - @var string ref
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
@@ -285,6 +286,8 @@ class Friends {
 	 * - @var FriendsSort sort: Sort order: '1' — by number of mutual friends, '0' — by date
 	 * - @var boolean need_viewed
 	 * - @var boolean suggested: '1' — to return a list of suggested friends, '0' — to return friend requests (default)
+	 * - @var string ref
+	 * - @var array[FriendsFields] fields
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed

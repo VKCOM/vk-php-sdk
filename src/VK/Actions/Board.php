@@ -1,9 +1,9 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\BoardOrder;
-use VK\Actions\Enum\BoardPreview;
-use VK\Actions\Enum\BoardSort;
+use VK\Actions\Enums\BoardOrder;
+use VK\Actions\Enums\BoardPreview;
+use VK\Actions\Enums\BoardSort;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;

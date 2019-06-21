@@ -1,8 +1,8 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\PagesEdit;
-use VK\Actions\Enum\PagesView;
+use VK\Actions\Enums\PagesEdit;
+use VK\Actions\Enums\PagesView;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessPageException;
 use VK\Exceptions\Api\VKApiParamPageIdException;

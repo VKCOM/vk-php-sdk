@@ -1,12 +1,12 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\AdsAdFormat;
-use VK\Actions\Enum\AdsIdsType;
-use VK\Actions\Enum\AdsLang;
-use VK\Actions\Enum\AdsLinkType;
-use VK\Actions\Enum\AdsPeriod;
-use VK\Actions\Enum\AdsSection;
+use VK\Actions\Enums\AdsAdFormat;
+use VK\Actions\Enums\AdsIdsType;
+use VK\Actions\Enums\AdsLang;
+use VK\Actions\Enums\AdsLinkType;
+use VK\Actions\Enums\AdsPeriod;
+use VK\Actions\Enums\AdsSection;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAdsObjectDeletedException;
 use VK\Exceptions\Api\VKApiAdsPartialSuccessException;

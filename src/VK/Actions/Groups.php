@@ -1,24 +1,24 @@
 <?php
 namespace VK\Actions;
 
-use VK\Actions\Enum\Groups\AddressWorkInfoStatus;
-use VK\Actions\Enum\Groups\GroupAccess;
-use VK\Actions\Enum\Groups\GroupAgeLimits;
-use VK\Actions\Enum\Groups\GroupAudio;
-use VK\Actions\Enum\Groups\GroupDocs;
-use VK\Actions\Enum\Groups\GroupMarketCurrency;
-use VK\Actions\Enum\Groups\GroupPhotos;
-use VK\Actions\Enum\Groups\GroupRole;
-use VK\Actions\Enum\Groups\GroupSubject;
-use VK\Actions\Enum\Groups\GroupTopics;
-use VK\Actions\Enum\Groups\GroupVideo;
-use VK\Actions\Enum\Groups\GroupWall;
-use VK\Actions\Enum\Groups\GroupWiki;
-use VK\Actions\Enum\GroupsFilter;
-use VK\Actions\Enum\GroupsNameCase;
-use VK\Actions\Enum\GroupsSort;
-use VK\Actions\Enum\GroupsSubtype;
-use VK\Actions\Enum\GroupsType;
+use VK\Actions\Enums\Groups\AddressWorkInfoStatus;
+use VK\Actions\Enums\Groups\GroupAccess;
+use VK\Actions\Enums\Groups\GroupAgeLimits;
+use VK\Actions\Enums\Groups\GroupAudio;
+use VK\Actions\Enums\Groups\GroupDocs;
+use VK\Actions\Enums\Groups\GroupMarketCurrency;
+use VK\Actions\Enums\Groups\GroupPhotos;
+use VK\Actions\Enums\Groups\GroupRole;
+use VK\Actions\Enums\Groups\GroupSubject;
+use VK\Actions\Enums\Groups\GroupTopics;
+use VK\Actions\Enums\Groups\GroupVideo;
+use VK\Actions\Enums\Groups\GroupWall;
+use VK\Actions\Enums\Groups\GroupWiki;
+use VK\Actions\Enums\GroupsFilter;
+use VK\Actions\Enums\GroupsNameCase;
+use VK\Actions\Enums\GroupsSort;
+use VK\Actions\Enums\GroupsSubtype;
+use VK\Actions\Enums\GroupsType;
 use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessGroupsException;
 use VK\Exceptions\Api\VKApiCallbackApiServersLimitException;
@@ -765,6 +765,7 @@ class Groups {
 	 * - @var boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
 	 * - @var boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
 	 * - @var boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_edit
 	 * - @var boolean message_deny: Denied messages notifications ('0' — disabled, '1' — enabled).
 	 * - @var boolean message_typing_state
 	 * - @var boolean photo_new: New photos notifications ('0' — disabled, '1' — enabled).

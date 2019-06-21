@@ -1,5 +1,5 @@
 <?php
-namespace VK\Actions\Enum\Groups;
+namespace VK\Actions\Enums\Groups;
 
 /**
  */
