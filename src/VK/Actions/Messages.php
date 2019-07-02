@@ -5,7 +5,6 @@ use VK\Actions\Enums\MessagesFilter;
 use VK\Actions\Enums\MessagesMediaType;
 use VK\Actions\Enums\MessagesRev;
 use VK\Client\VKApiRequest;
-use VK\Exceptions\Api\VKApiFloodException;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiMessagesCantChangeInviteLinkException;
 use VK\Exceptions\Api\VKApiMessagesCantDeleteForAllException;
@@ -97,7 +96,7 @@ class Messages {
 	 * - @var string title: Chat title.
 	 * @throws VKClientException
 	 * @throws VKApiException
-	 * @throws VKApiFloodException Flood control
+	 * @throws VKApiMessagesContactNotFoundException Contact not found
 	 * @return mixed
 	 */
 	public function createChat($access_token, array $params = []) {
@@ -145,8 +144,6 @@ class Messages {
 	 * @param array $params 
 	 * - @var integer user_id: User ID. To clear a chat history use 'chat_id'
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
-	 * - @var integer offset: Offset needed to delete a specific subset of conversations.
-	 * - @var integer count: Number of conversations to delete. "NOTE: If the number of messages exceeds the maximum, the method shall be called several times."
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * @throws VKClientException
 	 * @throws VKApiException
