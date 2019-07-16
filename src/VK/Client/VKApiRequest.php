@@ -128,6 +128,16 @@ class VKApiRequest {
 
         if (isset($decode_body[static::KEY_ERROR])) {
             $error = $decode_body[static::KEY_ERROR];
+
+            //FIX for string error from response
+            if (!is_array($error))
+            {
+            	$error = [
+		            'error_code' => 1,
+		            'error_msg' => $error
+	            ];
+            }
+
             $api_error = new VKApiError($error);
             throw ExceptionMapper::parse($api_error);
         }
