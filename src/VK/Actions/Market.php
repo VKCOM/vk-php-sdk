@@ -51,6 +51,7 @@ class Market {
 	 * - @var string description: Item description.
 	 * - @var integer category_id: Item category ID.
 	 * - @var number price: Item price.
+	 * - @var number old_price
 	 * - @var boolean deleted: Item status ('1' — deleted, '0' — not deleted).
 	 * - @var integer main_photo_id: Cover photo ID.
 	 * - @var array[integer] photo_ids: IDs of additional photos.

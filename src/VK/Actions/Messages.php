@@ -192,6 +192,7 @@ class Messages {
 	 * @throws VKApiMessagesTooLongMessageException Message is too long
 	 * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
 	 * @throws VKApiMessagesKeyboardInvalidException Keyboard format is invalid
+	 * @throws VKApiMessagesTooManyPostsException Too many posts in messages
 	 * @return mixed
 	 */
 	public function edit($access_token, array $params = []) {
@@ -563,6 +564,7 @@ class Messages {
 	 * @throws VKApiException
 	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
 	 * @throws VKApiMessagesChatUserNotInChatException User not found in chat
+	 * @throws VKApiMessagesContactNotFoundException Contact not found
 	 * @return mixed
 	 */
 	public function removeChatUser($access_token, array $params = []) {
@@ -640,7 +642,8 @@ class Messages {
 	 * - @var number long: Geographical longitude of a check-in, in degrees (from -180 to 180).
 	 * - @var string attachment: (Required if 'message' is not set.) List of objects attached to the message, separated by commas, in the following format: "<owner_id>_<media_id>", '' — Type of media attachment: 'photo' — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'wall' — wall post, '<owner_id>' — ID of the media attachment owner. '<media_id>' — media attachment ID. Example: "photo100172_166443618"
 	 * - @var integer reply_to
-	 * - @var string forward_messages: ID of forwarded messages, separated with a comma. Listed messages of the sender will be shown in the message body at the recipient's. Example: "123,431,544"
+	 * - @var array[integer] forward_messages: ID of forwarded messages, separated with a comma. Listed messages of the sender will be shown in the message body at the recipient's. Example: "123,431,544"
+	 * - @var string forward
 	 * - @var integer sticker_id: Sticker id.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * - @var string keyboard

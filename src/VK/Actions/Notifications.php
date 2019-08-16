@@ -2,6 +2,7 @@
 namespace VK\Actions;
 
 use VK\Client\VKApiRequest;
+use VK\Exceptions\Api\VKApiGroupAppIsNotInstalledInCommunityException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -61,6 +62,7 @@ class Notifications {
 	 * - @var string fragment
 	 * @throws VKClientException
 	 * @throws VKApiException
+	 * @throws VKApiGroupAppIsNotInstalledInCommunityException Application is not installed in community
 	 * @return mixed
 	 */
 	public function sendMessage($access_token, array $params = []) {

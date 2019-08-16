@@ -156,6 +156,24 @@ class Video {
 	}
 
 	/**
+	 * @param string $access_token
+	 * @param array $params 
+	 * - @var integer owner_id
+	 * - @var integer video_id
+	 * - @var string md5sum
+	 * - @var integer size
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiAccessVideoException Access denied
+	 * @throws VKApiWallAddPostException Access to adding post denied
+	 * @throws VKApiWallAdsPublishedException Advertisement post was recently added
+	 * @return mixed
+	 */
+	public function duplicate($access_token, array $params = []) {
+		return $this->request->post('video.duplicate', $access_token, $params);
+	}
+
+	/**
 	 * Edits information about a video on a user or community page.
 	 *
 	 * @param string $access_token
