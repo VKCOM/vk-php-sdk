@@ -222,7 +222,6 @@ class Stories {
 	 * @param array $params 
 	 * - @var integer owner_id: ID of the user whose replies should be hidden.
 	 * - @var integer story_id: Story ID.
-	 * - @var string access_key: Access key for the private object.
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
