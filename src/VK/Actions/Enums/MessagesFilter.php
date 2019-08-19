@@ -11,6 +11,10 @@ class MessagesFilter {
 
 	/**
 	 */
+	const BUSINESS_NOTIFY = 'business_notify';
+
+	/**
+	 */
 	const IMPORTANT = 'important';
 
 	/**
