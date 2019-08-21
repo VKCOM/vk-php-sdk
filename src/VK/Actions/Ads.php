@@ -124,7 +124,7 @@ class Ads {
 	 * - @var integer account_id: Advertising account ID.
 	 * - @var integer client_id: 'Only for advertising agencies.', ID of the client with the advertising account where the group will be created.
 	 * - @var string name: Name of the target group — a string up to 64 characters long.
-	 * - @var integer lifetime: 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group. '0' — not to remove users.
+	 * - @var integer lifetime: 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group.
 	 * - @var integer target_pixel_id
 	 * - @var string target_pixel_rules
 	 * @throws VKClientException
