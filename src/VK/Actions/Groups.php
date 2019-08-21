@@ -82,6 +82,23 @@ class Groups {
 		return $this->request->post('groups.addAddress', $access_token, $params);
 	}
 
+    /**
+     * Add callback server to community.
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer group_id
+     * - @var string url
+     * - @var string title
+     * - @var string secret_key
+     * @throws VKApiException
+     * @throws VKClientException
+     * @return mixed
+     */
+	public function addCallbackServer($access_token, array $params = []) {
+	    return $this->request->post('groups.addCallbackServer', $access_token, $params);
+    }
+
 	/**
 	 * @param string $access_token
 	 * @param array $params 
@@ -454,6 +471,21 @@ class Groups {
 		return $this->request->post('groups.getCallbackConfirmationCode', $access_token, $params);
 	}
 
+    /**
+     * Returns callback servers information.
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer group_id
+     * - @var string server_ids
+     * @return mixed
+     * @throws VKApiException
+     * @throws VKClientException
+     */
+	public function getCallbackServers($access_token, array $params = []) {
+	    return $this->request->post('groups.getCallbackServers', $access_token, $params);
+    }
+
 	/**
 	 * @param string $access_token
 	 * @param array $params 
@@ -627,6 +659,18 @@ class Groups {
 	public function getSettings($access_token, array $params = []) {
 		return $this->request->post('groups.getSettings', $access_token, $params);
 	}
+
+    /**
+     * Returns community token permissions.
+     *
+     * @param string $access_token
+     * @throws VKApiException
+     * @throws VKClientException
+     * @return mixed
+     */
+	public function getTokenPermissions($access_token) {
+	    return $this->request->post('groups.getTokenPermissions', $access_token);
+    }
 
 	/**
 	 * @param string $access_token
