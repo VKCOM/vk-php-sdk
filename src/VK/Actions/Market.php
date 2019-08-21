@@ -9,17 +9,13 @@ use VK\Client\VKApiRequest;
 use VK\Exceptions\Api\VKApiAccessMarketException;
 use VK\Exceptions\Api\VKApiMarketAlbumNotFoundException;
 use VK\Exceptions\Api\VKApiMarketCommentsClosedException;
-use VK\Exceptions\Api\VKApiMarketGroupingItemsMustHaveDistinctPropertiesException;
-use VK\Exceptions\Api\VKApiMarketGroupingMustContainMoreThanOneItemException;
 use VK\Exceptions\Api\VKApiMarketItemAlreadyAddedException;
 use VK\Exceptions\Api\VKApiMarketItemHasBadLinksException;
 use VK\Exceptions\Api\VKApiMarketItemNotFoundException;
-use VK\Exceptions\Api\VKApiMarketPropertyNotFoundException;
 use VK\Exceptions\Api\VKApiMarketRestoreTooLateException;
 use VK\Exceptions\Api\VKApiMarketTooManyAlbumsException;
 use VK\Exceptions\Api\VKApiMarketTooManyItemsException;
 use VK\Exceptions\Api\VKApiMarketTooManyItemsInAlbumException;
-use VK\Exceptions\Api\VKApiMarketVariantNotFoundException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -51,6 +47,7 @@ class Market {
 	 * - @var string description: Item description.
 	 * - @var integer category_id: Item category ID.
 	 * - @var number price: Item price.
+	 * - @var number old_price
 	 * - @var boolean deleted: Item status ('1' — deleted, '0' — not deleted).
 	 * - @var integer main_photo_id: Cover photo ID.
 	 * - @var array[integer] photo_ids: IDs of additional photos.
@@ -192,10 +189,6 @@ class Market {
 	 * @throws VKApiAccessMarketException Access denied
 	 * @throws VKApiMarketItemNotFoundException Item not found
 	 * @throws VKApiMarketItemHasBadLinksException Item has bad links in description
-	 * @throws VKApiMarketVariantNotFoundException Variant not found
-	 * @throws VKApiMarketPropertyNotFoundException Property not found
-	 * @throws VKApiMarketGroupingItemsMustHaveDistinctPropertiesException Item must have distinct properties
-	 * @throws VKApiMarketGroupingMustContainMoreThanOneItemException Grouping must have two or more items
 	 * @return mixed
 	 */
 	public function edit($access_token, array $params = []) {
