@@ -19,12 +19,6 @@ class TransportClientResponse {
         $this->http_status = $http_status;
         $this->headers = $headers;
         $this->body = $body;
-
-        \Bitrix\Main\Diag\Debug::writeToFile([
-	        $this->http_status,
-	        $this->headers,
-	        $this->body
-        ], __METHOD__);
     }
 
     /**

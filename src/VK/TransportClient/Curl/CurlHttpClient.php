@@ -80,7 +80,6 @@ class CurlHttpClient implements TransportClient {
      */
     public function post(string $url, ?array $payload = null): TransportClientResponse {
     	\Bitrix\Main\Diag\Debug::writeToFile($payload, $url);
-	    //\Bitrix\Main\Diag\Debug::writeToFile(debug_backtrace(), $url);
 	    $httpClient = $this->getHttpClient();
     	$res = $httpClient->post($url, $payload);
     	$this->checkErrors($httpClient);
@@ -102,7 +101,6 @@ class CurlHttpClient implements TransportClient {
      */
     public function get(string $url, ?array $payload = null): TransportClientResponse {
 	    \Bitrix\Main\Diag\Debug::writeToFile($payload, $url);
-	    //\Bitrix\Main\Diag\Debug::writeToFile(debug_backtrace(), $url);
 	    $httpClient = $this->getHttpClient();
 	    $res = $httpClient->get($url . static::QUESTION_MARK . http_build_query($payload));
 	    $this->checkErrors($httpClient);
@@ -125,7 +123,6 @@ class CurlHttpClient implements TransportClient {
      */
     public function upload(string $url, string $parameter_name, string $path): TransportClientResponse {
     	\Bitrix\Main\Diag\Debug::writeToFile([$url, $parameter_name, $path], __METHOD__);
-	    \Bitrix\Main\Diag\Debug::writeToFile(debug_backtrace(), $url);
 	    $payload = [
 		    $parameter_name => [
 			    'resource' => fopen($path, 'r'),
