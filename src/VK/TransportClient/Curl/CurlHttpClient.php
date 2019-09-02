@@ -23,6 +23,7 @@ class CurlHttpClient implements TransportClient {
      * @param int $connection_timeout
      */
     public function __construct(int $connection_timeout) {
+    	// TODO создавать инстанс в методе get post upload
         $this->httpClient = new HttpClient([
 		    'socketTimeout' => $connection_timeout,
 	    ]);
