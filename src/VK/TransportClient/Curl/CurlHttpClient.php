@@ -122,16 +122,20 @@ class CurlHttpClient implements TransportClient {
      * @throws TransportRequestException
      */
     public function upload(string $url, string $parameter_name, string $path): TransportClientResponse {
-    	\Bitrix\Main\Diag\Debug::writeToFile([$url, $parameter_name, $path], __METHOD__);
-	    $payload = [
+    	$payload = [
 		    $parameter_name => [
 			    'resource' => fopen($path, 'r'),
+			    //'content' => file_get_contents($path),
+
 			    // дополнительные параметры
 			    // 'content' => содержимое файла
 			    // 'filename' => название файла
 			    // 'contentType' => тип
 		    ]
 	    ];
+
+	    \Bitrix\Main\Diag\Debug::writeToFile([$payload, $url, $parameter_name, $path], __METHOD__);
+
 	    $httpClient = $this->getHttpClient();
 	    $res = $httpClient->post($url, $payload, true);
 	    $this->checkErrors($httpClient);
