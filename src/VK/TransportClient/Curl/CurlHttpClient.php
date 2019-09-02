@@ -13,26 +13,31 @@ class CurlHttpClient implements TransportClient {
     protected const HEADER_UPLOAD_CONTENT_TYPE = 'Content-Type: multipart/form-data';
     protected const QUESTION_MARK = '?';
 
-    /**
-     * @var HttpClient
-     */
-    protected $httpClient;
+	/**
+	 * @var array
+	 */
+	protected $initial_opts;
 
     /**
      * CurlHttpClient constructor.
      * @param int $connection_timeout
      */
-    public function __construct(int $connection_timeout) {
-    	// TODO создавать инстанс в методе get post upload
-        $this->httpClient = new HttpClient([
+    public function __construct(int $connection_timeout)
+    {
+	    $this->initial_opts = [
 		    'socketTimeout' => $connection_timeout,
-	    ]);
+	    ];
     }
 
-	private function getHeaders()
+    public function getHttpClient()
+    {
+    	return new HttpClient($this->initial_opts);
+    }
+
+	private function getHeaders(HttpClient $httpClient)
 	{
 		$result = [];
-		foreach ($this->httpClient->getHeaders() as $k => $v)
+		foreach ($httpClient->getHeaders() as $k => $v)
 		{
 			if (is_array($v))
 			{
@@ -47,12 +52,12 @@ class CurlHttpClient implements TransportClient {
 				$result[$k] = $v;
 			}
 		}
-		return [$this->httpClient->getStatus(), $result];
+		return [$httpClient->getStatus(), $result];
 	}
 
-	private function checkErrors()
+	private function checkErrors(HttpClient $httpClient)
 	{
-		$errors = $this->httpClient->getError();
+		$errors = $httpClient->getError();
 		if (count($errors) == 0)
 		{
 			return;
@@ -76,11 +81,12 @@ class CurlHttpClient implements TransportClient {
     public function post(string $url, ?array $payload = null): TransportClientResponse {
     	\Bitrix\Main\Diag\Debug::writeToFile($payload, $url);
 	    //\Bitrix\Main\Diag\Debug::writeToFile(debug_backtrace(), $url);
-    	$res = $this->httpClient->post($url, $payload);
-    	$this->checkErrors();
+	    $httpClient = $this->getHttpClient();
+    	$res = $httpClient->post($url, $payload);
+    	$this->checkErrors($httpClient);
     	return new TransportClientResponse(
-	    	$this->httpClient->getStatus(),
-		    $this->getHeaders(),
+	    	$httpClient->getStatus(),
+		    $this->getHeaders($httpClient),
 		    $res
 	    );
     }
@@ -97,11 +103,12 @@ class CurlHttpClient implements TransportClient {
     public function get(string $url, ?array $payload = null): TransportClientResponse {
 	    \Bitrix\Main\Diag\Debug::writeToFile($payload, $url);
 	    //\Bitrix\Main\Diag\Debug::writeToFile(debug_backtrace(), $url);
-	    $res = $this->httpClient->get($url . static::QUESTION_MARK . http_build_query($payload));
-	    $this->checkErrors();
+	    $httpClient = $this->getHttpClient();
+	    $res = $httpClient->get($url . static::QUESTION_MARK . http_build_query($payload));
+	    $this->checkErrors($httpClient);
 	    return new TransportClientResponse(
-		    $this->httpClient->getStatus(),
-		    $this->getHeaders(),
+		    $httpClient->getStatus(),
+		    $this->getHeaders($httpClient),
 		    $res
 	    );
     }
@@ -128,11 +135,12 @@ class CurlHttpClient implements TransportClient {
 			    // 'contentType' => тип
 		    ]
 	    ];
-	    $res = $this->httpClient->post($url, $payload, true);
-	    $this->checkErrors();
+	    $httpClient = $this->getHttpClient();
+	    $res = $httpClient->post($url, $payload, true);
+	    $this->checkErrors($httpClient);
 	    return new TransportClientResponse(
-		    $this->httpClient->getStatus(),
-		    $this->getHeaders(),
+		    $httpClient->getStatus(),
+		    $this->getHeaders($httpClient),
 		    $res
 	    );
     }
