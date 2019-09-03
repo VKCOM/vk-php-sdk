@@ -79,8 +79,7 @@ class CurlHttpClient implements TransportClient {
      * @throws TransportRequestException
      */
     public function post(string $url, ?array $payload = null): TransportClientResponse {
-    	\Bitrix\Main\Diag\Debug::writeToFile($payload, $url);
-	    $httpClient = $this->getHttpClient();
+    	$httpClient = $this->getHttpClient();
     	$res = $httpClient->post($url, $payload);
     	$this->checkErrors($httpClient);
     	return new TransportClientResponse(
@@ -100,7 +99,6 @@ class CurlHttpClient implements TransportClient {
      * @throws TransportRequestException
      */
     public function get(string $url, ?array $payload = null): TransportClientResponse {
-	    \Bitrix\Main\Diag\Debug::writeToFile($payload, $url);
 	    $httpClient = $this->getHttpClient();
 	    $res = $httpClient->get($url . static::QUESTION_MARK . http_build_query($payload));
 	    $this->checkErrors($httpClient);
@@ -125,17 +123,12 @@ class CurlHttpClient implements TransportClient {
     	$payload = [
 		    $parameter_name => [
 			    'resource' => fopen($path, 'r'),
-			    //'content' => file_get_contents($path),
-
+			    'filename' => basename($path),
 			    // дополнительные параметры
 			    // 'content' => содержимое файла
-			    // 'filename' => название файла
 			    // 'contentType' => тип
 		    ]
 	    ];
-
-	    \Bitrix\Main\Diag\Debug::writeToFile([$payload, $url, $parameter_name, $path], __METHOD__);
-
 	    $httpClient = $this->getHttpClient();
 	    $res = $httpClient->post($url, $payload, true);
 	    $this->checkErrors($httpClient);
