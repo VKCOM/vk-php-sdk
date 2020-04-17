@@ -1,0 +1,8 @@
+{
+  "color": "positive",
+  "action": {
+    "payload": "[]",
+    "label": "",
+    "type": "text"
+  }
+}

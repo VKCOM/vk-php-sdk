@@ -1,0 +1,9 @@
+{
+  "buttons": [],
+  "title": "",
+  "description": "",
+  "photo_id": "",
+  "action": {
+    "type": "open_photo"
+  }
+}
