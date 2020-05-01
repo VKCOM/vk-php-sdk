@@ -165,28 +165,13 @@ class CurlHttpClient implements TransportClient {
 
         $header_components = explode("\n", $raw_header);
         $result = array();
-        $http_status = 0;
         foreach ($header_components as $line) {
-            if (strpos($line, ': ') === false) {
-                $http_status = $this->getHttpStatus($line);
-            } else {
+            if (strpos($line, ': ') !== false) {
                 list($key, $value) = explode(': ', $line, 2);
                 $result[$key] = $value;
             }
         }
 
-        return array($http_status, $result);
-    }
-
-    /**
-     * Sets the HTTP response code from a raw header.
-     *
-     * @param string $raw_response_header
-     *
-     * @return int
-     */
-    protected function getHttpStatus(string $raw_response_header): int {
-        preg_match('|HTTP/\d(?:\.\d)?\s+(\d+)\s+.*|', $raw_response_header, $match);
-        return (int)$match[1];
+        return $result;
     }
 }
