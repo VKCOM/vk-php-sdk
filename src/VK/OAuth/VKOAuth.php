@@ -9,7 +9,7 @@ use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
 
 class VKOAuth {
-    protected const VERSION = '5.101';
+    protected const VERSION = '5.120';
 
     private const PARAM_VERSION = 'v';
     private const PARAM_CLIENT_ID = 'client_id';

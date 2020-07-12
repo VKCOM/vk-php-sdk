@@ -2,7 +2,6 @@
 
 namespace VK\Client;
 
-use VK\Client\Enums\VKLanguage;
 use VK\Actions\Account;
 use VK\Actions\Ads;
 use VK\Actions\Apps;
@@ -40,7 +39,7 @@ use VK\Actions\Wall;
 use VK\Actions\Widgets;
 
 class VKApiClient {
-    protected const API_VERSION = '5.101';
+    protected const API_VERSION = '5.120';
     protected const API_HOST = 'https://api.vk.com/method';
 
     /**
