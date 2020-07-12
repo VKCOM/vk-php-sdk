@@ -147,10 +147,6 @@ class Apps {
 		return $this->request->post('apps.getScore', $access_token, $params);
 	}
 
-	/* promoHasActiveGiftПроверить есть ли у пользователя подарок в игре.
-promoUseGift
-	*/
-
 	/**
 	 * Sends a request to another user in an app that uses VK authorization.
 	 *

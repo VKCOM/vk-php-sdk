@@ -617,16 +617,11 @@ class Groups {
 	}
 
 	/**
-	 * Returns a list of community members.
-	 *
+	 * 	Returns online status of community.
+   *
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var string group_id: ID or screen name of the community.
-	 * - @var GroupsSort sort: Sort order. Available values: 'id_asc', 'id_desc', 'time_asc', 'time_desc'. 'time_asc' and 'time_desc' are availavle only if the method is called by the group's 'moderator'.
-	 * - @var integer offset: Offset needed to return a specific subset of community members.
-	 * - @var integer count: Number of community members to return.
-	 * - @var array[GroupsFields] fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online, online_mobile, lists, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters'.
-	 * - @var GroupsFilter filter: *'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
+	 * - @var integer group_id: ID of the community.
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiParamGroupIdException Invalid group id
@@ -668,7 +663,7 @@ class Groups {
 	}
 
 	/**
-	 * Returns community settings.
+	 * Returns list of community tags.
 	 *
 	 * @param string $access_token
 	 * @param array $params
@@ -920,52 +915,15 @@ class Groups {
 	}
 
 	/**
-	 * Sets Long Poll notification settings
+	 * Sets community settings
 	 *
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer group_id: Community ID.
-	 * - @var boolean enabled: Sets whether Long Poll is enabled ('0' — disabled, '1' — enabled).
-	 * - @var string api_version
-	 * - @var boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_deny: Denied messages notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_edit: A message has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_typing_state
-	 * - @var boolean photo_new: New photos notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean audio_new: New audios notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_new: New videos notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_new: New wall replies notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_edit: Wall replies edited notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_delete: A wall comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_restore: A wall comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_post_new: New wall posts notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_repost: New wall posts notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_new: New board posts notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_edit: Board posts edited notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_restore: Board posts restored notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_delete: Board posts deleted notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_new: New comment to photo notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_edit: A photo comment has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_delete: A photo comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_restore: A photo comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_new: New comment to video notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_edit: A video comment has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_delete: A video comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_restore: A video comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_new: New comment to market item notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_edit: A market comment has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_delete: A market comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_restore: A market comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean poll_vote_new: A vote in a public poll has been added ('0' — disabled, '1' — enabled).
-	 * - @var boolean group_join: Joined community notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean group_leave: Left community notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean group_change_settings
-	 * - @var boolean group_change_photo
-	 * - @var boolean group_officers_edit
-	 * - @var boolean user_block: User added to community blacklist
-	 * - @var boolean user_unblock: User removed from community blacklist
+	 * - @var boolean messages: Sets whether messages is enabled ('0' — disabled, '1' — enabled).
+	 * - @var boolean bots_capabilities: Sets whether bots capabilities is enabled ('0' — disabled, '1' — enabled).
+	 * - @var boolean bots_start_button: Start button ('0' — disabled, '1' — enabled).
+	 * - @var boolean bots_add_to_chat: Users can add bots to conversations ('0' — disabled, '1' — enabled).
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
@@ -975,52 +933,13 @@ class Groups {
 	}
 
 	/**
-	 * Sets Long Poll notification settings
+	 * Set or update user note
 	 *
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer group_id: Community ID.
-	 * - @var boolean enabled: Sets whether Long Poll is enabled ('0' — disabled, '1' — enabled).
-	 * - @var string api_version
-	 * - @var boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_deny: Denied messages notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_edit: A message has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean message_typing_state
-	 * - @var boolean photo_new: New photos notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean audio_new: New audios notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_new: New videos notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_new: New wall replies notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_edit: Wall replies edited notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_delete: A wall comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_reply_restore: A wall comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_post_new: New wall posts notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean wall_repost: New wall posts notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_new: New board posts notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_edit: Board posts edited notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_restore: Board posts restored notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean board_post_delete: Board posts deleted notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_new: New comment to photo notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_edit: A photo comment has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_delete: A photo comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean photo_comment_restore: A photo comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_new: New comment to video notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_edit: A video comment has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_delete: A video comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean video_comment_restore: A video comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_new: New comment to market item notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_edit: A market comment has been edited ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_delete: A market comment has been deleted ('0' — disabled, '1' — enabled).
-	 * - @var boolean market_comment_restore: A market comment has been restored ('0' — disabled, '1' — enabled).
-	 * - @var boolean poll_vote_new: A vote in a public poll has been added ('0' — disabled, '1' — enabled).
-	 * - @var boolean group_join: Joined community notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean group_leave: Left community notifications ('0' — disabled, '1' — enabled).
-	 * - @var boolean group_change_settings
-	 * - @var boolean group_change_photo
-	 * - @var boolean group_officers_edit
-	 * - @var boolean user_block: User added to community blacklist
-	 * - @var boolean user_unblock: User removed from community blacklist
+   * - @var integer user_id: User ID.
+	 * - @var string note: Note text.
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
@@ -1030,12 +949,14 @@ class Groups {
 	}
 
 	/**
-	 * Sets Long Poll notification settings
+	 * Add new tag to community
 	 *
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var boolean user_unblock: User removed from community blacklist
-	 * @throws VKClientException
+   * - @var integer group_id: Community ID.
+   * - @var string tag_name: Name of tag.
+   * - @var string tag_color: Color of tag.
+   * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
 	 */
@@ -1044,11 +965,14 @@ class Groups {
 	}
 
 	/**
-	 * Sets Long Poll notification settings
+	 * Bind and unbind community's tags to conversations.
 	 *
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var boolean user_unblock: User removed from community blacklist
+   * - @var integer group_id: Community ID.
+   * - @var integer tag_id: Tag ID.
+   * - @var integer user_id: User ID.
+   * - @var string act: Tag Action. Values: *'bind',, *'unbind'
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
@@ -1058,11 +982,12 @@ class Groups {
 	}
 
 	/**
-	 * Sets Long Poll notification settings
+   * Delete tag of community
 	 *
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var boolean user_unblock: User removed from community blacklist
+   * - @var integer group_id: Community ID.
+   * - @var integer tag_id: Tag ID.
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed
@@ -1072,11 +997,13 @@ class Groups {
 	}
 
 	/**
-	 * Sets Long Poll notification settings
-	 *
+	 * Update tag of community
+   *
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var boolean user_unblock: User removed from community blacklist
+   * - @var integer group_id: Community ID.
+   * - @var integer tag_id: Tag ID.
+   * - @var string tag_name: Tag Name.
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @return mixed

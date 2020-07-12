@@ -11,7 +11,6 @@ use VK\Actions\Auth;
 use VK\Actions\Board;
 use VK\Actions\Database;
 use VK\Actions\Docs;
-use VK\Actions\Execute;
 use VK\Actions\Fave;
 use VK\Actions\Friends;
 use VK\Actions\Gifts;
@@ -90,7 +89,7 @@ class VKApiClient {
     private $docs;
 
     /**
-     * @var Execute
+     * @var
      */
     private $execute;
 
@@ -334,11 +333,15 @@ class VKApiClient {
     }
 
     /**
-     * @return Execute
+     * @param string $access_token
+     * @param array $params
+     * - @var string code: VKScript code
+     *
+     * @return array
      */
-    public function execute(): Execute {
+    public function execute($access_token, $params = []): array {
         if (!$this->execute) {
-            $this->execute = new Execute($this->request);
+            $this->execute = $this->request->post('execute', $access_token, $params);
         }
 
         return $this->execute;

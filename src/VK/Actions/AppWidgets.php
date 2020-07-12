@@ -95,7 +95,7 @@ class AppWidgets {
      * @return mixed
      */
     public function getGroupImages($access_token, $params = []) {
-        return $this->request->post('appWidgets.getAppImages', $access_token, $params);
+        return $this->request->post('appWidgets.getGroupImages', $access_token, $params);
     }
 
     /**
