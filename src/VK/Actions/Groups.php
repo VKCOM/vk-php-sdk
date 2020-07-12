@@ -167,18 +167,16 @@ class Groups {
 	}
 
 	/**
-	 * Creates a new community.
+	 * Delete community address.
 	 *
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var string title: Community title.
-	 * - @var string description: Community description (ignored for 'type' = 'public').
-	 * - @var GroupsType type: Community type. Possible values: *'group' – group,, *'event' – event,, *'public' – public page
-	 * - @var integer public_category: Category ID (for 'type' = 'public' only).
-	 * - @var GroupsSubtype subtype: Public page subtype. Possible values: *'1' – place or small business,, *'2' – company, organization or website,, *'3' – famous person or group of people,, *'4' – product or work of art.
-	 * @throws VKClientException
+   * - @var integer group_id: Group ID
+   * - @var integer address_id: Address ID
+   * @throws VKClientException
 	 * @throws VKApiException
-	 * @throws VKApiLimitsException Out of limits
+   * @throws VKApiAccessGroupsException Access to the groups list is denied due to the user's privacy settings
+   * @throws VKApiNotFoundException Not found
 	 * @return mixed
 	 */
 	public function deleteAddress($access_token, array $params = []) {

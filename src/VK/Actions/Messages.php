@@ -702,17 +702,6 @@ class Messages {
      * - @var string event_data
      * @throws VKClientException
      * @throws VKApiException
-     * @throws VKApiMessagesUserBlockedException Can't send messages for users from blacklist
-     * @throws VKApiMessagesDenySendException Can't send messages for users without permission
-     * @throws VKApiMessagesPrivacyException Can't send messages to this user due to their privacy settings
-     * @throws VKApiMessagesTooLongMessageException Message is too long
-     * @throws VKApiMessagesTooLongForwardsException Too many forwarded messages
-     * @throws VKApiMessagesCantFwdException Can't forward these messages
-     * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
-     * @throws VKApiMessagesKeyboardInvalidException Keyboard format is invalid
-     * @throws VKApiMessagesChatBotFeatureException This is a chat bot feature, change this status in settings
-     * @throws VKApiMessagesContactNotFoundException Contact not found
-     * @throws VKApiMessagesTooManyPostsException Too many posts in messages
      * @return mixed
      */
     public function sendMessageEventAnswer($access_token, array $params = []) {
