@@ -167,6 +167,25 @@ class Groups {
 	}
 
 	/**
+	 * Creates a new community.
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var string title: Community title.
+	 * - @var string description: Community description (ignored for 'type' = 'public').
+	 * - @var GroupsType type: Community type. Possible values: *'group' – group,, *'event' – event,, *'public' – public page
+	 * - @var integer public_category: Category ID (for 'type' = 'public' only).
+	 * - @var GroupsSubtype subtype: Public page subtype. Possible values: *'1' – place or small business,, *'2' – company, organization or website,, *'3' – famous person or group of people,, *'4' – product or work of art.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiLimitsException Out of limits
+	 * @return mixed
+	 */
+	public function deleteAddress($access_token, array $params = []) {
+		return $this->request->post('groups.deleteAddress', $access_token, $params);
+	}
+
+	/**
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer group_id
@@ -598,6 +617,26 @@ class Groups {
 	}
 
 	/**
+	 * Returns a list of community members.
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var string group_id: ID or screen name of the community.
+	 * - @var GroupsSort sort: Sort order. Available values: 'id_asc', 'id_desc', 'time_asc', 'time_desc'. 'time_asc' and 'time_desc' are availavle only if the method is called by the group's 'moderator'.
+	 * - @var integer offset: Offset needed to return a specific subset of community members.
+	 * - @var integer count: Number of community members to return.
+	 * - @var array[GroupsFields] fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online, online_mobile, lists, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters'.
+	 * - @var GroupsFilter filter: *'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiParamGroupIdException Invalid group id
+	 * @return mixed
+	 */
+	public function getOnlineStatus($access_token, array $params = []) {
+		return $this->request->post('groups.getOnlineStatus', $access_token, $params);
+	}
+
+	/**
 	 * Returns a list of requests to the community.
 	 *
 	 * @param string $access_token
@@ -626,6 +665,20 @@ class Groups {
 	 */
 	public function getSettings($access_token, array $params = []) {
 		return $this->request->post('groups.getSettings', $access_token, $params);
+	}
+
+	/**
+	 * Returns community settings.
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getTagList($access_token, array $params = []) {
+		return $this->request->post('groups.getTagList', $access_token, $params);
 	}
 
 	/**
@@ -864,6 +917,172 @@ class Groups {
 	 */
 	public function setLongPollSettings($access_token, array $params = []) {
 		return $this->request->post('groups.setLongPollSettings', $access_token, $params);
+	}
+
+	/**
+	 * Sets Long Poll notification settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+	 * - @var boolean enabled: Sets whether Long Poll is enabled ('0' — disabled, '1' — enabled).
+	 * - @var string api_version
+	 * - @var boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_deny: Denied messages notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_edit: A message has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_typing_state
+	 * - @var boolean photo_new: New photos notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean audio_new: New audios notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_new: New videos notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_new: New wall replies notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_edit: Wall replies edited notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_delete: A wall comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_restore: A wall comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_post_new: New wall posts notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_repost: New wall posts notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_new: New board posts notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_edit: Board posts edited notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_restore: Board posts restored notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_delete: Board posts deleted notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_new: New comment to photo notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_edit: A photo comment has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_delete: A photo comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_restore: A photo comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_new: New comment to video notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_edit: A video comment has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_delete: A video comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_restore: A video comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_new: New comment to market item notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_edit: A market comment has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_delete: A market comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_restore: A market comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean poll_vote_new: A vote in a public poll has been added ('0' — disabled, '1' — enabled).
+	 * - @var boolean group_join: Joined community notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean group_leave: Left community notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean group_change_settings
+	 * - @var boolean group_change_photo
+	 * - @var boolean group_officers_edit
+	 * - @var boolean user_block: User added to community blacklist
+	 * - @var boolean user_unblock: User removed from community blacklist
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function setSettings($access_token, array $params = []) {
+		return $this->request->post('groups.setSettings', $access_token, $params);
+	}
+
+	/**
+	 * Sets Long Poll notification settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+	 * - @var boolean enabled: Sets whether Long Poll is enabled ('0' — disabled, '1' — enabled).
+	 * - @var string api_version
+	 * - @var boolean message_new: A new incoming message has been received ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_reply: A new outcoming message has been received ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_allow: Allowed messages notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_deny: Denied messages notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_edit: A message has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean message_typing_state
+	 * - @var boolean photo_new: New photos notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean audio_new: New audios notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_new: New videos notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_new: New wall replies notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_edit: Wall replies edited notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_delete: A wall comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_reply_restore: A wall comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_post_new: New wall posts notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean wall_repost: New wall posts notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_new: New board posts notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_edit: Board posts edited notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_restore: Board posts restored notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean board_post_delete: Board posts deleted notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_new: New comment to photo notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_edit: A photo comment has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_delete: A photo comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean photo_comment_restore: A photo comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_new: New comment to video notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_edit: A video comment has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_delete: A video comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean video_comment_restore: A video comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_new: New comment to market item notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_edit: A market comment has been edited ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_delete: A market comment has been deleted ('0' — disabled, '1' — enabled).
+	 * - @var boolean market_comment_restore: A market comment has been restored ('0' — disabled, '1' — enabled).
+	 * - @var boolean poll_vote_new: A vote in a public poll has been added ('0' — disabled, '1' — enabled).
+	 * - @var boolean group_join: Joined community notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean group_leave: Left community notifications ('0' — disabled, '1' — enabled).
+	 * - @var boolean group_change_settings
+	 * - @var boolean group_change_photo
+	 * - @var boolean group_officers_edit
+	 * - @var boolean user_block: User added to community blacklist
+	 * - @var boolean user_unblock: User removed from community blacklist
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function setUserNote($access_token, array $params = []) {
+		return $this->request->post('groups.setUserNote', $access_token, $params);
+	}
+
+	/**
+	 * Sets Long Poll notification settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var boolean user_unblock: User removed from community blacklist
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagAdd($access_token, array $params = []) {
+		return $this->request->post('groups.tagAdd', $access_token, $params);
+	}
+
+	/**
+	 * Sets Long Poll notification settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var boolean user_unblock: User removed from community blacklist
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagBind($access_token, array $params = []) {
+		return $this->request->post('groups.tagBind', $access_token, $params);
+	}
+
+	/**
+	 * Sets Long Poll notification settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var boolean user_unblock: User removed from community blacklist
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagDelete($access_token, array $params = []) {
+		return $this->request->post('groups.tagDelete', $access_token, $params);
+	}
+
+	/**
+	 * Sets Long Poll notification settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var boolean user_unblock: User removed from community blacklist
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagUpdate($access_token, array $params = []) {
+		return $this->request->post('groups.tagUpdate', $access_token, $params);
 	}
 
 	/**

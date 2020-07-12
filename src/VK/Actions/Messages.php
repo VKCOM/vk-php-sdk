@@ -371,6 +371,26 @@ class Messages {
 		return $this->request->post('messages.getHistoryAttachments', $access_token, $params);
 	}
 
+    /**
+     * Returns important messages from the dialog or group chat.
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer count: Number of objects to return.
+     * - @var integer offset: Offset needed to return a specific subset of messages.
+     * - @var string start_message_id: Message ID to start return results from.
+     * - @var integer preview_length
+     * - @var array[MessagesFields] fields: Additional profile [vk.com/dev/fields|fields] to return.
+     * - @var boolean extended: '1' — return extra information about users and communities
+     * - @var integer group_id: Group ID (for group messages with group access token)
+     * @throws VKClientException
+     * @throws VKApiException
+     * @return mixed
+     */
+    public function getImportantMessages($access_token, array $params = []) {
+        return $this->request->post('messages.getImportantMessages', $access_token, $params);
+    }
+
 	/**
 	 * @param string $access_token
 	 * @param array $params 
@@ -670,6 +690,34 @@ class Messages {
 	public function send($access_token, array $params = []) {
 		return $this->request->post('messages.send', $access_token, $params);
 	}
+
+    /**
+     * Sends a message event answer.
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer event_id: Event ID.
+     * - @var integer user_id: User ID (by default — current user).
+     * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+     * - @var string event_data
+     * @throws VKClientException
+     * @throws VKApiException
+     * @throws VKApiMessagesUserBlockedException Can't send messages for users from blacklist
+     * @throws VKApiMessagesDenySendException Can't send messages for users without permission
+     * @throws VKApiMessagesPrivacyException Can't send messages to this user due to their privacy settings
+     * @throws VKApiMessagesTooLongMessageException Message is too long
+     * @throws VKApiMessagesTooLongForwardsException Too many forwarded messages
+     * @throws VKApiMessagesCantFwdException Can't forward these messages
+     * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
+     * @throws VKApiMessagesKeyboardInvalidException Keyboard format is invalid
+     * @throws VKApiMessagesChatBotFeatureException This is a chat bot feature, change this status in settings
+     * @throws VKApiMessagesContactNotFoundException Contact not found
+     * @throws VKApiMessagesTooManyPostsException Too many posts in messages
+     * @return mixed
+     */
+    public function sendMessageEventAnswer($access_token, array $params = []) {
+        return $this->request->post('messages.sendMessageEventAnswer', $access_token, $params);
+    }
 
 	/**
 	 * Changes the status of a user as typing in a conversation.
