@@ -333,6 +333,21 @@ class Market {
 		return $this->request->post('market.getComments', $access_token, $params);
 	}
 
+    /**
+     * Returns order by its identifier
+     *
+     * @param string $access_token
+     * @param array $params
+     * - @var integer user_id: identifier of customer
+     * - @var integer order_id: identifier of customer's order
+     * @throws VKClientException
+     * @throws VKApiException
+     * @return mixed
+     */
+    public function getOrderById($access_token, array $params = []) {
+        return $this->request->post('market.getOrderById', $access_token, $params);
+    }
+
 	/**
 	 * Removes an item from one or multiple collections.
 	 *
