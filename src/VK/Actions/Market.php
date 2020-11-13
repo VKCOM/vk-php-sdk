@@ -479,4 +479,17 @@ class Market {
 	public function search($access_token, array $params = []) {
 		return $this->request->post('market.search', $access_token, $params);
 	}
+	
+	/**
+	 * Edit order
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function editOrder($access_token, array $params = []) {
+		return $this->request->post('market.editOrder', $access_token, $params);
+	}
 }
