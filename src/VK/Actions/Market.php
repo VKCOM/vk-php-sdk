@@ -492,4 +492,130 @@ class Market {
 	public function editOrder($access_token, array $params = []) {
 		return $this->request->post('market.editOrder', $access_token, $params);
 	}
+	
+	/**
+	 * Add property
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function addProperty($access_token, array $params = []) {
+		return $this->request->post('market.addProperty', $access_token, $params);
+	}
+
+	/**
+	 * Add property variant
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function addPropertyVariant($access_token, array $params = []) {
+		return $this->request->post('market.addPropertyVariant', $access_token, $params);
+	}
+
+	/**
+	 * Delete property
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function deleteProperty($access_token, array $params = []) {
+		return $this->request->post('market.deleteProperty', $access_token, $params);
+	}
+
+	/**
+	 * Delete property variant
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function deletePropertyVariant($access_token, array $params = []) {
+		return $this->request->post('market.deletePropertyVariant', $access_token, $params);
+	}
+
+	/**
+	 * Edit property
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function editProperty($access_token, array $params = []) {
+		return $this->request->post('market.editProperty', $access_token, $params);
+	}
+
+	/**
+	 * Edit property variant
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function editPropertyVariant($access_token, array $params = []) {
+		return $this->request->post('market.editPropertyVariant', $access_token, $params);
+	}
+
+	/**
+	 * Get properties
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function getProperties($access_token, array $params = []) {
+		return $this->request->post('market.getProperties', $access_token, $params);
+	}
+
+	/**
+	 * Group items
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function groupItems() {
+		return $this->request->post('market.groupItems', $access_token, $params);
+	}
+
+	/**
+	 * Ungroup items
+	 * 
+	 * @param string 
+	 * @param array $params
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+
+	public function ungroupItems() {
+		return $this->request->post('market.ungroupItems', $access_token, $params);
+	}
 }
