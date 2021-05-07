@@ -167,6 +167,23 @@ class Groups {
 	}
 
 	/**
+	 * Delete community address.
+	 *
+	 * @param string $access_token
+	 * @param array $params
+   * - @var integer group_id: Group ID
+   * - @var integer address_id: Address ID
+   * @throws VKClientException
+	 * @throws VKApiException
+   * @throws VKApiAccessGroupsException Access to the groups list is denied due to the user's privacy settings
+   * @throws VKApiNotFoundException Not found
+	 * @return mixed
+	 */
+	public function deleteAddress($access_token, array $params = []) {
+		return $this->request->post('groups.deleteAddress', $access_token, $params);
+	}
+
+	/**
 	 * @param string $access_token
 	 * @param array $params 
 	 * - @var integer group_id
@@ -598,6 +615,21 @@ class Groups {
 	}
 
 	/**
+	 * 	Returns online status of community.
+   *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: ID of the community.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiParamGroupIdException Invalid group id
+	 * @return mixed
+	 */
+	public function getOnlineStatus($access_token, array $params = []) {
+		return $this->request->post('groups.getOnlineStatus', $access_token, $params);
+	}
+
+	/**
 	 * Returns a list of requests to the community.
 	 *
 	 * @param string $access_token
@@ -626,6 +658,20 @@ class Groups {
 	 */
 	public function getSettings($access_token, array $params = []) {
 		return $this->request->post('groups.getSettings', $access_token, $params);
+	}
+
+	/**
+	 * Returns list of community tags.
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function getTagList($access_token, array $params = []) {
+		return $this->request->post('groups.getTagList', $access_token, $params);
 	}
 
 	/**
@@ -864,6 +910,104 @@ class Groups {
 	 */
 	public function setLongPollSettings($access_token, array $params = []) {
 		return $this->request->post('groups.setLongPollSettings', $access_token, $params);
+	}
+
+	/**
+	 * Sets community settings
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+	 * - @var boolean messages: Sets whether messages is enabled ('0' — disabled, '1' — enabled).
+	 * - @var boolean bots_capabilities: Sets whether bots capabilities is enabled ('0' — disabled, '1' — enabled).
+	 * - @var boolean bots_start_button: Start button ('0' — disabled, '1' — enabled).
+	 * - @var boolean bots_add_to_chat: Users can add bots to conversations ('0' — disabled, '1' — enabled).
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function setSettings($access_token, array $params = []) {
+		return $this->request->post('groups.setSettings', $access_token, $params);
+	}
+
+	/**
+	 * Set or update user note
+	 *
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+   * - @var integer user_id: User ID.
+	 * - @var string note: Note text.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function setUserNote($access_token, array $params = []) {
+		return $this->request->post('groups.setUserNote', $access_token, $params);
+	}
+
+	/**
+	 * Add new tag to community
+	 *
+	 * @param string $access_token
+	 * @param array $params
+   * - @var integer group_id: Community ID.
+   * - @var string tag_name: Name of tag.
+   * - @var string tag_color: Color of tag.
+   * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagAdd($access_token, array $params = []) {
+		return $this->request->post('groups.tagAdd', $access_token, $params);
+	}
+
+	/**
+	 * Bind and unbind community's tags to conversations.
+	 *
+	 * @param string $access_token
+	 * @param array $params
+   * - @var integer group_id: Community ID.
+   * - @var integer tag_id: Tag ID.
+   * - @var integer user_id: User ID.
+   * - @var string act: Tag Action. Values: *'bind',, *'unbind'
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagBind($access_token, array $params = []) {
+		return $this->request->post('groups.tagBind', $access_token, $params);
+	}
+
+	/**
+   * Delete tag of community
+	 *
+	 * @param string $access_token
+	 * @param array $params
+   * - @var integer group_id: Community ID.
+   * - @var integer tag_id: Tag ID.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagDelete($access_token, array $params = []) {
+		return $this->request->post('groups.tagDelete', $access_token, $params);
+	}
+
+	/**
+	 * Update tag of community
+   *
+	 * @param string $access_token
+	 * @param array $params
+   * - @var integer group_id: Community ID.
+   * - @var integer tag_id: Tag ID.
+   * - @var string tag_name: Tag Name.
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @return mixed
+	 */
+	public function tagUpdate($access_token, array $params = []) {
+		return $this->request->post('groups.tagUpdate', $access_token, $params);
 	}
 
 	/**

@@ -2,10 +2,10 @@
 
 namespace VK\Client;
 
-use VK\Client\Enums\VKLanguage;
 use VK\Actions\Account;
 use VK\Actions\Ads;
 use VK\Actions\Apps;
+use VK\Actions\AppWidgets;
 use VK\Actions\Auth;
 use VK\Actions\Board;
 use VK\Actions\Database;
@@ -24,7 +24,6 @@ use VK\Actions\Notifications;
 use VK\Actions\Orders;
 use VK\Actions\Pages;
 use VK\Actions\Photos;
-use VK\Actions\Places;
 use VK\Actions\Polls;
 use VK\Actions\Search;
 use VK\Actions\Secure;
@@ -40,7 +39,7 @@ use VK\Actions\Wall;
 use VK\Actions\Widgets;
 
 class VKApiClient {
-    protected const API_VERSION = '5.101';
+    protected const API_VERSION = '5.120';
     protected const API_HOST = 'https://api.vk.com/method';
 
     /**
@@ -64,6 +63,11 @@ class VKApiClient {
     private $apps;
 
     /**
+     * @var AppWidgets
+     */
+    private $appWidgets;
+
+    /**
      * @var Auth
      */
     private $auth;
@@ -82,6 +86,11 @@ class VKApiClient {
      * @var Docs
      */
     private $docs;
+
+    /**
+     * @var
+     */
+    private $execute;
 
     /**
      * @var Fave
@@ -152,11 +161,6 @@ class VKApiClient {
      * @var Photos
      */
     private $photos;
-
-    /**
-     * @var Places
-     */
-    private $places;
 
     /**
      * @var Polls
@@ -273,6 +277,17 @@ class VKApiClient {
     }
 
     /**
+     * @return AppWidgets
+     */
+    public function appWidgets(): AppWidgets {
+        if (!$this->appWidgets) {
+            $this->appWidgets = new AppWidgets($this->request);
+        }
+
+        return $this->appWidgets;
+    }
+
+    /**
      * @return Auth
      */
     public function auth(): Auth {
@@ -314,6 +329,21 @@ class VKApiClient {
         }
 
         return $this->docs;
+    }
+
+    /**
+     * @param string $access_token
+     * @param array $params
+     * - @var string code: VKScript code
+     *
+     * @return array
+     */
+    public function execute($access_token, $params = []): array {
+        if (!$this->execute) {
+            $this->execute = $this->request->post('execute', $access_token, $params);
+        }
+
+        return $this->execute;
     }
 
     /**
@@ -468,17 +498,6 @@ class VKApiClient {
         }
 
         return $this->photos;
-    }
-
-    /**
-     * @return Places
-     */
-    public function places(): Places {
-        if (!$this->places) {
-            $this->places = new Places($this->request);
-        }
-
-        return $this->places;
     }
 
     /**

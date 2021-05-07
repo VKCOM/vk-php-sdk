@@ -45,7 +45,7 @@ class Apps {
 	 * Returns applications data.
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var integer app_id: Application ID
 	 * - @var array[string] app_ids: List of application ID
 	 * - @var AppsPlatform platform: platform. Possible values: *'ios' — iOS,, *'android' — Android,, *'winphone' — Windows Phone,, *'web' — приложения на vk.com. By default: 'web'.
@@ -65,7 +65,7 @@ class Apps {
 	 * Returns a list of applications (apps) available to users in the App Catalog.
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var AppsSort sort: Sort order: 'popular_today' — popular for one day (default), 'visitors' — by visitors number , 'create_date' — by creation date, 'growth_rate' — by growth rate, 'popular_week' — popular for one week
 	 * - @var integer offset: Offset required to return a specific subset of apps.
 	 * - @var integer count: Number of apps to return.
@@ -89,7 +89,7 @@ class Apps {
 	 * Creates friends list for requests and invites in current app.
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var boolean extended
 	 * - @var integer count: List size.
 	 * - @var integer offset
@@ -107,7 +107,7 @@ class Apps {
 	 * Returns players rating in the game.
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var AppsType type: Leaderboard type. Possible values: *'level' — by level,, *'points' — by mission points,, *'score' — by score ().
 	 * - @var boolean global: Rating type. Possible values: *'1' — global rating among all players,, *'0' — rating among user friends.
 	 * - @var boolean extended: 1 — to return additional info about users
@@ -123,7 +123,7 @@ class Apps {
 	 * Returns scopes for auth
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var AppsType type
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -137,7 +137,7 @@ class Apps {
 	 * Returns user score in app
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var integer user_id
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -151,7 +151,7 @@ class Apps {
 	 * Sends a request to another user in an app that uses VK authorization.
 	 *
 	 * @param string $access_token
-	 * @param array $params 
+	 * @param array $params
 	 * - @var integer user_id: id of the user to send a request
 	 * - @var string text: request text
 	 * - @var AppsType type: request type. Values: 'invite' – if the request is sent to a user who does not have the app installed,, 'request' – if a user has already installed the app
