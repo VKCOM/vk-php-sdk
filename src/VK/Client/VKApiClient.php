@@ -2,22 +2,19 @@
 
 namespace VK\Client;
 
-use VK\Client\Enum\VKLanguage;
 use VK\Actions\Account;
 use VK\Actions\Ads;
-use VK\Actions\Adsweb;
-use VK\Actions\AppWidgets;
 use VK\Actions\Apps;
+use VK\Actions\AppWidgets;
 use VK\Actions\Auth;
 use VK\Actions\Board;
 use VK\Actions\Database;
 use VK\Actions\Docs;
-use VK\Actions\Donut;
-use VK\Actions\DownloadedGames;
 use VK\Actions\Fave;
 use VK\Actions\Friends;
 use VK\Actions\Gifts;
 use VK\Actions\Groups;
+use VK\Actions\Leads;
 use VK\Actions\Likes;
 use VK\Actions\Market;
 use VK\Actions\Messages;
@@ -27,15 +24,12 @@ use VK\Actions\Notifications;
 use VK\Actions\Orders;
 use VK\Actions\Pages;
 use VK\Actions\Photos;
-use VK\Actions\Podcasts;
 use VK\Actions\Polls;
-use VK\Actions\PrettyCards;
 use VK\Actions\Search;
 use VK\Actions\Secure;
 use VK\Actions\Stats;
 use VK\Actions\Status;
 use VK\Actions\Storage;
-use VK\Actions\Store;
 use VK\Actions\Stories;
 use VK\Actions\Streaming;
 use VK\Actions\Users;
@@ -45,7 +39,7 @@ use VK\Actions\Wall;
 use VK\Actions\Widgets;
 
 class VKApiClient {
-    protected const API_VERSION = '5.130';
+    protected const API_VERSION = '5.120';
     protected const API_HOST = 'https://api.vk.com/method';
 
     /**
@@ -64,19 +58,14 @@ class VKApiClient {
     private $ads;
 
     /**
-     * @var Adsweb
+     * @var Apps
      */
-    private $adsweb;
+    private $apps;
 
     /**
      * @var AppWidgets
      */
     private $appWidgets;
-
-    /**
-     * @var Apps
-     */
-    private $apps;
 
     /**
      * @var Auth
@@ -99,14 +88,9 @@ class VKApiClient {
     private $docs;
 
     /**
-     * @var Donut
+     * @var
      */
-    private $donut;
-
-    /**
-     * @var DownloadedGames
-     */
-    private $downloadedGames;
+    private $execute;
 
     /**
      * @var Fave
@@ -127,6 +111,11 @@ class VKApiClient {
      * @var Groups
      */
     private $groups;
+
+    /**
+     * @var Leads
+     */
+    private $leads;
 
     /**
      * @var Likes
@@ -174,19 +163,9 @@ class VKApiClient {
     private $photos;
 
     /**
-     * @var Podcasts
-     */
-    private $podcasts;
-
-    /**
      * @var Polls
      */
     private $polls;
-
-    /**
-     * @var PrettyCards
-     */
-    private $prettyCards;
 
     /**
      * @var Search
@@ -212,11 +191,6 @@ class VKApiClient {
      * @var Storage
      */
     private $storage;
-
-    /**
-     * @var Store
-     */
-    private $store;
 
     /**
      * @var Stories
@@ -292,14 +266,14 @@ class VKApiClient {
     }
 
     /**
-     * @return Adsweb
+     * @return Apps
      */
-    public function adsweb(): Adsweb {
-        if (!$this->adsweb) {
-            $this->adsweb = new Adsweb($this->request);
+    public function apps(): Apps {
+        if (!$this->apps) {
+            $this->apps = new Apps($this->request);
         }
 
-        return $this->adsweb;
+        return $this->apps;
     }
 
     /**
@@ -311,17 +285,6 @@ class VKApiClient {
         }
 
         return $this->appWidgets;
-    }
-
-    /**
-     * @return Apps
-     */
-    public function apps(): Apps {
-        if (!$this->apps) {
-            $this->apps = new Apps($this->request);
-        }
-
-        return $this->apps;
     }
 
     /**
@@ -369,25 +332,18 @@ class VKApiClient {
     }
 
     /**
-     * @return Donut
+     * @param string $access_token
+     * @param array $params
+     * - @var string code: VKScript code
+     *
+     * @return array
      */
-    public function donut(): Donut {
-        if (!$this->donut) {
-            $this->donut = new Donut($this->request);
+    public function execute($access_token, $params = []): array {
+        if (!$this->execute) {
+            $this->execute = $this->request->post('execute', $access_token, $params);
         }
 
-        return $this->donut;
-    }
-
-    /**
-     * @return DownloadedGames
-     */
-    public function downloadedGames(): DownloadedGames {
-        if (!$this->downloadedGames) {
-            $this->downloadedGames = new DownloadedGames($this->request);
-        }
-
-        return $this->downloadedGames;
+        return $this->execute;
     }
 
     /**
@@ -432,6 +388,17 @@ class VKApiClient {
         }
 
         return $this->groups;
+    }
+
+    /**
+     * @return Leads
+     */
+    public function leads(): Leads {
+        if (!$this->leads) {
+            $this->leads = new Leads($this->request);
+        }
+
+        return $this->leads;
     }
 
     /**
@@ -534,17 +501,6 @@ class VKApiClient {
     }
 
     /**
-     * @return Podcasts
-     */
-    public function podcasts(): Podcasts {
-        if (!$this->podcasts) {
-            $this->podcasts = new Podcasts($this->request);
-        }
-
-        return $this->podcasts;
-    }
-
-    /**
      * @return Polls
      */
     public function polls(): Polls {
@@ -553,17 +509,6 @@ class VKApiClient {
         }
 
         return $this->polls;
-    }
-
-    /**
-     * @return PrettyCards
-     */
-    public function prettyCards(): PrettyCards {
-        if (!$this->prettyCards) {
-            $this->prettyCards = new PrettyCards($this->request);
-        }
-
-        return $this->prettyCards;
     }
 
     /**
@@ -619,17 +564,6 @@ class VKApiClient {
         }
 
         return $this->storage;
-    }
-
-    /**
-     * @return Store
-     */
-    public function store(): Store {
-        if (!$this->store) {
-            $this->store = new Store($this->request);
-        }
-
-        return $this->store;
     }
 
     /**
