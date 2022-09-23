@@ -637,4 +637,48 @@ class Ads {
 	public function updateTargetGroup($access_token, array $params = []) {
 		return $this->request->post('ads.updateTargetGroup', $access_token, $params);
 	}
+
+    /**
+     * @param $access_token
+     * @param array $params
+     * @return array|mixed
+     * @throws VKApiException
+     * @throws VKClientException
+     */
+    public function getTargetPixels($access_token, array $params = []) {
+        return $this->request->post('ads.getTargetPixels', $access_token, $params);
+    }
+
+    /**
+     * @param $access_token
+     * @param array $params
+     * @return array|mixed
+     * @throws VKApiException
+     * @throws VKClientException
+     */
+    public function createTargetPixel($access_token, array $params = []) {
+        return $this->request->post('ads.createTargetPixel', $access_token, $params);
+    }
+
+    /**
+     * @param $access_token
+     * @param array $params
+     * @return array|mixed
+     * @throws VKApiException
+     * @throws VKClientException
+     */
+    public function deleteTargetPixel($access_token, array $params = []) {
+        return $this->request->post('ads.deleteTargetPixel', $access_token, $params);
+    }
+
+    /**
+     * @param $access_token
+     * @param array $params
+     * @return array|mixed
+     * @throws VKApiException
+     * @throws VKClientException
+     */
+    public function updateTargetPixel($access_token, array $params = []) {
+        return $this->request->post('ads.updateTargetPixel', $access_token, $params);
+    }
 }
