@@ -14,7 +14,7 @@ use VK\Actions\Fave;
 use VK\Actions\Friends;
 use VK\Actions\Gifts;
 use VK\Actions\Groups;
-use VK\Actions\Leads;
+use VK\Actions\LeadForms;
 use VK\Actions\Likes;
 use VK\Actions\Market;
 use VK\Actions\Messages;
@@ -24,7 +24,6 @@ use VK\Actions\Notifications;
 use VK\Actions\Orders;
 use VK\Actions\Pages;
 use VK\Actions\Photos;
-use VK\Actions\Places;
 use VK\Actions\Polls;
 use VK\Actions\Search;
 use VK\Actions\Secure;
@@ -104,9 +103,9 @@ class VKApiClient {
     private $groups;
 
     /**
-     * @var Leads
+     * @var LeadForms
      */
-    private $leads;
+    private $leadForms;
 
     /**
      * @var Likes
@@ -152,11 +151,6 @@ class VKApiClient {
      * @var Photos
      */
     private $photos;
-
-    /**
-     * @var Places
-     */
-    private $places;
 
     /**
      * @var Polls
@@ -361,14 +355,14 @@ class VKApiClient {
     }
 
     /**
-     * @return Leads
+     * @return LeadForms
      */
-    public function leads(): Leads {
-        if (!$this->leads) {
-            $this->leads = new Leads($this->request);
+    public function leadForms(): LeadForms {
+        if (!$this->leadForms) {
+            $this->leadForms = new LeadForms($this->request);
         }
 
-        return $this->leads;
+        return $this->leadForms;
     }
 
     /**
@@ -468,17 +462,6 @@ class VKApiClient {
         }
 
         return $this->photos;
-    }
-
-    /**
-     * @return Places
-     */
-    public function places(): Places {
-        if (!$this->places) {
-            $this->places = new Places($this->request);
-        }
-
-        return $this->places;
     }
 
     /**
