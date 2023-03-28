@@ -1,5 +1,5 @@
 {
-    "name": "vkcom/vk-php-sdk",
+    "name": "alexspi/vk-php-sdk",
     "description": "VK PHP SDK",
     "keywords": ["vk", "sdk"],
     "type": "library",
