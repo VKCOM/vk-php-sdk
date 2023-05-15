@@ -2,36 +2,84 @@
 
 namespace VK\Client;
 
-class VKApiError {
+class VKApiError
+{
+    protected const ERROR_CODE = 'error_code';
+    protected const ERROR_MSG = 'error_msg';
+    protected const CAPTCHA_SID = 'captcha_sid';
+    protected const CAPTCHA_IMG = 'captcha_img';
+    protected const CONFIRMATION_TEXT = 'confirmation_text';
+    protected const REDIRECT_URI = 'redirect_uri';
+    protected const REQUEST_PARAMS = 'request_params';
 
-    protected const KEY_ERROR_CODE = 'error_code';
-    protected const KEY_ERROR_MSG = 'error_msg';
-    protected const KEY_CAPTCHA_SID = 'captcha_sid';
-    protected const KEY_CAPTCHA_IMG = 'captcha_img';
-    protected const KEY_CONFIRMATION_TEXT = 'confirmation_text';
-    protected const KEY_REDIRECT_URI = 'redirect_uri';
-    protected const KEY_REQUEST_PARAMS = 'request_params';
+    /**
+     * @var int|null
+     */
+    protected ?int $error_code = null;
 
-    protected $error_code;
-    protected $error_msg;
-    protected $captcha_sid;
-    protected $captcha_img;
-    protected $confirmation_text;
-    protected $redirect_uri;
-    protected $request_params;
+    /**
+     * @var string|null
+     */
+    protected ?string $error_msg = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $captcha_sid = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $captcha_img = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $confirmation_text = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $redirect_uri = null;
+
+    /**
+     * @var array<array-key, mixed>|null
+     */
+    protected ?array $request_params = null;
 
     /**
      * VKApiError constructor.
-     * @param array $error
+     * @param array<array-key, mixed> $error
      */
-    public function __construct(array $error) {
-        $this->error_code = isset($error[static::KEY_ERROR_CODE]) ? intval($error[static::KEY_ERROR_CODE]) : null;
-        $this->error_msg = isset($error[static::KEY_ERROR_MSG]) ? strval($error[static::KEY_ERROR_MSG]) : null;
-        $this->captcha_sid = isset($error[static::KEY_CAPTCHA_SID]) ? strval($error[static::KEY_CAPTCHA_SID]) : null;
-        $this->captcha_img = isset($error[static::KEY_CAPTCHA_IMG]) ? strval($error[static::KEY_CAPTCHA_IMG]) : null;
-        $this->confirmation_text = isset($error[static::KEY_CONFIRMATION_TEXT]) ? strval($error[static::KEY_CONFIRMATION_TEXT]) : null;
-        $this->redirect_uri = isset($error[static::KEY_REDIRECT_URI]) ? strval($error[static::KEY_REDIRECT_URI]) : null;
-        $this->request_params = isset($error[static::KEY_REQUEST_PARAMS]) ? ((array)$error[static::KEY_REQUEST_PARAMS]) : null;
+    public function __construct(array $error)
+    {
+        if (array_key_exists(static::ERROR_CODE, $error)) {
+            $this->error_code = (int)$error[static::ERROR_CODE];
+        }
+
+        if (array_key_exists(static::ERROR_MSG, $error)) {
+            $this->error_msg = (string)$error[static::ERROR_MSG];
+        }
+
+        if (array_key_exists(self::CAPTCHA_SID, $error)) {
+            $this->captcha_sid = (string)$error[static::CAPTCHA_SID];
+        }
+
+        if (array_key_exists(static::CAPTCHA_IMG, $error)) {
+            $this->captcha_img = (string)$error[static::CAPTCHA_IMG];
+        }
+
+        if (array_key_exists(static::CONFIRMATION_TEXT, $error)) {
+            $this->confirmation_text = (string)$error[static::CONFIRMATION_TEXT];
+        }
+
+        if (array_key_exists(static::REDIRECT_URI, $error)) {
+            $this->redirect_uri = (string)$error[static::REDIRECT_URI];
+        }
+
+        if (array_key_exists(static::REQUEST_PARAMS, $error)) {
+            $this->request_params = (array)$error[static::REQUEST_PARAMS];
+        }
     }
 
     /**
@@ -39,7 +87,8 @@ class VKApiError {
      *
      * @return int|null
      */
-    public function getErrorCode(): ?int {
+    public function getErrorCode(): ?int
+    {
         return $this->error_code;
     }
 
@@ -48,7 +97,8 @@ class VKApiError {
      *
      * @return string|null
      */
-    public function getErrorMsg(): ?string {
+    public function getErrorMsg(): ?string
+    {
         return $this->error_msg;
     }
 
@@ -57,7 +107,8 @@ class VKApiError {
      *
      * @return string|null
      */
-    public function getCaptchaSid(): ?string {
+    public function getCaptchaSid(): ?string
+    {
         return $this->captcha_sid;
     }
 
@@ -66,7 +117,8 @@ class VKApiError {
      *
      * @return string|null
      */
-    public function getCaptchaImg(): ?string {
+    public function getCaptchaImg(): ?string
+    {
         return $this->captcha_img;
     }
 
@@ -75,7 +127,8 @@ class VKApiError {
      *
      * @return string|null
      */
-    public function getConfirmationText(): ?string {
+    public function getConfirmationText(): ?string
+    {
         return $this->confirmation_text;
     }
 
@@ -84,7 +137,8 @@ class VKApiError {
      *
      * @return string|null
      */
-    public function getRedirectUri(): ?string {
+    public function getRedirectUri(): ?string
+    {
         return $this->redirect_uri;
     }
 
@@ -93,9 +147,9 @@ class VKApiError {
      *
      * @return array|null
      */
-    public function getRequestParams(): ?array {
+    public function getRequestParams(): ?array
+    {
         return $this->request_params;
     }
-
 
 }

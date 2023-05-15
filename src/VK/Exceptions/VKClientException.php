@@ -2,6 +2,6 @@
 
 namespace VK\Exceptions;
 
-class VKClientException extends \Exception {
-    
+class VKClientException extends VKException
+{
 }
