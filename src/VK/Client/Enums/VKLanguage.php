@@ -2,7 +2,8 @@
 
 namespace VK\Client\Enums;
 
-class VKLanguage {
+class VKLanguage
+{
     const RUSSIAN = 'ru';
     const UKRAINIAN = 'ua';
     const BELORUSSIAN = 'be';

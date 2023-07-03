@@ -2,14 +2,18 @@
 
 namespace VK\OAuth;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 use VK\Exceptions\VKClientException;
 use VK\Exceptions\VKOAuthException;
-use VK\TransportClient\Curl\CurlHttpClient;
-use VK\TransportClient\TransportClientResponse;
-use VK\TransportClient\TransportRequestException;
+use VK\OAuth\Scopes\VKOAuthGroupScope;
+use VK\OAuth\Scopes\VKOAuthUserScope;
+use VK\Transport\Client;
 
-class VKOAuth {
-    protected const VERSION = '5.101';
+class VKOAuth
+{
+    protected const VERSION = '5.131';
 
     private const PARAM_VERSION = 'v';
     private const PARAM_CLIENT_ID = 'client_id';
@@ -34,29 +38,34 @@ class VKOAuth {
     protected const HTTP_STATUS_CODE_OK = 200;
 
     /**
-     * @var CurlHttpClient
+     * @var ClientInterface
      */
-    private $http_client;
+    private ClientInterface $client;
 
     /**
      * @var string
      */
-    private $version;
+    private string $version;
 
     /**
      * @var string
      */
-    private $host;
+    private string $host;
 
     /**
      * VKOAuth constructor.
      *
      * @param string $version
+     * @param ClientInterface|null $client
      */
-    public function __construct(string $version = self::VERSION) {
-        $this->http_client = new CurlHttpClient(static::CONNECTION_TIMEOUT);
+    public function __construct(string $version = self::VERSION, ?ClientInterface $client = null)
+    {
         $this->version = $version;
         $this->host = static::HOST;
+        $this->client = $client ?: new Client([
+            'base_uri' => $this->host,
+            'timeout' => static::CONNECTION_TIMEOUT,
+        ]);
     }
 
     /**
@@ -76,22 +85,30 @@ class VKOAuth {
      * @see VKOAuthGroupScope
      * @see VKOAuthUserScope
      */
-    public function getAuthorizeUrl(string $response_type, int $client_id, string $redirect_uri, string $display,
-                                    ?array $scope = null, ?string $state = null, ?array $group_ids = null, bool $revoke = false): string {
+    public function getAuthorizeUrl(
+        string $response_type,
+        int $client_id,
+        string $redirect_uri,
+        string $display,
+        ?array $scope = null,
+        ?string $state = null,
+        ?array $group_ids = null,
+        bool $revoke = false
+    ): string {
         $scope_mask = 0;
         foreach ($scope as $scope_setting) {
             $scope_mask |= $scope_setting;
         }
 
-        $params = array(
-            static::PARAM_CLIENT_ID     => $client_id,
-            static::PARAM_REDIRECT_URI  => $redirect_uri,
-            static::PARAM_DISPLAY       => $display,
-            static::PARAM_SCOPE         => $scope_mask,
-            static::PARAM_STATE         => $state,
+        $params = [
+            static::PARAM_CLIENT_ID => $client_id,
+            static::PARAM_REDIRECT_URI => $redirect_uri,
+            static::PARAM_DISPLAY => $display,
+            static::PARAM_SCOPE => $scope_mask,
+            static::PARAM_STATE => $state,
             static::PARAM_RESPONSE_TYPE => $response_type,
-            static::PARAM_VERSION       => $this->version,
-        );
+            static::PARAM_VERSION => $this->version,
+        ];
 
         if ($group_ids) {
             $params[static::PARAM_GROUP_IDS] = implode(',', $group_ids);
@@ -113,17 +130,19 @@ class VKOAuth {
      * @throws VKClientException
      * @throws VKOAuthException
      */
-    public function getAccessToken(int $client_id, string $client_secret, string $redirect_uri, string $code) {
-        $params = array(
-            static::PARAM_CLIENT_ID     => $client_id,
+    public function getAccessToken(int $client_id, string $client_secret, string $redirect_uri, string $code)
+    {
+        $params = [
+            static::PARAM_CLIENT_ID => $client_id,
             static::PARAM_CLIENT_SECRET => $client_secret,
-            static::PARAM_REDIRECT_URI  => $redirect_uri,
-            static::PARAM_CODE          => $code,
-        );
+            static::PARAM_REDIRECT_URI => $redirect_uri,
+            static::PARAM_CODE => $code,
+        ];
 
         try {
-            $response = $this->http_client->get($this->host . static::ENDPOINT_ACCESS_TOKEN, $params);
-        } catch (TransportRequestException $e) {
+            $url = $this->host . static::ENDPOINT_ACCESS_TOKEN . '?' . http_build_query($params);
+            $response = $this->client->get($url);
+        } catch (GuzzleException $e) {
             throw new VKClientException($e);
         }
 
@@ -133,21 +152,26 @@ class VKOAuth {
     /**
      * Decodes the authorization response and checks its status code and whether it has an error.
      *
-     * @param TransportClientResponse $response
+     * @param ResponseInterface $response
      *
      * @return mixed
      *
      * @throws VKClientException
      * @throws VKOAuthException
      */
-    protected function checkOAuthResponse(TransportClientResponse $response) {
-        $this->checkHttpStatus($response);
+    protected function checkOAuthResponse(ResponseInterface $response)
+    {
+        if ($response->getStatusCode() !== static::HTTP_STATUS_CODE_OK) {
+            throw new VKClientException("Invalid http status: {$response->getStatusCode()}");
+        }
 
-        $body = $response->getBody();
+        $body = $response->getBody()->getContents();
         $decode_body = $this->decodeBody($body);
 
         if (isset($decode_body[static::RESPONSE_KEY_ERROR])) {
-            throw new VKOAuthException("{$decode_body[static::RESPONSE_KEY_ERROR_DESCRIPTION]}. OAuth error {$decode_body[static::RESPONSE_KEY_ERROR]}");
+            throw new VKOAuthException(
+                "{$decode_body[static::RESPONSE_KEY_ERROR_DESCRIPTION]}. OAuth error {$decode_body[static::RESPONSE_KEY_ERROR]}"
+            );
         }
 
         return $decode_body;
@@ -160,24 +184,14 @@ class VKOAuth {
      *
      * @return mixed
      */
-    protected function decodeBody(string $body) {
+    protected function decodeBody(string $body)
+    {
         $decoded_body = json_decode($body, true);
 
-        if ($decoded_body === null || !is_array($decoded_body)) {
+        if (!is_array($decoded_body)) {
             $decoded_body = [];
         }
 
         return $decoded_body;
-    }
-
-    /**
-     * @param TransportClientResponse $response
-     *
-     * @throws VKClientException
-     */
-    protected function checkHttpStatus(TransportClientResponse $response): void {
-        if ((int)$response->getHttpStatus() !== static::HTTP_STATUS_CODE_OK) {
-            throw new VKClientException("Invalid http status: {$response->getHttpStatus()}");
-        }
     }
 }
