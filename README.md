@@ -101,7 +101,7 @@ Then use this method to get the access token:
 ```php
 $oauth = new \VK\OAuth\VKOAuth();
 $client_id = 1234567;
-$client_secret = 'SDAScasd'
+$client_secret = 'SDAScasd';
 $redirect_uri = 'https://example.com/vk';
 $code = 'CODE';
 
