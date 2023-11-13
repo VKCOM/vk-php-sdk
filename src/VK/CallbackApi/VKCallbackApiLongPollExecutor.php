@@ -157,8 +157,10 @@ class VKCallbackApiLongPollExecutor {
             static::PARAM_ACT  => static::VALUE_ACT
         );
 
+        $query_string = http_build_query($params);
+
         try {
-            $response = $this->http_client->get($host, $params);
+            $response = $this->http_client->get($host . '?' . $query_string);
         } catch (GuzzleException $exception) {
             throw new VKClientException($exception);
         }
