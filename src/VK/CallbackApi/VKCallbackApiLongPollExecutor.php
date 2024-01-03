@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Skeleton\skeleton\base\src\VK\CallbackApi;
+namespace VK\CallbackApi;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
