@@ -87,7 +87,7 @@ class VKApiRequest
         }
 
         try {
-            $response = $this->client->post("{$this->host}/{$method}?" . http_build_query($params));
+            $response = $this->client->post("{$this->host}/{$method}",['form_params' => $params]);
         } catch (GuzzleException $exception) {
             throw new VKClientException($exception);
         }
