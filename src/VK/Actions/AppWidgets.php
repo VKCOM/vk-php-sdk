@@ -4,8 +4,11 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\AppWidgetsImageType;
-use VK\Enums\AppWidgetsType;
+use VK\Enums\AppWidgetsGetAppImageUploadServerImageType;
+use VK\Enums\AppWidgetsGetAppImagesImageType;
+use VK\Enums\AppWidgetsGetGroupImageUploadServerImageType;
+use VK\Enums\AppWidgetsGetGroupImagesImageType;
+use VK\Enums\AppWidgetsUpdateType;
 use VK\Exceptions\Api\VKApiBlockedException;
 use VK\Exceptions\Api\VKApiCompileException;
 use VK\Exceptions\Api\VKApiParamGroupIdException;
@@ -35,7 +38,7 @@ class AppWidgets implements ActionInterface
 	 * Returns a URL for uploading a photo to the community collection for community app widgets
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var AppWidgetsImageType image_type
+	 * - @var AppWidgetsGetAppImageUploadServerImageType image_type
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -52,7 +55,7 @@ class AppWidgets implements ActionInterface
 	 * @param array $params
 	 * - @var integer offset: Offset needed to return a specific subset of images.
 	 * - @var integer count: Maximum count of results.
-	 * - @var AppWidgetsImageType image_type
+	 * - @var AppWidgetsGetAppImagesImageType image_type
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -67,7 +70,7 @@ class AppWidgets implements ActionInterface
 	 * Returns a URL for uploading a photo to the community collection for community app widgets
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var AppWidgetsImageType image_type
+	 * - @var AppWidgetsGetGroupImageUploadServerImageType image_type
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -84,7 +87,7 @@ class AppWidgets implements ActionInterface
 	 * @param array $params
 	 * - @var integer offset: Offset needed to return a specific subset of images.
 	 * - @var integer count: Maximum count of results.
-	 * - @var AppWidgetsImageType image_type
+	 * - @var AppWidgetsGetGroupImagesImageType image_type
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -149,7 +152,7 @@ class AppWidgets implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string code
-	 * - @var AppWidgetsType type
+	 * - @var AppWidgetsUpdateType type
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

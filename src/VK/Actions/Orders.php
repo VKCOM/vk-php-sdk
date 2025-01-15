@@ -4,7 +4,7 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\OrdersAction;
+use VK\Enums\OrdersChangeStateAction;
 use VK\Exceptions\Api\VKApiActionFailedException;
 use VK\Exceptions\Api\VKApiAppsSubscriptionInvalidStatusException;
 use VK\Exceptions\Api\VKApiAppsSubscriptionNotFoundException;
@@ -51,7 +51,7 @@ class Orders implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer order_id: order ID.
-	 * - @var OrdersAction action: action to be done with the order. Available actions: *cancel - to cancel unconfirmed order. *charge - to confirm unconfirmed order. Applies only if processing of [vk.com/dev/payments_status|order_change_state] notification failed. *refund - to cancel confirmed order.
+	 * - @var OrdersChangeStateAction action: action to be done with the order. Available actions: *cancel - to cancel unconfirmed order. *charge - to confirm unconfirmed order. Applies only if processing of [vk.com/dev/payments_status|order_change_state] notification failed. *refund - to cancel confirmed order.
 	 * - @var integer app_order_id: internal ID of the order in the application.
 	 * - @var boolean test_mode: if this parameter is set to 1, this method returns a list of test mode orders. By default - 0.
 	 * @return mixed
@@ -142,24 +142,6 @@ class Orders implements ActionInterface
 	public function getUserSubscriptions(string $access_token, array $params = [])
 	{
 		return $this->request->post('orders.getUserSubscriptions', $access_token, $params);
-	}
-
-
-	/**
-	 * @param string $access_token
-	 * @param array $params
-	 * - @var integer user_id
-	 * - @var integer subscription_id
-	 * - @var integer price
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 * @throws VKApiAppsSubscriptionNotFoundException Subscription not found
-	 * @throws VKApiAppsSubscriptionInvalidStatusException Subscription is in invalid status
-	 */
-	public function updateSubscription(string $access_token, array $params = [])
-	{
-		return $this->request->post('orders.updateSubscription', $access_token, $params);
 	}
 }
 

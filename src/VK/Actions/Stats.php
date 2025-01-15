@@ -4,7 +4,8 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\StatsInterval;
+use VK\Enums\StatsGetInterval;
+use VK\Enums\StatsTrackVisitorType;
 use VK\Exceptions\Api\VKApiWallAccessPostException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -31,9 +32,9 @@ class Stats implements ActionInterface
 	 * @param array $params
 	 * - @var integer group_id: Community ID.
 	 * - @var integer app_id: Application ID.
-	 * - @var integer timestamp_from
-	 * - @var integer timestamp_to
-	 * - @var StatsInterval interval
+	 * - @var number timestamp_from
+	 * - @var number timestamp_to
+	 * - @var StatsGetInterval interval
 	 * - @var integer intervals_count
 	 * - @var array[string] filters
 	 * - @var array[string] stats_groups
@@ -67,13 +68,15 @@ class Stats implements ActionInterface
 
 	/**
 	 * @param string $access_token
+	 * @param array $params
+	 * - @var StatsTrackVisitorType type
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 */
-	public function trackVisitor(string $access_token)
+	public function trackVisitor(string $access_token, array $params = [])
 	{
-		return $this->request->post('stats.trackVisitor', $access_token);
+		return $this->request->post('stats.trackVisitor', $access_token, $params);
 	}
 }
 

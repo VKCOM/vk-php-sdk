@@ -4,9 +4,10 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\FaveItemType;
-use VK\Enums\FavePosition;
-use VK\Enums\FaveType;
+use VK\Enums\FaveAddTagPosition;
+use VK\Enums\FaveGetItemType;
+use VK\Enums\FaveGetPagesType;
+use VK\Enums\FaveSetTagsItemType;
 use VK\Exceptions\Api\VKApiFaveAliexpressTagException;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiNotFoundException;
@@ -110,7 +111,7 @@ class Fave implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string name
-	 * - @var FavePosition position
+	 * - @var FaveAddTagPosition position
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -157,7 +158,7 @@ class Fave implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var boolean extended: '1' - to return additional 'wall', 'profiles', and 'groups' fields. By default: '0'.
-	 * - @var FaveItemType item_type
+	 * - @var FaveGetItemType item_type
 	 * - @var integer tag_id: Tag ID.
 	 * - @var integer offset: Offset needed to return a specific subset of users.
 	 * - @var integer count: Number of users to return.
@@ -178,8 +179,8 @@ class Fave implements ActionInterface
 	 * @param array $params
 	 * - @var integer offset
 	 * - @var integer count
-	 * - @var FaveType type
-	 * - @var array[FaveFields] fields
+	 * - @var FaveGetPagesType type
+	 * - @var array[FaveGetPagesFields] fields
 	 * - @var integer tag_id
 	 * @return mixed
 	 * @throws VKClientException
@@ -354,7 +355,7 @@ class Fave implements ActionInterface
 	/**
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var FaveItemType item_type
+	 * - @var FaveSetTagsItemType item_type
 	 * - @var integer item_owner_id
 	 * - @var integer item_id
 	 * - @var array[integer] tag_ids

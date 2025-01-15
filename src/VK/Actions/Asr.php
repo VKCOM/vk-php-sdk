@@ -4,7 +4,7 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\AsrModel;
+use VK\Enums\AsrProcessModel;
 use VK\Exceptions\Api\VKApiAsrAudioDurationFloodedException;
 use VK\Exceptions\Api\VKApiAsrFileIsTooBigException;
 use VK\Exceptions\Api\VKApiAsrInvalidHashException;
@@ -62,7 +62,7 @@ class Asr implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string audio: This parameter is a JSON response returned from [vk.com/dev/upload_files_2|file uploading server].
-	 * - @var AsrModel model: Which model to use for recognition. `neutral` -- general purpose (interviews, TV shows, etc.), `spontaneous` -- for NSFW audios (slang, profanity, etc.)
+	 * - @var AsrProcessModel model: Which model to use for recognition. `neutral` -- general purpose (interviews, TV shows, etc.), `spontaneous` -- for NSFW audios (slang, profanity, etc.)
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

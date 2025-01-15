@@ -73,7 +73,7 @@ class VKApiRequest
      * @throws VKClientException
      * @throws VKApiException
      */
-    public function post(string $method, string $access_token, array $params = array())
+    public function post(string $method, string $access_token, array $params = [])
     {
         $params = $this->formatParams($params);
         $params[static::PARAM_ACCESS_TOKEN] = $access_token;
@@ -87,7 +87,9 @@ class VKApiRequest
         }
 
         try {
-            $response = $this->client->post("{$this->host}/{$method}?" . http_build_query($params));
+            $response = $this->client->post("{$this->host}/{$method}", [
+                'body' => http_build_query($params),
+            ]);
         } catch (GuzzleException $exception) {
             throw new VKClientException($exception);
         }

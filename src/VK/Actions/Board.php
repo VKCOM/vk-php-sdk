@@ -4,9 +4,9 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\BoardOrder;
-use VK\Enums\BoardPreview;
-use VK\Enums\BoardSort;
+use VK\Enums\BoardGetCommentsSort;
+use VK\Enums\BoardGetTopicsOrder;
+use VK\Enums\BoardGetTopicsPreview;
 use VK\Exceptions\Api\VKApiGroupNeed2faException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -180,7 +180,7 @@ class Board implements ActionInterface
 	 * - @var integer offset: Offset needed to return a specific subset of comments.
 	 * - @var integer count: Number of comments to return.
 	 * - @var boolean extended: '1' - to return information about users who posted comments, '0' - to return no additional fields (default)
-	 * - @var BoardSort sort: Sort order: 'asc' - by creation date in chronological order, 'desc' - by creation date in reverse chronological order,
+	 * - @var BoardGetCommentsSort sort: Sort order: 'asc' - by creation date in chronological order, 'desc' - by creation date in reverse chronological order,
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -197,11 +197,11 @@ class Board implements ActionInterface
 	 * @param array $params
 	 * - @var integer group_id: ID of the community that owns the discussion board.
 	 * - @var array[integer] topic_ids: IDs of topics to be returned (100 maximum). By default, all topics are returned. If this parameter is set, the 'order', 'offset', and 'count' parameters are ignored.
-	 * - @var BoardOrder order: Sort order: '1' - by date updated in reverse chronological order. '2' - by date created in reverse chronological order. '-1' - by date updated in chronological order. '-2' - by date created in chronological order. If no sort order is specified, topics are returned in the order specified by the group administrator. Pinned topics are returned first, regardless of the sorting.
+	 * - @var BoardGetTopicsOrder order: Sort order: '1' - by date updated in reverse chronological order. '2' - by date created in reverse chronological order. '-1' - by date updated in chronological order. '-2' - by date created in chronological order. If no sort order is specified, topics are returned in the order specified by the group administrator. Pinned topics are returned first, regardless of the sorting.
 	 * - @var integer offset: Offset needed to return a specific subset of topics.
 	 * - @var integer count: Number of topics to return.
 	 * - @var boolean extended: '1' - to return information about users who created topics or who posted there last, '0' - to return no additional fields (default)
-	 * - @var BoardPreview preview: '1' - to return the first comment in each topic,, '2' - to return the last comment in each topic,, '0' - to return no comments. By default: '0'.
+	 * - @var BoardGetTopicsPreview preview: '1' - to return the first comment in each topic,, '2' - to return the last comment in each topic,, '0' - to return no comments. By default: '0'.
 	 * - @var integer preview_length: Number of characters after which to truncate the previewed comment. To preview the full comment, specify '0'.
 	 * @return mixed
 	 * @throws VKClientException

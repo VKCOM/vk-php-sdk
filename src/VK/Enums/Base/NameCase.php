@@ -4,11 +4,11 @@ namespace VK\Enums\Base;
 
 class NameCase
 {
-	const NOMINATIVE = 'Nom';
-	const GENITIVE = 'Gen';
-	const DATIVE = 'Dat';
-	const ACCUSATIVE = 'Acc';
-	const INSTRUMENTAL = 'Ins';
-	const PREPOSITIONAL = 'Abl';
+	public const NOMINATIVE = 'Nom';
+	public const GENITIVE = 'Gen';
+	public const DATIVE = 'Dat';
+	public const ACCUSATIVE = 'Acc';
+	public const INSTRUMENTAL = 'Ins';
+	public const PREPOSITIONAL = 'Abl';
 }
 

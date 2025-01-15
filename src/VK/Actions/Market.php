@@ -4,39 +4,57 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\MarketPaymentStatus;
-use VK\Enums\MarketReason;
-use VK\Enums\MarketRev;
-use VK\Enums\MarketSort;
-use VK\Enums\MarketSortBy;
-use VK\Enums\MarketSortDirection;
-use VK\Enums\MarketType;
+use VK\Enums\MarketEditOrderPaymentStatus;
+use VK\Enums\MarketGetCommentsSort;
+use VK\Enums\MarketReportCommentReason;
+use VK\Enums\MarketReportReason;
+use VK\Enums\MarketSearchItemsBasicSortBy;
+use VK\Enums\MarketSearchItemsBasicSortDirection;
+use VK\Enums\MarketSearchItemsSortBy;
+use VK\Enums\MarketSearchItemsSortDirection;
+use VK\Enums\MarketSearchRev;
+use VK\Enums\MarketSearchSort;
 use VK\Exceptions\Api\VKApiAccessMarketException;
 use VK\Exceptions\Api\VKApiMarketAlbumMainHiddenException;
 use VK\Exceptions\Api\VKApiMarketAlbumNotFoundException;
 use VK\Exceptions\Api\VKApiMarketCantChangeVkpayStatusException;
 use VK\Exceptions\Api\VKApiMarketCommentsClosedException;
+use VK\Exceptions\Api\VKApiMarketDisabledException;
 use VK\Exceptions\Api\VKApiMarketExtendedNotEnabledException;
+use VK\Exceptions\Api\VKApiMarketFailedToSetAlbumAsMainException;
+use VK\Exceptions\Api\VKApiMarketFailedToUnsetAlbumAsMainException;
 use VK\Exceptions\Api\VKApiMarketGroupingAlreadyHasSuchVariantException;
+use VK\Exceptions\Api\VKApiMarketGroupingHasOtherPropertiesException;
 use VK\Exceptions\Api\VKApiMarketGroupingItemsMustHaveDistinctPropertiesException;
 use VK\Exceptions\Api\VKApiMarketGroupingItemsWithDifferentPropertiesException;
 use VK\Exceptions\Api\VKApiMarketGroupingMustContainMoreThanOneItemException;
+use VK\Exceptions\Api\VKApiMarketGroupingMustHaveVariantsException;
 use VK\Exceptions\Api\VKApiMarketInvalidDimensionsException;
 use VK\Exceptions\Api\VKApiMarketItemAlreadyAddedException;
 use VK\Exceptions\Api\VKApiMarketItemHasBadLinksException;
+use VK\Exceptions\Api\VKApiMarketItemIsNotDeletedException;
 use VK\Exceptions\Api\VKApiMarketItemNotFoundException;
+use VK\Exceptions\Api\VKApiMarketMaxPropertiesLimitExceedException;
+use VK\Exceptions\Api\VKApiMarketMaxVariantsLimitExceedException;
+use VK\Exceptions\Api\VKApiMarketNameTooLongException;
 use VK\Exceptions\Api\VKApiMarketNotEnabledException;
 use VK\Exceptions\Api\VKApiMarketOrdersInvalidStatusException;
 use VK\Exceptions\Api\VKApiMarketOrdersNoCartItemsException;
+use VK\Exceptions\Api\VKApiMarketOrdersOrderNotFoundException;
 use VK\Exceptions\Api\VKApiMarketPhotosCropInvalidFormatException;
 use VK\Exceptions\Api\VKApiMarketPhotosCropOverflowException;
 use VK\Exceptions\Api\VKApiMarketPhotosCropSizeTooLowException;
 use VK\Exceptions\Api\VKApiMarketPropertyNotFoundException;
 use VK\Exceptions\Api\VKApiMarketRestoreTooLateException;
+use VK\Exceptions\Api\VKApiMarketServicesDisabledException;
 use VK\Exceptions\Api\VKApiMarketTooManyAlbumsException;
 use VK\Exceptions\Api\VKApiMarketTooManyItemsException;
 use VK\Exceptions\Api\VKApiMarketTooManyItemsInAlbumException;
+use VK\Exceptions\Api\VKApiMarketUnknownPropertyTypeException;
 use VK\Exceptions\Api\VKApiMarketVariantNotFoundException;
+use VK\Exceptions\Api\VKApiMarketVariantValueTooLongException;
+use VK\Exceptions\Api\VKApiMarketVariantsException;
+use VK\Exceptions\Api\VKApiMarketVariantsNotEnabledException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -71,11 +89,14 @@ class Market implements ActionInterface
 	 * - @var array[integer] photo_ids: IDs of additional photos.
 	 * - @var array[integer] video_ids: IDs of additional videos.
 	 * - @var string url: Url for button in market item.
+	 * - @var array[integer] variant_ids: IDs of properties variants.
+	 * - @var boolean is_main_variant: Is main in their group.
 	 * - @var integer dimension_width
 	 * - @var integer dimension_height
 	 * - @var integer dimension_length
 	 * - @var integer weight
 	 * - @var string sku
+	 * - @var integer stock_amount
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -90,6 +111,7 @@ class Market implements ActionInterface
 	 * @throws VKApiMarketPhotosCropOverflowException Crop bottom right corner is outside of the image
 	 * @throws VKApiMarketPhotosCropSizeTooLowException Crop size is less than the minimum
 	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 * @throws VKApiMarketTooManyItemsInAlbumException Too many items in album
 	 */
 	public function add(string $access_token, array $params = [])
 	{
@@ -116,6 +138,51 @@ class Market implements ActionInterface
 	public function addAlbum(string $access_token, array $params = [])
 	{
 		return $this->request->post('market.addAlbum', $access_token, $params);
+	}
+
+
+	/**
+	 * Adds property
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var string title: Property name.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketNameTooLongException Name too long
+	 * @throws VKApiMarketUnknownPropertyTypeException Unknown property type
+	 * @throws VKApiMarketMaxPropertiesLimitExceedException Max properties limit exceeded
+	 * @throws VKApiMarketVariantsNotEnabledException Variants not enabled
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function addProperty(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.addProperty', $access_token, $params);
+	}
+
+
+	/**
+	 * Adds property variant
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var integer property_id: Property id.
+	 * - @var string title: Variant name.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 * @throws VKApiMarketVariantValueTooLongException Variant value is too long
+	 * @throws VKApiMarketMaxVariantsLimitExceedException Max variant limit exceeded
+	 * @throws VKApiMarketPropertyNotFoundException Property not found
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function addPropertyVariant(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.addPropertyVariant', $access_token, $params);
 	}
 
 
@@ -217,6 +284,45 @@ class Market implements ActionInterface
 
 
 	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var integer property_id: Property id.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 * @throws VKApiMarketPropertyNotFoundException Property not found
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function deleteProperty(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.deleteProperty', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var integer variant_id: Variant id.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 * @throws VKApiMarketPropertyNotFoundException Property not found
+	 * @throws VKApiMarketVariantNotFoundException Variant not found
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function deletePropertyVariant(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.deletePropertyVariant', $access_token, $params);
+	}
+
+
+	/**
 	 * Edits an item.
 	 * @param string $access_token
 	 * @param array $params
@@ -232,11 +338,14 @@ class Market implements ActionInterface
 	 * - @var array[integer] photo_ids: IDs of additional photos.
 	 * - @var array[integer] video_ids: IDs of additional videos.
 	 * - @var string url: Url for button in market item.
+	 * - @var array[integer] variant_ids: IDs of properties variants.
+	 * - @var boolean is_main_variant: Is main in their group.
 	 * - @var integer dimension_width
 	 * - @var integer dimension_height
 	 * - @var integer dimension_length
 	 * - @var integer weight
 	 * - @var string sku
+	 * - @var integer stock_amount
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -272,6 +381,8 @@ class Market implements ActionInterface
 	 * @throws VKApiMarketAlbumNotFoundException Album not found
 	 * @throws VKApiMarketNotEnabledException Market not enabled
 	 * @throws VKApiMarketAlbumMainHiddenException Main album can not be hidden
+	 * @throws VKApiMarketFailedToSetAlbumAsMainException Failed to set album as main
+	 * @throws VKApiMarketFailedToUnsetAlbumAsMainException Failed to unset album as main
 	 */
 	public function editAlbum(string $access_token, array $params = [])
 	{
@@ -306,12 +417,14 @@ class Market implements ActionInterface
 	 * - @var string merchant_comment
 	 * - @var integer status
 	 * - @var string track_number
-	 * - @var MarketPaymentStatus payment_status
+	 * - @var MarketEditOrderPaymentStatus payment_status
 	 * - @var integer delivery_price
 	 * - @var integer width
 	 * - @var integer length
 	 * - @var integer height
 	 * - @var integer weight
+	 * - @var string comment_for_user
+	 * - @var string receipt_link
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -323,6 +436,50 @@ class Market implements ActionInterface
 	public function editOrder(string $access_token, array $params = [])
 	{
 		return $this->request->post('market.editOrder', $access_token, $params);
+	}
+
+
+	/**
+	 * Adds property
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var integer property_id: Property id.
+	 * - @var string title: Property name
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketNameTooLongException Name too long
+	 * @throws VKApiMarketUnknownPropertyTypeException Unknown property type
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function editProperty(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.editProperty', $access_token, $params);
+	}
+
+
+	/**
+	 * Edit property variant name
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var integer variant_id: Variant id.
+	 * - @var string title: Variant name.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 * @throws VKApiMarketNameTooLongException Name too long
+	 * @throws VKApiMarketVariantValueTooLongException Variant value is too long
+	 * @throws VKApiMarketVariantNotFoundException Variant not found
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function editPropertyVariant(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.editPropertyVariant', $access_token, $params);
 	}
 
 
@@ -356,6 +513,7 @@ class Market implements ActionInterface
 	 * - @var string date_to: Items update date to (format: yyyy-mm-dd)
 	 * - @var boolean need_variants: Add variants to response if exist
 	 * - @var boolean with_disabled: Add disabled items to response
+	 * - @var array[string] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -405,11 +563,11 @@ class Market implements ActionInterface
 	 * @param array $params
 	 * - @var array[string] item_ids: Comma-separated ids list: {user id}_{item id}. If an item belongs to a community -{community id} is used. " 'Videos' value example: , '-4363_136089719,13245770_137352259'"
 	 * - @var boolean extended: '1' - to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.
-	 * - @var string ref_screen: Ref screen
-	 * - @var string ref_post_id: Ref post id
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
+	 * @throws VKApiMarketDisabledException Market is disabled
+	 * @throws VKApiMarketServicesDisabledException Market services are disabled
 	 */
 	public function getById(string $access_token, array $params = [])
 	{
@@ -421,10 +579,8 @@ class Market implements ActionInterface
 	 * Returns a list of market categories.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var MarketType type: Type of categories
 	 * - @var integer group_id: Group Id.
-	 * - @var integer count: Number of results to return.
-	 * - @var integer offset: Offset needed to return a specific subset of results.
+	 * - @var integer album_id
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -445,9 +601,9 @@ class Market implements ActionInterface
 	 * - @var integer start_comment_id: ID of a comment to start a list from (details below).
 	 * - @var integer offset
 	 * - @var integer count: Number of results to return.
-	 * - @var MarketSort sort: Sort order ('asc' - from old to new, 'desc' - from new to old)
+	 * - @var MarketGetCommentsSort sort: Sort order ('asc' - from old to new, 'desc' - from new to old)
 	 * - @var boolean extended: '1' - comments will be returned as numbered objects, in addition lists of 'profiles' and 'groups' objects will be returned.
-	 * - @var array[MarketFields] fields: List of additional profile fields to return. See the [vk.com/dev/fields|details]
+	 * - @var array[MarketGetCommentsFields] fields: List of additional profile fields to return. See the [vk.com/dev/fields|details]
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -488,6 +644,7 @@ class Market implements ActionInterface
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
+	 * @throws VKApiMarketOrdersOrderNotFoundException Order not found
 	 */
 	public function getOrderById(string $access_token, array $params = [])
 	{
@@ -528,6 +685,70 @@ class Market implements ActionInterface
 	public function getOrders(string $access_token, array $params = [])
 	{
 		return $this->request->post('market.getOrders', $access_token, $params);
+	}
+
+
+	/**
+	 * Returns the server address for market photo upload.
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Community ID.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function getProductPhotoUploadServer(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.getProductPhotoUploadServer', $access_token, $params);
+	}
+
+
+	/**
+	 * Get properties
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketVariantsNotEnabledException Variants not enabled
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 */
+	public function getProperties(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.getProperties', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var array[integer] item_ids: Item ids.
+	 * - @var integer item_group_id: Items group id.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 * @throws VKApiMarketItemNotFoundException Item not found
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketGroupingItemsWithDifferentPropertiesException Grouping items with different properties
+	 * @throws VKApiMarketGroupingAlreadyHasSuchVariantException Grouping already has such variant
+	 * @throws VKApiMarketGroupingHasOtherPropertiesException Grouping has other properties
+	 * @throws VKApiMarketGroupingMustHaveVariantsException Grouping must have variants
+	 * @throws VKApiMarketVariantNotFoundException Variant not found
+	 * @throws VKApiMarketVariantsNotEnabledException Variants not enabled
+	 * @throws VKApiMarketPropertyNotFoundException Property not found
+	 * @throws VKApiMarketGroupingMustContainMoreThanOneItemException Grouping must have two or more items
+	 * @throws VKApiMarketGroupingItemsMustHaveDistinctPropertiesException Item must have distinct properties
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function groupItems(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.groupItems', $access_token, $params);
 	}
 
 
@@ -601,7 +822,7 @@ class Market implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: ID of an item owner community.
 	 * - @var integer item_id: Item ID.
-	 * - @var MarketReason reason: Complaint reason. Possible values: *'0' - spam,, *'1' - child porn,, *'2' - extremism,, *'3' - violence,, *'4' - drugs propaganda,, *'5' - adult materials,, *'6' - insult.
+	 * - @var MarketReportReason reason: Complaint reason. Possible values: *'0' - spam,, *'1' - child porn,, *'2' - extremism,, *'3' - violence,, *'4' - drugs propaganda,, *'5' - adult materials,, *'6' - insult.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -618,7 +839,7 @@ class Market implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: ID of an item owner community.
 	 * - @var integer comment_id: Comment ID.
-	 * - @var MarketReason reason: Complaint reason. Possible values: *'0' - spam,, *'1' - child porn,, *'2' - extremism,, *'3' - violence,, *'4' - drugs propaganda,, *'5' - adult materials,, *'6' - insult.
+	 * - @var MarketReportCommentReason reason: Complaint reason. Possible values: *'0' - spam,, *'1' - child porn,, *'2' - extremism,, *'3' - violence,, *'4' - drugs propaganda,, *'5' - adult materials,, *'6' - insult.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -641,6 +862,8 @@ class Market implements ActionInterface
 	 * @throws VKApiAccessMarketException Access denied
 	 * @throws VKApiMarketRestoreTooLateException Too late for restore
 	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 * @throws VKApiMarketItemNotFoundException Item not found
+	 * @throws VKApiMarketItemIsNotDeletedException Item is not deleted
 	 */
 	public function restore(string $access_token, array $params = [])
 	{
@@ -665,6 +888,22 @@ class Market implements ActionInterface
 
 
 	/**
+	 * Save market photo after upload.
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var string upload_response: Upload response
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function saveProductPhoto(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.saveProductPhoto', $access_token, $params);
+	}
+
+
+	/**
 	 * Searches market items in a community's catalog
 	 * @param string $access_token
 	 * @param array $params
@@ -673,8 +912,8 @@ class Market implements ActionInterface
 	 * - @var string q: Search query, for example "pink slippers".
 	 * - @var integer price_from: Minimum item price value.
 	 * - @var integer price_to: Maximum item price value.
-	 * - @var MarketSort sort
-	 * - @var MarketRev rev: '0' - do not use reverse order, '1' - use reverse order
+	 * - @var MarketSearchSort sort
+	 * - @var MarketSearchRev rev: '0' - do not use reverse order, '1' - use reverse order
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * - @var integer count: Number of items to return.
 	 * - @var boolean extended: '1' - to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.
@@ -699,8 +938,8 @@ class Market implements ActionInterface
 	 * - @var integer category_id
 	 * - @var integer price_from
 	 * - @var integer price_to
-	 * - @var MarketSortBy sort_by
-	 * - @var MarketSortDirection sort_direction
+	 * - @var MarketSearchItemsSortBy sort_by
+	 * - @var MarketSearchItemsSortDirection sort_direction
 	 * - @var integer country
 	 * - @var integer city
 	 * @return mixed
@@ -722,8 +961,8 @@ class Market implements ActionInterface
 	 * - @var integer category_id
 	 * - @var integer price_from
 	 * - @var integer price_to
-	 * - @var MarketSortBy sort_by
-	 * - @var MarketSortDirection sort_direction
+	 * - @var MarketSearchItemsBasicSortBy sort_by
+	 * - @var MarketSearchItemsBasicSortDirection sort_direction
 	 * - @var integer country
 	 * - @var integer city
 	 * - @var boolean only_my_groups
@@ -734,6 +973,24 @@ class Market implements ActionInterface
 	public function searchItemsBasic(string $access_token, array $params = [])
 	{
 		return $this->request->post('market.searchItemsBasic', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer group_id: Group id.
+	 * - @var integer item_group_id: Items group id.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketExtendedNotEnabledException Extended market not enabled
+	 * @throws VKApiMarketVariantsException Variants error
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function ungroupItems(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.ungroupItems', $access_token, $params);
 	}
 }
 

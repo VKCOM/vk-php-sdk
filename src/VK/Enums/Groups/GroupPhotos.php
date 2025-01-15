@@ -4,8 +4,8 @@ namespace VK\Enums\Groups;
 
 class GroupPhotos
 {
-	const DISABLED = 0;
-	const OPEN = 1;
-	const LIMITED = 2;
+	public const DISABLED = 0;
+	public const OPEN = 1;
+	public const LIMITED = 2;
 }
 

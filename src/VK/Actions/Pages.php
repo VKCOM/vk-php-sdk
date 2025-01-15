@@ -4,8 +4,8 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\PagesEdit;
-use VK\Enums\PagesView;
+use VK\Enums\PagesSaveAccessEdit;
+use VK\Enums\PagesSaveAccessView;
 use VK\Exceptions\Api\VKApiAccessPageException;
 use VK\Exceptions\Api\VKApiParamPageIdException;
 use VK\Exceptions\Api\VKApiParamTitleException;
@@ -163,8 +163,8 @@ class Pages implements ActionInterface
 	 * - @var integer page_id: Wiki page ID.
 	 * - @var integer group_id: ID of the community that owns the wiki page.
 	 * - @var integer user_id
-	 * - @var PagesView view: Who can view the wiki page: '1' - only community members, '2' - all users can view the page, '0' - only community managers
-	 * - @var PagesEdit edit: Who can edit the wiki page: '1' - only community members, '2' - all users can edit the page, '0' - only community managers
+	 * - @var PagesSaveAccessView view: Who can view the wiki page: '1' - only community members, '2' - all users can view the page, '0' - only community managers
+	 * - @var PagesSaveAccessEdit edit: Who can edit the wiki page: '1' - only community members, '2' - all users can edit the page, '0' - only community managers
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

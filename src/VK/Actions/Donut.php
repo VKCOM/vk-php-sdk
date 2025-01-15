@@ -60,7 +60,7 @@ class Donut implements ActionInterface
 	 * Returns a list of user's VK Donut subscriptions.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var array[DonutFields] fields
+	 * - @var array[DonutGetSubscriptionsFields] fields
 	 * - @var integer offset
 	 * - @var integer count
 	 * @return mixed

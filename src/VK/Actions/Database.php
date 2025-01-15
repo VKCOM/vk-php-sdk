@@ -44,7 +44,6 @@ class Database implements ActionInterface
 	 * Returns a list of cities.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var integer country_id: Country ID.
 	 * - @var integer region_id: Region ID.
 	 * - @var string q: Search query.
 	 * - @var boolean need_all: '1' - to return all cities in the country, '0' - to return major cities in the country (default),
@@ -162,7 +161,6 @@ class Database implements ActionInterface
 	 * Returns a list of regions.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var integer country_id: Country ID, received in [vk.com/dev/database.getCountries|database.getCountries] method.
 	 * - @var string q: Search query.
 	 * - @var integer offset: Offset needed to return specific subset of regions.
 	 * - @var integer count: Number of regions to return.
@@ -214,7 +212,6 @@ class Database implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string q: Search query.
-	 * - @var integer country_id: Country ID.
 	 * - @var integer city_id: City ID.
 	 * - @var integer offset: Offset needed to return a specific subset of universities.
 	 * - @var integer count: Number of universities to return.

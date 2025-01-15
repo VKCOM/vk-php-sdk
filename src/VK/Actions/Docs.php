@@ -4,11 +4,14 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\DocsType;
+use VK\Enums\DocsGetMessagesUploadServerType;
+use VK\Enums\DocsGetType;
 use VK\Exceptions\Api\VKApiMessagesDenySendException;
 use VK\Exceptions\Api\VKApiParamDocAccessException;
 use VK\Exceptions\Api\VKApiParamDocDeleteAccessException;
 use VK\Exceptions\Api\VKApiParamDocIdException;
+use VK\Exceptions\Api\VKApiParamDocRestoreAccessException;
+use VK\Exceptions\Api\VKApiParamDocRestoreTimeoutException;
 use VK\Exceptions\Api\VKApiParamDocTitleException;
 use VK\Exceptions\Api\VKApiSaveFileException;
 use VK\Exceptions\VKApiException;
@@ -92,7 +95,7 @@ class Docs implements ActionInterface
 	 * @param array $params
 	 * - @var integer count: Number of documents to return. By default, all documents.
 	 * - @var integer offset: Offset needed to return a specific subset of documents.
-	 * - @var DocsType type
+	 * - @var DocsGetType type
 	 * - @var integer owner_id: ID of the user or community that owns the documents. Use a negative value to designate a community ID.
 	 * - @var boolean return_tags
 	 * @return mixed
@@ -125,7 +128,7 @@ class Docs implements ActionInterface
 	 * Returns the server address for document upload.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var DocsType type: Document type.
+	 * - @var DocsGetMessagesUploadServerType type: Document type.
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
 	 * @return mixed
 	 * @throws VKClientException
@@ -180,6 +183,23 @@ class Docs implements ActionInterface
 	public function getWallUploadServer(string $access_token, array $params = [])
 	{
 		return $this->request->post('docs.getWallUploadServer', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer owner_id
+	 * - @var integer doc_id
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiParamDocRestoreAccessException Access to document restoring is denied
+	 * @throws VKApiParamDocRestoreTimeoutException Document was deleted too long ago
+	 */
+	public function restore(string $access_token, array $params = [])
+	{
+		return $this->request->post('docs.restore', $access_token, $params);
 	}
 
 

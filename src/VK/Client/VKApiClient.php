@@ -2,12 +2,14 @@
 
 namespace VK\Client;
 
+use Psr\Http\Client\ClientInterface;
 use VK\Client\Actions\ActionInterface;
 use VK\Exceptions\VKApiException;
 
 /**
  * @method \VK\Actions\Account account()
  * @method \VK\Actions\Ads ads()
+ * @method \VK\Actions\Adsweb adsweb()
  * @method \VK\Actions\AppWidgets appwidgets()
  * @method \VK\Actions\Apps apps()
  * @method \VK\Actions\Asr asr()
@@ -45,6 +47,7 @@ use VK\Exceptions\VKApiException;
  * @method \VK\Actions\Store store()
  * @method \VK\Actions\Stories stories()
  * @method \VK\Actions\Streaming streaming()
+ * @method \VK\Actions\Translations translations()
  * @method \VK\Actions\Users users()
  * @method \VK\Actions\Utils utils()
  * @method \VK\Actions\Video video()
@@ -53,7 +56,7 @@ use VK\Exceptions\VKApiException;
  */
 class VKApiClient
 {
-    protected const API_VERSION = '5.131';
+    protected const API_VERSION = '5.199';
     protected const API_HOST = 'https://api.vk.com/method';
 
     /**
@@ -70,10 +73,11 @@ class VKApiClient
      * VKApiClient constructor.
      * @param string $api_version
      * @param string|null $language
+     * @param ClientInterface|null $client
      */
-    public function __construct(string $api_version = self::API_VERSION, ?string $language = null)
+    public function __construct(string $api_version = self::API_VERSION, ?string $language = null, ?ClientInterface $client = null)
     {
-        $this->request = new VKApiRequest($api_version, $language, self::API_HOST);
+        $this->request = new VKApiRequest($api_version, $language, self::API_HOST, $client);
     }
 
     /**
@@ -96,7 +100,7 @@ class VKApiClient
 
         $class = '\\VK\\Actions\\' . ucfirst($name);
         if (!class_exists($class)) {
-            throw new VKApiException("Class {$class} not found");
+            throw new VKApiException(0, "Class {$class} not found");
         }
 
         if (!array_key_exists($name, $this->instances)) {

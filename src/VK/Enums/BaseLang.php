@@ -4,13 +4,13 @@ namespace VK\Enums;
 
 class BaseLang
 {
-	const RUSSIAN = 'ru';
-	const UKRAINIAN = 'ua';
-	const BELARUSIAN = 'be';
-	const ENGLISH = 'en';
-	const SPANISH = 'es';
-	const FINNISH = 'fi';
-	const GERMAN = 'de';
-	const ITALIAN = 'it';
+	public const RUSSIAN = 'ru';
+	public const UKRAINIAN = 'ua';
+	public const BELARUSIAN = 'be';
+	public const ENGLISH = 'en';
+	public const SPANISH = 'es';
+	public const FINNISH = 'fi';
+	public const GERMAN = 'de';
+	public const ITALIAN = 'it';
 }
 

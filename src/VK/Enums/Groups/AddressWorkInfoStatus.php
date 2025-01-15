@@ -4,10 +4,10 @@ namespace VK\Enums\Groups;
 
 class AddressWorkInfoStatus
 {
-	const NO_INFORMATION = 'no_information';
-	const TEMPORARILY_CLOSED = 'temporarily_closed';
-	const ALWAYS_OPENED = 'always_opened';
-	const TIMETABLE = 'timetable';
-	const FOREVER_CLOSED = 'forever_closed';
+	public const NO_INFORMATION = 'no_information';
+	public const TEMPORARILY_CLOSED = 'temporarily_closed';
+	public const ALWAYS_OPENED = 'always_opened';
+	public const TIMETABLE = 'timetable';
+	public const FOREVER_CLOSED = 'forever_closed';
 }
 

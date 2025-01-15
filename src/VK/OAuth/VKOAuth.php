@@ -13,7 +13,7 @@ use VK\Transport\Client;
 
 class VKOAuth
 {
-    protected const VERSION = '5.131';
+    protected const VERSION = '5.199';
 
     private const PARAM_VERSION = 'v';
     private const PARAM_CLIENT_ID = 'client_id';

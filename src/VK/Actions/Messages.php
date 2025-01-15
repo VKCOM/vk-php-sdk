@@ -5,11 +5,13 @@ namespace VK\Actions;
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
 use VK\Enums\Base\NameCase;
-use VK\Enums\MessagesFilter;
-use VK\Enums\MessagesIntent;
-use VK\Enums\MessagesMediaType;
-use VK\Enums\MessagesRev;
-use VK\Enums\MessagesType;
+use VK\Enums\MessagesGetConversationsFilter;
+use VK\Enums\MessagesGetHistoryAttachmentsMediaType;
+use VK\Enums\MessagesGetHistoryRev;
+use VK\Enums\MessagesGetIntentUsersIntent;
+use VK\Enums\MessagesMuteChatMentionsMentionStatus;
+use VK\Enums\MessagesSendIntent;
+use VK\Enums\MessagesSetActivityType;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiMessagesCantChangeInviteLinkException;
 use VK\Exceptions\Api\VKApiMessagesCantDeleteForAllException;
@@ -28,17 +30,24 @@ use VK\Exceptions\Api\VKApiMessagesChatUserNoAccessException;
 use VK\Exceptions\Api\VKApiMessagesChatUserNotInChatException;
 use VK\Exceptions\Api\VKApiMessagesContactNotFoundException;
 use VK\Exceptions\Api\VKApiMessagesDenySendException;
+use VK\Exceptions\Api\VKApiMessagesDropDeviceCacheException;
 use VK\Exceptions\Api\VKApiMessagesEditExpiredException;
 use VK\Exceptions\Api\VKApiMessagesEditKindDisallowedException;
+use VK\Exceptions\Api\VKApiMessagesForbiddenReactionException;
+use VK\Exceptions\Api\VKApiMessagesGroupForNotificationsOnlyException;
 use VK\Exceptions\Api\VKApiMessagesGroupPeerAccessException;
 use VK\Exceptions\Api\VKApiMessagesIntentCantUseException;
 use VK\Exceptions\Api\VKApiMessagesIntentLimitOverflowException;
+use VK\Exceptions\Api\VKApiMessagesInvalidReactionIdException;
 use VK\Exceptions\Api\VKApiMessagesKeyboardInvalidException;
 use VK\Exceptions\Api\VKApiMessagesMemberAccessToGroupDeniedException;
 use VK\Exceptions\Api\VKApiMessagesMessageCannotBeForwardedException;
 use VK\Exceptions\Api\VKApiMessagesMessageRequestAlreadySentException;
+use VK\Exceptions\Api\VKApiMessagesNeedMessageRequestException;
 use VK\Exceptions\Api\VKApiMessagesPeerBlockedReasonByTimeException;
+use VK\Exceptions\Api\VKApiMessagesPendingMessageRequestException;
 use VK\Exceptions\Api\VKApiMessagesPrivacyException;
+use VK\Exceptions\Api\VKApiMessagesReactionsLimitReachedException;
 use VK\Exceptions\Api\VKApiMessagesTooBigException;
 use VK\Exceptions\Api\VKApiMessagesTooLongForwardsException;
 use VK\Exceptions\Api\VKApiMessagesTooLongMessageException;
@@ -47,6 +56,7 @@ use VK\Exceptions\Api\VKApiMessagesTooNewPtsException;
 use VK\Exceptions\Api\VKApiMessagesTooOldPtsException;
 use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
 use VK\Exceptions\Api\VKApiMessagesUserNotDonException;
+use VK\Exceptions\Api\VKApiMessagesWritingDisabledForChatException;
 use VK\Exceptions\Api\VKApiNotFoundException;
 use VK\Exceptions\Api\VKApiPhotoChangedException;
 use VK\Exceptions\Api\VKApiTimeoutException;
@@ -96,6 +106,22 @@ class Messages implements ActionInterface
 
 
 	/**
+	 * Adds new users to a chat.
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer chat_id
+	 * - @var integer visible_messages_count
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function addChatUsers(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.addChatUsers', $access_token, $params);
+	}
+
+
+	/**
 	 * Allows sending messages from community to the current user.
 	 * @param string $access_token
 	 * @param array $params
@@ -136,6 +162,7 @@ class Messages implements ActionInterface
 	 * @param array $params
 	 * - @var array[integer] message_ids: Message IDs.
 	 * - @var boolean spam: '1' - to mark message as spam.
+	 * - @var integer reason: Reason for spam
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * - @var boolean delete_for_all: '1' - delete message for for all.
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
@@ -184,6 +211,22 @@ class Messages implements ActionInterface
 	public function deleteConversation(string $access_token, array $params = [])
 	{
 		return $this->request->post('messages.deleteConversation', $access_token, $params);
+	}
+
+
+	/**
+	 * Delete message reaction
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer peer_id
+	 * - @var integer cmid
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function deleteReaction(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.deleteReaction', $access_token, $params);
 	}
 
 
@@ -267,7 +310,7 @@ class Messages implements ActionInterface
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
 	 * - @var array[integer] conversation_message_ids: Conversation message IDs.
 	 * - @var boolean extended: Information whether the response should be extended
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var array[MessagesGetByConversationMessageIdFields] fields: Profile fields to return.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * @return mixed
 	 * @throws VKClientException
@@ -286,7 +329,7 @@ class Messages implements ActionInterface
 	 * - @var array[integer] message_ids: Message IDs.
 	 * - @var integer preview_length: Number of characters after which to truncate a previewed message. To preview the full message, specify '0'. "NOTE: Messages are not truncated by default. Messages are truncated by words."
 	 * - @var boolean extended: Information whether the response should be extended
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var array[MessagesGetByIdFields] fields: Profile fields to return.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * - @var array[integer] cmids
 	 * - @var integer peer_id
@@ -306,12 +349,15 @@ class Messages implements ActionInterface
 	 * @param array $params
 	 * - @var integer chat_id: Chat ID.
 	 * - @var array[integer] chat_ids: Chat IDs.
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var array[MessagesGetChatFields] fields: Profile fields to return.
 	 * - @var NameCase name_case: Case for declension of user name and surname: 'nom' - nominative (default), 'gen' - genitive , 'dat' - dative, 'acc' - accusative , 'ins' - instrumental , 'abl' - prepositional
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
+	 * @throws VKApiMessagesChatDisabledException Chat was disabled
 	 * @throws VKApiMessagesChatUnsupportedException Chat not supported
+	 * @throws VKApiMessagesWritingDisabledForChatException Writing is disabled for this chat
+	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
 	 */
 	public function getChat(string $access_token, array $params = [])
 	{
@@ -324,7 +370,7 @@ class Messages implements ActionInterface
 	 * @param array $params
 	 * - @var integer peer_id
 	 * - @var string link: Invitation link.
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var array[MessagesGetChatPreviewFields] fields: Profile fields to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -342,12 +388,17 @@ class Messages implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer peer_id: Peer ID.
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var integer offset
+	 * - @var integer count
+	 * - @var boolean extended: Extended flag
+	 * - @var array[MessagesGetConversationMembersFields] fields: Profile fields to return.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
+	 * - @var array[integer] member_ids
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
+	 * @throws VKApiMessagesChatNotExistException Chat does not exist
 	 */
 	public function getConversationMembers(string $access_token, array $params = [])
 	{
@@ -361,10 +412,10 @@ class Messages implements ActionInterface
 	 * @param array $params
 	 * - @var integer offset: Offset needed to return a specific subset of conversations.
 	 * - @var integer count: Number of conversations to return.
-	 * - @var MessagesFilter filter: Filter to apply: 'all' - all conversations, 'unread' - conversations with unread messages, 'important' - conversations, marked as important (only for community messages), 'unanswered' - conversations, marked as unanswered (only for community messages)
+	 * - @var MessagesGetConversationsFilter filter: Filter to apply: 'all' - all conversations, 'unread' - conversations with unread messages, 'important' - conversations, marked as important (only for community messages), 'unanswered' - conversations, marked as unanswered (only for community messages)
 	 * - @var boolean extended: '1' - return extra information about users and communities
 	 * - @var integer start_message_id: ID of the message from what to return dialogs.
-	 * - @var array[MessagesFields] fields: Profile and communities fields to return.
+	 * - @var array[MessagesGetConversationsFields] fields: Profile and communities fields to return.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * @return mixed
 	 * @throws VKClientException
@@ -385,7 +436,7 @@ class Messages implements ActionInterface
 	 * @param array $params
 	 * - @var array[integer] peer_ids: Destination IDs. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
 	 * - @var boolean extended: Return extended properties
-	 * - @var array[MessagesFields] fields: Profile and communities fields to return.
+	 * - @var array[MessagesGetConversationsByIdFields] fields: Profile and communities fields to return.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * @return mixed
 	 * @throws VKClientException
@@ -409,9 +460,9 @@ class Messages implements ActionInterface
 	 * - @var integer user_id: ID of the user whose message history you want to return.
 	 * - @var integer peer_id
 	 * - @var integer start_message_id: Starting message ID from which to return history.
-	 * - @var MessagesRev rev: Sort order: '1' - return messages in chronological order. '0' - return messages in reverse chronological order.
+	 * - @var MessagesGetHistoryRev rev: Sort order: '1' - return messages in chronological order. '0' - return messages in reverse chronological order.
 	 * - @var boolean extended: Information whether the response should be extended
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var array[MessagesGetHistoryFields] fields: Profile fields to return.
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * @return mixed
 	 * @throws VKClientException
@@ -429,16 +480,21 @@ class Messages implements ActionInterface
 	 * Returns media files from the dialog or group chat.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var integer peer_id: Peer ID. ", For group chat: '2000000000 + chat ID' , , For community: '-community ID'"
-	 * - @var MessagesMediaType media_type: Type of media files to return: *'photo',, *'video',, *'audio',, *'doc',, *'link'.,*'market'.,*'wall'.,*'share'
-	 * - @var string start_from: Message ID to start return results from.
-	 * - @var integer count: Number of objects to return.
-	 * - @var boolean photo_sizes: '1' - to return photo sizes in a
+	 * - @var array[MessagesGetHistoryAttachmentsAttachmentTypes] attachment_types
 	 * - @var integer group_id: Group ID (for group messages with group access token)
-	 * - @var boolean preserve_order
-	 * - @var integer max_forwards_level
-	 * - @var array[MessagesFields] fields: Additional profile [vk.com/dev/fields|fields] to return.
+	 * - @var integer peer_id: Peer ID. ", For group chat: '2000000000 + chat ID' , , For community: '-community ID'"
+	 * - @var integer cmid
+	 * - @var integer attachment_position
+	 * - @var integer offset
+	 * - @var integer count: Number of objects to return.
 	 * - @var boolean extended
+	 * - @var array[MessagesGetHistoryAttachmentsFields] fields: Additional profile [vk.com/dev/fields|fields] to return.
+	 * - @var integer max_forwards_level
+	 * - @var boolean message_video
+	 * - @var MessagesGetHistoryAttachmentsMediaType media_type: Type of media files to return: *'photo',, *'video',, *'audio',, *'doc',, *'link'.,*'market'.,*'wall'.,*'share'
+	 * - @var string start_from: Message ID to start return results from.
+	 * - @var boolean preserve_order
+	 * - @var boolean photo_sizes: '1' - to return photo sizes in a
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -457,7 +513,7 @@ class Messages implements ActionInterface
 	 * - @var integer offset
 	 * - @var integer start_message_id
 	 * - @var integer preview_length: Maximum length of messages body.
-	 * - @var array[MessagesFields] fields: Actors fields to return.
+	 * - @var array[MessagesGetImportantMessagesFields] fields: Actors fields to return.
 	 * - @var boolean extended: Return extended properties
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * @return mixed
@@ -473,12 +529,12 @@ class Messages implements ActionInterface
 	/**
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var MessagesIntent intent
+	 * - @var MessagesGetIntentUsersIntent intent
 	 * - @var integer subscribe_id
 	 * - @var integer offset
 	 * - @var integer count
 	 * - @var boolean extended
-	 * - @var array[string] name_case
+	 * - @var NameCase name_case
 	 * - @var array[string] fields
 	 * @return mixed
 	 * @throws VKClientException
@@ -532,7 +588,7 @@ class Messages implements ActionInterface
 	 * - @var integer pts: Last value of 'pts' parameter returned from the Long Poll server or by using [vk.com/dev/messages.getLongPollHistory|messages.getLongPollHistory] method.
 	 * - @var integer preview_length: Number of characters after which to truncate a previewed message. To preview the full message, specify '0'. "NOTE: Messages are not truncated by default. Messages are truncated by words."
 	 * - @var boolean onlines: '1' - to return history with online users only.
-	 * - @var array[MessagesFields] fields: Additional profile [vk.com/dev/fields|fields] to return.
+	 * - @var array[MessagesGetLongPollHistoryFields] fields: Additional profile [vk.com/dev/fields|fields] to return.
 	 * - @var integer events_limit: Maximum number of events to return.
 	 * - @var integer msgs_limit: Maximum number of messages to return.
 	 * - @var integer max_msg_id: Maximum ID of the message among existing ones in the local copy. Both messages received with API methods (for example, , ), and data received from a Long Poll server (events with code 4) are taken into account.
@@ -548,6 +604,7 @@ class Messages implements ActionInterface
 	 * @throws VKApiMessagesTooNewPtsException Value of ts or pts is too new
 	 * @throws VKApiTimeoutException Method execution was interrupted due to timeout
 	 * @throws VKApiMessagesChatNotExistException Chat does not exist
+	 * @throws VKApiMessagesDropDeviceCacheException Drop device cache
 	 */
 	public function getLongPollHistory(string $access_token, array $params = [])
 	{
@@ -569,6 +626,55 @@ class Messages implements ActionInterface
 	public function getLongPollServer(string $access_token, array $params = [])
 	{
 		return $this->request->post('messages.getLongPollServer', $access_token, $params);
+	}
+
+
+	/**
+	 * Get reaction counters for message
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer peer_id
+	 * - @var array[integer] cmids
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function getMessagesReactions(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.getMessagesReactions', $access_token, $params);
+	}
+
+
+	/**
+	 * Get reacted users and counters for message
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer peer_id
+	 * - @var integer cmid
+	 * - @var integer reaction_id
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMessagesInvalidReactionIdException Unknown reaction passed
+	 */
+	public function getReactedPeers(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.getReactedPeers', $access_token, $params);
+	}
+
+
+	/**
+	 * Get assets to display message reactions
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer client_version
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function getReactionsAssets(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.getReactionsAssets', $access_token, $params);
 	}
 
 
@@ -664,6 +770,7 @@ class Messages implements ActionInterface
 	 * - @var integer start_message_id: Message ID to start from.
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * - @var boolean mark_conversation_as_read
+	 * - @var integer up_to_cmid
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -671,6 +778,37 @@ class Messages implements ActionInterface
 	public function markAsRead(string $access_token, array $params = [])
 	{
 		return $this->request->post('messages.markAsRead', $access_token, $params);
+	}
+
+
+	/**
+	 * Mark messages reactions as read
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer peer_id
+	 * - @var array[integer] cmids
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function markReactionsAsRead(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.markReactionsAsRead', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer peer_id: Chat id
+	 * - @var MessagesMuteChatMentionsMentionStatus mention_status
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function muteChatMentions(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.muteChatMentions', $access_token, $params);
 	}
 
 
@@ -687,6 +825,7 @@ class Messages implements ActionInterface
 	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
 	 * @throws VKApiMessagesCantPinOneTimeStoryException Cannot pin one-time story
 	 * @throws VKApiMessagesCantPinExpiringMessageException Cannot pin an expiring message
+	 * @throws VKApiMessagesChatNotExistException Chat does not exist
 	 */
 	public function pin(string $access_token, array $params = [])
 	{
@@ -764,7 +903,7 @@ class Messages implements ActionInterface
 	 * - @var string q: Search query string.
 	 * - @var integer count: Maximum number of results.
 	 * - @var boolean extended: '1' - return extra information about users and communities
-	 * - @var array[MessagesFields] fields: Profile fields to return.
+	 * - @var array[MessagesSearchConversationsFields] fields: Profile fields to return.
 	 * - @var integer group_id: Group ID (for group messages with user access token)
 	 * @return mixed
 	 * @throws VKClientException
@@ -786,7 +925,6 @@ class Messages implements ActionInterface
 	 * - @var array[integer] peer_ids: IDs of message recipients. (See peer_id)
 	 * - @var string domain: User's short address (for example, 'illarionov').
 	 * - @var integer chat_id: ID of conversation the message will relate to.
-	 * - @var array[integer] user_ids: IDs of message recipients (if new conversation shall be started).
 	 * - @var string message: (Required if 'attachments' is not set.) Text of the message.
 	 * - @var number lat: Geographical latitude of a check-in, in degrees (from -90 to 90).
 	 * - @var number long: Geographical longitude of a check-in, in degrees (from -180 to 180).
@@ -802,7 +940,7 @@ class Messages implements ActionInterface
 	 * - @var string content_source: JSON describing the content source in the message
 	 * - @var boolean dont_parse_links
 	 * - @var boolean disable_mentions
-	 * - @var MessagesIntent intent
+	 * - @var MessagesSendIntent intent
 	 * - @var integer subscribe_id
 	 * @return mixed
 	 * @throws VKClientException
@@ -828,6 +966,10 @@ class Messages implements ActionInterface
 	 * @throws VKApiMessagesUserNotDonException You can't access donut chat without subscription
 	 * @throws VKApiMessagesMessageCannotBeForwardedException Message cannot be forwarded
 	 * @throws VKApiMessagesChatUserLeftException You left this chat
+	 * @throws VKApiMessagesWritingDisabledForChatException Writing is disabled for this chat
+	 * @throws VKApiMessagesGroupForNotificationsOnlyException Cannot write to notifications only groups
+	 * @throws VKApiMessagesNeedMessageRequestException Need message request
+	 * @throws VKApiMessagesPendingMessageRequestException Pending message request
 	 */
 	public function send(string $access_token, array $params = [])
 	{
@@ -853,11 +995,31 @@ class Messages implements ActionInterface
 
 
 	/**
+	 * Send message reaction
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer peer_id
+	 * - @var integer cmid
+	 * - @var integer reaction_id
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMessagesInvalidReactionIdException Unknown reaction passed
+	 * @throws VKApiMessagesForbiddenReactionException This reaction has been disabled
+	 * @throws VKApiMessagesReactionsLimitReachedException Reactions limit for this message has been reached
+	 */
+	public function sendReaction(string $access_token, array $params = [])
+	{
+		return $this->request->post('messages.sendReaction', $access_token, $params);
+	}
+
+
+	/**
 	 * Changes the status of a user as typing in a conversation.
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer user_id: User ID.
-	 * - @var MessagesType type: 'typing' - user has started to type.
+	 * - @var MessagesSetActivityType type: 'typing' - user has started to type.
 	 * - @var integer peer_id: Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
 	 * - @var integer group_id: Group ID (for group messages with group access token)
 	 * @return mixed
@@ -866,6 +1028,7 @@ class Messages implements ActionInterface
 	 * @throws VKApiMessagesGroupPeerAccessException Your community can't interact with this peer
 	 * @throws VKApiMessagesChatUserNoAccessException You don't have access to this chat
 	 * @throws VKApiMessagesContactNotFoundException Contact not found
+	 * @throws VKApiMessagesChatNotExistException Chat does not exist
 	 */
 	public function setActivity(string $access_token, array $params = [])
 	{
@@ -900,6 +1063,7 @@ class Messages implements ActionInterface
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
+	 * @throws VKApiMessagesChatNotExistException Chat does not exist
 	 */
 	public function unpin(string $access_token, array $params = [])
 	{

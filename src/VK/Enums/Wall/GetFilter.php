@@ -4,12 +4,12 @@ namespace VK\Enums\Wall;
 
 class GetFilter
 {
-	const OWNER = 'owner';
-	const OTHERS = 'others';
-	const ALL = 'all';
-	const POSTPONED = 'postponed';
-	const SUGGESTS = 'suggests';
-	const ARCHIVED = 'archived';
-	const DONUT = 'donut';
+	public const OWNER = 'owner';
+	public const OTHERS = 'others';
+	public const ALL = 'all';
+	public const POSTPONED = 'postponed';
+	public const SUGGESTS = 'suggests';
+	public const ARCHIVED = 'archived';
+	public const DONUT = 'donut';
 }
 

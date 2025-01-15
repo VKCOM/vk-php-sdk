@@ -4,8 +4,8 @@ namespace VK\Enums\Groups;
 
 class MarketState
 {
-	const NONE = 'none';
-	const BASIC = 'basic';
-	const ADVANCED = 'advanced';
+	public const NONE = 'none';
+	public const BASIC = 'basic';
+	public const ADVANCED = 'advanced';
 }
 

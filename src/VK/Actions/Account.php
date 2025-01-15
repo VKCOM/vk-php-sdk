@@ -4,10 +4,10 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\AccountBdateVisibility;
-use VK\Enums\AccountName;
-use VK\Enums\AccountRelation;
-use VK\Enums\AccountSex;
+use VK\Enums\AccountSaveProfileInfoBdateVisibility;
+use VK\Enums\AccountSaveProfileInfoRelation;
+use VK\Enums\AccountSaveProfileInfoSex;
+use VK\Enums\AccountSetInfoName;
 use VK\Exceptions\Api\VKApiInvalidAddressException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -97,6 +97,7 @@ class Account implements ActionInterface
 	 * @param array $params
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * - @var integer count: Number of results to return.
+	 * - @var array[AccountGetBannedFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -111,8 +112,7 @@ class Account implements ActionInterface
 	 * Returns non-null values of user counters.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var array[AccountFilter] filter: Counters to be returned.
-	 * - @var integer user_id: User ID
+	 * - @var array[AccountGetCountersFilter] filter: Counters to be returned.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -127,7 +127,7 @@ class Account implements ActionInterface
 	 * Returns current account info.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var array[AccountFields] fields: Fields to return. Possible values: *'country' - user country,, *'https_required' - is "HTTPS only" option enabled,, *'own_posts_default' - is "Show my posts only" option is enabled,, *'no_wall_replies' - are wall replies disabled or not,, *'intro' - is intro passed by user or not,, *'lang' - user language. By default: all.
+	 * - @var array[AccountGetInfoFields] fields: Fields to return. Possible values: *'country' - user country,, *'https_required' - is "HTTPS only" option enabled,, *'own_posts_default' - is "Show my posts only" option is enabled,, *'no_wall_replies' - are wall replies disabled or not,, *'intro' - is intro passed by user or not,, *'lang' - user language. By default: all.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -167,18 +167,6 @@ class Account implements ActionInterface
 
 
 	/**
-	 * @param string $access_token
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 */
-	public function getSubscriptions(string $access_token)
-	{
-		return $this->request->post('account.getSubscriptions', $access_token);
-	}
-
-
-	/**
 	 * Subscribes an iOS/Android/Windows Phone-based device to receive push notifications
 	 * @param string $access_token
 	 * @param array $params
@@ -189,6 +177,7 @@ class Account implements ActionInterface
 	 * - @var string system_version: String version of device operating system.
 	 * - @var string settings: Push settings in a [vk.com/dev/push_settings|special format].
 	 * - @var boolean sandbox
+	 * - @var boolean pushes_granted
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -208,11 +197,11 @@ class Account implements ActionInterface
 	 * - @var string maiden_name: User maiden name (female only)
 	 * - @var string screen_name: User screen name.
 	 * - @var integer cancel_request_id: ID of the name change request to be canceled. If this parameter is sent, all the others are ignored.
-	 * - @var AccountSex sex: User sex. Possible values: , * '1' - female,, * '2' - male.
-	 * - @var AccountRelation relation: User relationship status. Possible values: , * '1' - single,, * '2' - in a relationship,, * '3' - engaged,, * '4' - married,, * '5' - it's complicated,, * '6' - actively searching,, * '7' - in love,, * '0' - not specified.
+	 * - @var AccountSaveProfileInfoSex sex: User sex. Possible values: , * '1' - female,, * '2' - male.
+	 * - @var AccountSaveProfileInfoRelation relation: User relationship status. Possible values: , * '1' - single,, * '2' - in a relationship,, * '3' - engaged,, * '4' - married,, * '5' - it's complicated,, * '6' - actively searching,, * '7' - in love,, * '0' - not specified.
 	 * - @var integer relation_partner_id: ID of the relationship partner.
 	 * - @var string bdate: User birth date, format: DD.MM.YYYY.
-	 * - @var AccountBdateVisibility bdate_visibility: Birth date visibility. Returned values: , * '1' - show birth date,, * '2' - show only month and day,, * '0' - hide birth date.
+	 * - @var AccountSaveProfileInfoBdateVisibility bdate_visibility: Birth date visibility. Returned values: , * '1' - show birth date,, * '2' - show only month and day,, * '0' - hide birth date.
 	 * - @var string home_town: User home town.
 	 * - @var integer country_id: User country.
 	 * - @var integer city_id: User city.
@@ -232,7 +221,7 @@ class Account implements ActionInterface
 	 * Allows to edit the current account info.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var AccountName name: Setting name.
+	 * - @var AccountSetInfoName name: Setting name.
 	 * - @var string value: Setting value.
 	 * @return mixed
 	 * @throws VKClientException

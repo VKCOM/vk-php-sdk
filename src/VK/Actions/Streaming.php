@@ -4,9 +4,8 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\StreamingInterval;
-use VK\Enums\StreamingMonthlyTier;
-use VK\Enums\StreamingType;
+use VK\Enums\StreamingGetStatsInterval;
+use VK\Enums\StreamingGetStatsType;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -41,21 +40,9 @@ class Streaming implements ActionInterface
 
 	/**
 	 * @param string $access_token
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 */
-	public function getSettings(string $access_token)
-	{
-		return $this->request->post('streaming.getSettings', $access_token);
-	}
-
-
-	/**
-	 * @param string $access_token
 	 * @param array $params
-	 * - @var StreamingType type
-	 * - @var StreamingInterval interval
+	 * - @var StreamingGetStatsType type
+	 * - @var StreamingGetStatsInterval interval
 	 * - @var integer start_time
 	 * - @var integer end_time
 	 * @return mixed
@@ -79,20 +66,6 @@ class Streaming implements ActionInterface
 	public function getStem(string $access_token, array $params = [])
 	{
 		return $this->request->post('streaming.getStem', $access_token, $params);
-	}
-
-
-	/**
-	 * @param string $access_token
-	 * @param array $params
-	 * - @var StreamingMonthlyTier monthly_tier
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 */
-	public function setSettings(string $access_token, array $params = [])
-	{
-		return $this->request->post('streaming.setSettings', $access_token, $params);
 	}
 }
 

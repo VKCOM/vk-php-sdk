@@ -4,13 +4,17 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\VideoReason;
-use VK\Enums\VideoSort;
+use VK\Enums\VideoGetCommentsSort;
+use VK\Enums\VideoGetSortAlbum;
+use VK\Enums\VideoReportCommentReason;
+use VK\Enums\VideoReportReason;
+use VK\Enums\VideoSearchSort;
 use VK\Exceptions\Api\VKApiAccessVideoException;
 use VK\Exceptions\Api\VKApiActionFailedException;
 use VK\Exceptions\Api\VKApiAlbumsLimitException;
 use VK\Exceptions\Api\VKApiGroupHostNeed2faException;
 use VK\Exceptions\Api\VKApiNotFoundException;
+use VK\Exceptions\Api\VKApiParamPhotoException;
 use VK\Exceptions\Api\VKApiUploadException;
 use VK\Exceptions\Api\VKApiVideoAlreadyAddedException;
 use VK\Exceptions\Api\VKApiVideoCommentsClosedException;
@@ -61,7 +65,7 @@ class Video implements ActionInterface
 	 * @param array $params
 	 * - @var integer group_id: Community ID (if the album will be created in a community).
 	 * - @var string title: Album title.
-	 * - @var array[VideoPrivacy] privacy: new access permissions for the album. Possible values: , *'0' - all users,, *'1' - friends only,, *'2' - friends and friends of friends,, *'3' - "only me".
+	 * - @var array[VideoAddAlbumPrivacy] privacy: new access permissions for the album. Possible values: , *'0' - all users,, *'1' - friends only,, *'2' - friends and friends of friends,, *'3' - "only me".
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -106,6 +110,7 @@ class Video implements ActionInterface
 	 * - @var integer reply_to_comment
 	 * - @var integer sticker_id
 	 * - @var string guid
+	 * - @var string track_code
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -140,6 +145,7 @@ class Video implements ActionInterface
 	 * @param array $params
 	 * - @var integer group_id: Community ID (if the album is owned by a community).
 	 * - @var integer album_id: Album ID.
+	 * - @var integer owner_id
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -179,6 +185,7 @@ class Video implements ActionInterface
 	 * - @var array[string] privacy_comment: Privacy settings for comments in a [vk.com/dev/privacy_setting|special format].
 	 * - @var boolean no_comments: Disable comments for the group video.
 	 * - @var boolean repeat: '1' - to repeat the playback of the video, '0' - to play the video once,
+	 * - @var string ord_info
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -196,7 +203,8 @@ class Video implements ActionInterface
 	 * - @var integer group_id: Community ID (if the album edited is owned by a community).
 	 * - @var integer album_id: Album ID.
 	 * - @var string title: New album title.
-	 * - @var array[VideoPrivacy] privacy: new access permissions for the album. Possible values: , *'0' - all users,, *'1' - friends only,, *'2' - friends and friends of friends,, *'3' - "only me".
+	 * - @var array[VideoEditAlbumPrivacy] privacy: new access permissions for the album. Possible values: , *'0' - all users,, *'1' - friends only,, *'2' - friends and friends of friends,, *'3' - "only me".
+	 * - @var integer owner_id
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -237,6 +245,7 @@ class Video implements ActionInterface
 	 * - @var integer offset: Offset needed to return a specific subset of videos.
 	 * - @var boolean extended: '1' - to return an extended response with additional fields
 	 * - @var array[string] fields
+	 * - @var VideoGetSortAlbum sort_album: Sort order: '0' - newest video first, '1' - oldest video first
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -313,9 +322,11 @@ class Video implements ActionInterface
 	 * - @var integer start_comment_id
 	 * - @var integer offset: Offset needed to return a specific subset of comments.
 	 * - @var integer count: Number of comments to return.
-	 * - @var VideoSort sort: Sort order: 'asc' - oldest comment first, 'desc' - newest comment first
+	 * - @var VideoGetCommentsSort sort: Sort order: 'asc' - oldest comment first, 'desc' - newest comment first
 	 * - @var boolean extended
 	 * - @var array[string] fields
+	 * - @var integer comment_id
+	 * - @var integer thread_items_count
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -345,6 +356,20 @@ class Video implements ActionInterface
 
 	/**
 	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer owner_id
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 */
+	public function getThumbUploadUrl(string $access_token, array $params = [])
+	{
+		return $this->request->post('video.getThumbUploadUrl', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -352,22 +377,6 @@ class Video implements ActionInterface
 	public function liveGetCategories(string $access_token)
 	{
 		return $this->request->post('video.liveGetCategories', $access_token);
-	}
-
-
-	/**
-	 * Pin comment on a video.
-	 * @param string $access_token
-	 * @param array $params
-	 * - @var integer owner_id: ID of the user or community that owns the video.
-	 * - @var integer comment_id: ID of the pinning comment.
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 */
-	public function pinComment(string $access_token, array $params = [])
-	{
-		return $this->request->post('video.pinComment', $access_token, $params);
 	}
 
 
@@ -439,7 +448,7 @@ class Video implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: ID of the user or community that owns the video.
 	 * - @var integer video_id: Video ID.
-	 * - @var VideoReason reason: Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse
+	 * - @var VideoReportReason reason: Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse
 	 * - @var string comment: Comment describing the complaint.
 	 * - @var string search_query: (If the video was found in search results.) Search query string.
 	 * @return mixed
@@ -458,7 +467,7 @@ class Video implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: ID of the user or community that owns the video.
 	 * - @var integer comment_id: ID of the comment being reported.
-	 * - @var VideoReason reason: Reason for the complaint: , 0 - spam , 1 - child pornography , 2 - extremism , 3 - violence , 4 - drug propaganda , 5 - adult material , 6 - insult, abuse
+	 * - @var VideoReportCommentReason reason: Reason for the complaint: , 0 - spam , 1 - child pornography , 2 - extremism , 3 - violence , 4 - drug propaganda , 5 - adult material , 6 - insult, abuse
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -517,6 +526,8 @@ class Video implements ActionInterface
 	 * - @var boolean no_comments
 	 * - @var boolean repeat: '1' - to repeat the playback of the video, '0' - to play the video once,
 	 * - @var boolean compression
+	 * - @var string ord_info
+	 * - @var boolean auto_publish
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -533,21 +544,42 @@ class Video implements ActionInterface
 
 
 	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer owner_id
+	 * - @var string thumb_json
+	 * - @var string thumb_size
+	 * - @var string random_tag
+	 * - @var integer video_id: Video ID.
+	 * - @var boolean set_thumb: If flag passed uploaded thumb will automatically set to passed video. Work only with video_id.
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiParamPhotoException Invalid photo
+	 */
+	public function saveUploadedThumb(string $access_token, array $params = [])
+	{
+		return $this->request->post('video.saveUploadedThumb', $access_token, $params);
+	}
+
+
+	/**
 	 * Returns a list of videos under the set search criterion.
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string q: Search query string (e.g., 'The Beatles').
-	 * - @var VideoSort sort: Sort order: '1' - by duration, '2' - by relevance, '0' - by date added
+	 * - @var VideoSearchSort sort: Sort order: '1' - by duration, '2' - by relevance, '0' - by date added
 	 * - @var integer hd: If not null, only searches for high-definition videos.
 	 * - @var boolean adult: '1' - to disable the Safe Search filter, '0' - to enable the Safe Search filter
 	 * - @var boolean live
-	 * - @var array[VideoFilters] filters: Filters to apply: 'youtube' - return YouTube videos only, 'vimeo' - return Vimeo videos only, 'short' - return short videos only, 'long' - return long videos only
+	 * - @var array[VideoSearchFilters] filters: Filters to apply: 'youtube' - return YouTube videos only, 'vimeo' - return Vimeo videos only, 'vk' - return VK videos only, 'short' - return short videos only, 'long' - return long videos only
 	 * - @var boolean search_own
 	 * - @var integer offset: Offset needed to return a specific subset of videos.
 	 * - @var integer longer
 	 * - @var integer shorter
 	 * - @var integer count: Number of videos to return.
 	 * - @var boolean extended
+	 * - @var integer owner_id
 	 * - @var array[string] fields
 	 * @return mixed
 	 * @throws VKClientException

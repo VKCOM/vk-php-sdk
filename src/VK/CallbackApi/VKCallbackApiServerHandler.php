@@ -1,8 +1,6 @@
 <?php
 
-namespace Generator\Skeleton\skeleton\base\src\VK\CallbackApi;
-
-use VK\CallbackApi\VKCallbackApiHandler;
+namespace VK\CallbackApi;
 
 abstract class VKCallbackApiServerHandler extends VKCallbackApiHandler {
     protected const EVENT_KEY_TYPE = 'type';

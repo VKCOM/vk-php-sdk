@@ -4,8 +4,9 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\PhotosReason;
-use VK\Enums\PhotosSort;
+use VK\Enums\PhotosGetCommentsSort;
+use VK\Enums\PhotosReportCommentReason;
+use VK\Enums\PhotosReportReason;
 use VK\Exceptions\Api\VKApiAlbumsLimitException;
 use VK\Exceptions\Api\VKApiBlockedException;
 use VK\Exceptions\Api\VKApiGroupNeed2faException;
@@ -279,6 +280,7 @@ class Photos implements ActionInterface
 	 * @param array $params
 	 * - @var integer user_id: User ID.
 	 * - @var integer group_id: Community ID.
+	 * - @var boolean need_system
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -377,10 +379,10 @@ class Photos implements ActionInterface
 	 * - @var integer start_comment_id
 	 * - @var integer offset: Offset needed to return a specific subset of comments. By default, '0'.
 	 * - @var integer count: Number of comments to return.
-	 * - @var PhotosSort sort: Sort order: 'asc' - old first, 'desc' - new first
+	 * - @var PhotosGetCommentsSort sort: Sort order: 'asc' - old first, 'desc' - new first
 	 * - @var string access_key
 	 * - @var boolean extended
-	 * - @var array[PhotosFields] fields
+	 * - @var array[PhotosGetCommentsFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -404,26 +406,6 @@ class Photos implements ActionInterface
 	public function getMarketAlbumUploadServer(string $access_token, array $params = [])
 	{
 		return $this->request->post('photos.getMarketAlbumUploadServer', $access_token, $params);
-	}
-
-
-	/**
-	 * Returns the server address for market photo upload.
-	 * @param string $access_token
-	 * @param array $params
-	 * - @var integer group_id: Community ID.
-	 * - @var boolean main_photo: '1' if you want to upload the main item photo.
-	 * - @var integer crop_x: X coordinate of the crop left upper corner.
-	 * - @var integer crop_y: Y coordinate of the crop left upper corner.
-	 * - @var integer crop_width: Width of the cropped photo in px.
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 * @throws VKApiMarketNotEnabledException Market not enabled
-	 */
-	public function getMarketUploadServer(string $access_token, array $params = [])
-	{
-		return $this->request->post('photos.getMarketUploadServer', $access_token, $params);
 	}
 
 
@@ -679,7 +661,7 @@ class Photos implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: ID of the user or community that owns the photo.
 	 * - @var integer photo_id: Photo ID.
-	 * - @var PhotosReason reason: Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse, '8' - suicide calls
+	 * - @var PhotosReportReason reason: Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse, '8' - suicide calls
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -696,7 +678,7 @@ class Photos implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: ID of the user or community that owns the photo.
 	 * - @var integer comment_id: ID of the comment being reported.
-	 * - @var PhotosReason reason: Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse
+	 * - @var PhotosReportCommentReason reason: Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -787,29 +769,6 @@ class Photos implements ActionInterface
 
 
 	/**
-	 * Saves market photos after successful uploading.
-	 * @param string $access_token
-	 * @param array $params
-	 * - @var integer group_id: Community ID.
-	 * - @var string photo: Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
-	 * - @var integer server: Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
-	 * - @var string hash: Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
-	 * - @var string crop_data: Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
-	 * - @var string crop_hash: Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 * @throws VKApiParamHashException Invalid hash
-	 * @throws VKApiParamPhotoException Invalid photo
-	 * @throws VKApiMarketNotEnabledException Market not enabled
-	 */
-	public function saveMarketPhoto(string $access_token, array $params = [])
-	{
-		return $this->request->post('photos.saveMarketPhoto', $access_token, $params);
-	}
-
-
-	/**
 	 * Saves a photo after being successfully uploaded. URL obtained with [vk.com/dev/photos.getMessagesUploadServer|photos.getMessagesUploadServer] method.
 	 * @param string $access_token
 	 * @param array $params
@@ -890,6 +849,7 @@ class Photos implements ActionInterface
 	 * @throws VKApiParamAlbumIdException Invalid album id
 	 * @throws VKApiParamServerException Invalid server
 	 * @throws VKApiParamHashException Invalid hash
+	 * @throws VKApiUploadException Upload error
 	 */
 	public function saveWallPhoto(string $access_token, array $params = [])
 	{
@@ -904,8 +864,8 @@ class Photos implements ActionInterface
 	 * - @var string q: Search query string.
 	 * - @var number lat: Geographical latitude, in degrees (from '-90' to '90').
 	 * - @var number long: Geographical longitude, in degrees (from '-180' to '180').
-	 * - @var integer start_time
-	 * - @var integer end_time
+	 * - @var number start_time
+	 * - @var number end_time
 	 * - @var integer sort: Sort order:
 	 * - @var integer offset: Offset needed to return a specific subset of photos.
 	 * - @var integer count: Number of photos to return.

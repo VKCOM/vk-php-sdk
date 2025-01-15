@@ -4,51 +4,54 @@ namespace VK\CallbackApi;
 
 abstract class VKCallbackApiHandler
 {
-	const AUDIO_NEW = 'audio_new';
-	const BOARD_POST_NEW = 'board_post_new';
-	const BOARD_POST_EDIT = 'board_post_edit';
-	const BOARD_POST_RESTORE = 'board_post_restore';
-	const BOARD_POST_DELETE = 'board_post_delete';
-	const CONFIRMATION = 'confirmation';
-	const GROUP_LEAVE = 'group_leave';
-	const GROUP_JOIN = 'group_join';
-	const GROUP_CHANGE_PHOTO = 'group_change_photo';
-	const GROUP_CHANGE_SETTINGS = 'group_change_settings';
-	const GROUP_OFFICERS_EDIT = 'group_officers_edit';
-	const LEAD_FORMS_NEW = 'lead_forms_new';
-	const MARKET_COMMENT_NEW = 'market_comment_new';
-	const MARKET_COMMENT_DELETE = 'market_comment_delete';
-	const MARKET_COMMENT_EDIT = 'market_comment_edit';
-	const MARKET_COMMENT_RESTORE = 'market_comment_restore';
-	const MARKET_ORDER_NEW = 'market_order_new';
-	const MARKET_ORDER_EDIT = 'market_order_edit';
-	const MESSAGE_NEW = 'message_new';
-	const MESSAGE_REPLY = 'message_reply';
-	const MESSAGE_EDIT = 'message_edit';
-	const MESSAGE_ALLOW = 'message_allow';
-	const MESSAGE_DENY = 'message_deny';
-	const MESSAGE_READ = 'message_read';
-	const MESSAGE_TYPING_STATE = 'message_typing_state';
-	const MESSAGES_EDIT = 'messages_edit';
-	const PHOTO_NEW = 'photo_new';
-	const PHOTO_COMMENT_NEW = 'photo_comment_new';
-	const PHOTO_COMMENT_DELETE = 'photo_comment_delete';
-	const PHOTO_COMMENT_EDIT = 'photo_comment_edit';
-	const PHOTO_COMMENT_RESTORE = 'photo_comment_restore';
-	const POLL_VOTE_NEW = 'poll_vote_new';
-	const USER_BLOCK = 'user_block';
-	const USER_UNBLOCK = 'user_unblock';
-	const VIDEO_NEW = 'video_new';
-	const VIDEO_COMMENT_NEW = 'video_comment_new';
-	const VIDEO_COMMENT_DELETE = 'video_comment_delete';
-	const VIDEO_COMMENT_EDIT = 'video_comment_edit';
-	const VIDEO_COMMENT_RESTORE = 'video_comment_restore';
-	const WALL_POST_NEW = 'wall_post_new';
-	const WALL_REPLY_NEW = 'wall_reply_new';
-	const WALL_REPLY_EDIT = 'wall_reply_edit';
-	const WALL_REPLY_DELETE = 'wall_reply_delete';
-	const WALL_REPLY_RESTORE = 'wall_reply_restore';
-	const WALL_REPOST = 'wall_repost';
+	public const AUDIO_NEW = 'audio_new';
+	public const BOARD_POST_NEW = 'board_post_new';
+	public const BOARD_POST_EDIT = 'board_post_edit';
+	public const BOARD_POST_RESTORE = 'board_post_restore';
+	public const BOARD_POST_DELETE = 'board_post_delete';
+	public const CONFIRMATION = 'confirmation';
+	public const GROUP_LEAVE = 'group_leave';
+	public const GROUP_JOIN = 'group_join';
+	public const GROUP_CHANGE_PHOTO = 'group_change_photo';
+	public const GROUP_CHANGE_SETTINGS = 'group_change_settings';
+	public const GROUP_OFFICERS_EDIT = 'group_officers_edit';
+	public const LEAD_FORMS_NEW = 'lead_forms_new';
+	public const MARKET_COMMENT_NEW = 'market_comment_new';
+	public const MARKET_COMMENT_DELETE = 'market_comment_delete';
+	public const MARKET_COMMENT_EDIT = 'market_comment_edit';
+	public const MARKET_COMMENT_RESTORE = 'market_comment_restore';
+	public const MARKET_ORDER_NEW = 'market_order_new';
+	public const MARKET_ORDER_EDIT = 'market_order_edit';
+	public const MESSAGE_NEW = 'message_new';
+	public const MESSAGE_REPLY = 'message_reply';
+	public const MESSAGE_EDIT = 'message_edit';
+	public const MESSAGE_ALLOW = 'message_allow';
+	public const MESSAGE_DENY = 'message_deny';
+	public const MESSAGE_READ = 'message_read';
+	public const MESSAGE_TYPING_STATE = 'message_typing_state';
+	public const MESSAGES_EDIT = 'messages_edit';
+	public const MESSAGE_REACTION_EVENT = 'message_reaction_event';
+	public const PHOTO_NEW = 'photo_new';
+	public const PHOTO_COMMENT_NEW = 'photo_comment_new';
+	public const PHOTO_COMMENT_DELETE = 'photo_comment_delete';
+	public const PHOTO_COMMENT_EDIT = 'photo_comment_edit';
+	public const PHOTO_COMMENT_RESTORE = 'photo_comment_restore';
+	public const POLL_VOTE_NEW = 'poll_vote_new';
+	public const USER_BLOCK = 'user_block';
+	public const USER_UNBLOCK = 'user_unblock';
+	public const VIDEO_NEW = 'video_new';
+	public const VIDEO_COMMENT_NEW = 'video_comment_new';
+	public const VIDEO_COMMENT_DELETE = 'video_comment_delete';
+	public const VIDEO_COMMENT_EDIT = 'video_comment_edit';
+	public const VIDEO_COMMENT_RESTORE = 'video_comment_restore';
+	public const WALL_POST_NEW = 'wall_post_new';
+	public const WALL_REPLY_NEW = 'wall_reply_new';
+	public const WALL_REPLY_EDIT = 'wall_reply_edit';
+	public const WALL_REPLY_DELETE = 'wall_reply_delete';
+	public const WALL_REPLY_RESTORE = 'wall_reply_restore';
+	public const WALL_REPOST = 'wall_repost';
+	public const WALL_SCHEDULE_POST_NEW = 'wall_schedule_post_new';
+	public const WALL_SCHEDULE_POST_DELETE = 'wall_schedule_post_delete';
 
 	/**
 	 * @param int $group_id
@@ -315,6 +318,16 @@ abstract class VKCallbackApiHandler
 	 * @param string|null $secret
 	 * @param array $object
 	 */
+	public function messageReactionEvent(int $group_id, ?string $secret, array $object)
+	{
+	}
+
+
+	/**
+	 * @param int $group_id
+	 * @param string|null $secret
+	 * @param array $object
+	 */
 	public function photoNew(int $group_id, ?string $secret, array $object)
 	{
 	}
@@ -503,6 +516,26 @@ abstract class VKCallbackApiHandler
 	/**
 	 * @param int $group_id
 	 * @param string|null $secret
+	 * @param array $object
+	 */
+	public function wallSchedulePostNew(int $group_id, ?string $secret, array $object)
+	{
+	}
+
+
+	/**
+	 * @param int $group_id
+	 * @param string|null $secret
+	 * @param array $object
+	 */
+	public function wallSchedulePostDelete(int $group_id, ?string $secret, array $object)
+	{
+	}
+
+
+	/**
+	 * @param int $group_id
+	 * @param string|null $secret
 	 * @param string $type
 	 * @param array $object
 	 */
@@ -587,6 +620,9 @@ abstract class VKCallbackApiHandler
 			case static::MESSAGES_EDIT:
 				$this->messagesEdit($group_id, $secret, $object);
 				break;
+			case static::MESSAGE_REACTION_EVENT:
+				$this->messageReactionEvent($group_id, $secret, $object);
+				break;
 			case static::PHOTO_NEW:
 				$this->photoNew($group_id, $secret, $object);
 				break;
@@ -643,6 +679,12 @@ abstract class VKCallbackApiHandler
 				break;
 			case static::WALL_REPOST:
 				$this->wallRepost($group_id, $secret, $object);
+				break;
+			case static::WALL_SCHEDULE_POST_NEW:
+				$this->wallSchedulePostNew($group_id, $secret, $object);
+				break;
+			case static::WALL_SCHEDULE_POST_DELETE:
+				$this->wallSchedulePostDelete($group_id, $secret, $object);
 				break;
 		}
 	}

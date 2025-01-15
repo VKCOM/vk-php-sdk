@@ -31,7 +31,7 @@ class Widgets implements ActionInterface
 	 * - @var string url
 	 * - @var string page_id
 	 * - @var string order
-	 * - @var array[WidgetsFields] fields
+	 * - @var array[WidgetsGetCommentsFields] fields
 	 * - @var integer offset
 	 * - @var integer count
 	 * @return mixed

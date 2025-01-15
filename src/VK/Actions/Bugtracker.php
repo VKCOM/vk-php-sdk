@@ -4,8 +4,8 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\BugtrackerFilterRole;
-use VK\Enums\BugtrackerRole;
+use VK\Enums\BugtrackerGetCompanyMembersFilterRole;
+use VK\Enums\BugtrackerSetCompanyMemberRoleRole;
 use VK\Exceptions\Api\VKApiActionFailedException;
 use VK\Exceptions\Api\VKApiLimitsException;
 use VK\Exceptions\Api\VKApiNotFoundException;
@@ -91,6 +91,8 @@ class Bugtracker implements ActionInterface
 	 * - @var integer bugreport_id
 	 * - @var string text
 	 * - @var boolean hidden
+	 * - @var boolean hidden_attachments
+	 * - @var boolean force
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -104,6 +106,25 @@ class Bugtracker implements ActionInterface
 
 
 	/**
+	 * Returns extended bugreport data
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer bugreport_id
+	 * - @var boolean extended
+	 * - @var array[BugtrackerGetBugreportByIdFields] fields
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiNotFoundException Not found
+	 * @throws VKApiLimitsException Out of limits
+	 */
+	public function getBugreportById(string $access_token, array $params = [])
+	{
+		return $this->request->post('bugtracker.getBugreportById', $access_token, $params);
+	}
+
+
+	/**
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer company_id
@@ -112,7 +133,7 @@ class Bugtracker implements ActionInterface
 	 * - @var integer offset
 	 * - @var string filter_name
 	 * - @var boolean extended
-	 * - @var array[BugtrackerFields] fields
+	 * - @var array[BugtrackerGetCompanyGroupMembersFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -132,10 +153,11 @@ class Bugtracker implements ActionInterface
 	 * - @var integer count
 	 * - @var integer offset
 	 * - @var string filter_name
-	 * - @var BugtrackerFilterRole filter_role
+	 * - @var BugtrackerGetCompanyMembersFilterRole filter_role
 	 * - @var integer filter_not_group
+	 * - @var array[integer] filter_member_ids
 	 * - @var boolean extended
-	 * - @var array[BugtrackerFields] fields
+	 * - @var array[BugtrackerGetCompanyMembersFields] fields
 	 * - @var boolean extra
 	 * @return mixed
 	 * @throws VKClientException
@@ -146,6 +168,24 @@ class Bugtracker implements ActionInterface
 	public function getCompanyMembers(string $access_token, array $params = [])
 	{
 		return $this->request->post('bugtracker.getCompanyMembers', $access_token, $params);
+	}
+
+
+	/**
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var integer product_id
+	 * - @var integer version_id
+	 * - @var integer ttl
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiNotFoundException Not found
+	 * @throws VKApiActionFailedException Unable to process action
+	 */
+	public function getDownloadVersionUrl(string $access_token, array $params = [])
+	{
+		return $this->request->post('bugtracker.getDownloadVersionUrl', $access_token, $params);
 	}
 
 
@@ -223,7 +263,7 @@ class Bugtracker implements ActionInterface
 	 * @param array $params
 	 * - @var integer user_id
 	 * - @var integer company_id
-	 * - @var BugtrackerRole role
+	 * - @var BugtrackerSetCompanyMemberRoleRole role
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

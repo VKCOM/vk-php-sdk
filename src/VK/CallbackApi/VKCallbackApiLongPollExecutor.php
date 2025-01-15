@@ -1,13 +1,12 @@
 <?php
 
-namespace Generator\Skeleton\skeleton\base\src\VK\CallbackApi;
+namespace VK\CallbackApi;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
-use VK\CallbackApi\VKCallbackApiHandler;
 use VK\Client\VKApiClient;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -157,8 +156,10 @@ class VKCallbackApiLongPollExecutor {
             static::PARAM_ACT  => static::VALUE_ACT
         );
 
+        $url = $host . '?' . http_build_query($params);
+
         try {
-            $response = $this->http_client->get($host, $params);
+            $response = $this->http_client->get($url);
         } catch (GuzzleException $exception) {
             throw new VKClientException($exception);
         }
@@ -197,7 +198,7 @@ class VKCallbackApiLongPollExecutor {
                     throw new VKLongPollServerKeyExpiredException('Try to generate a new key.');
 
                 default:
-                    throw new VKClientException('Unknown LongPollServer exception, something went wrong. ' . $decode_body);
+                    throw new VKClientException('Unknown LongPollServer exception, something went wrong: ' . $body);
             }
         }
 

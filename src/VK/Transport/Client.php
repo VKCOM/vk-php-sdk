@@ -10,7 +10,7 @@ use GuzzleHttp\Utils;
 
 class Client extends HttpClient
 {
-    private const USER_AGENT = 'VK/php-sdk lib/5.131 api/5.131';
+    private const USER_AGENT = 'VK/php-sdk lib/5.199.0 api/5.199';
 
     /**
      * @param array $config

@@ -5,8 +5,8 @@ namespace VK\Actions;
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
 use VK\Enums\Base\NameCase;
-use VK\Enums\NewsfeedType;
 use VK\Enums\Newsfeed\IgnoreItemType;
+use VK\Enums\NewsfeedUnsubscribeType;
 use VK\Exceptions\Api\VKApiTooManyListsException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -77,7 +77,7 @@ class Newsfeed implements ActionInterface
 	 * Returns data required to show newsfeed for the current user.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var array[NewsfeedFilters] filters: Filters to apply: 'post' - new wall posts, 'photo' - new photos, 'photo_tag' - new photo tags, 'wall_photo' - new wall photos, 'friend' - new friends
+	 * - @var array[NewsfeedGetFilters] filters: Filters to apply: 'post' - new wall posts, 'photo' - new photos, 'photo_tag' - new photo tags, 'wall_photo' - new wall photos, 'friend' - new friends
 	 * - @var boolean return_banned: '1' - to return news items from banned sources
 	 * - @var integer start_time: Earliest timestamp (in Unix time) of a news item to return. By default, 24 hours ago.
 	 * - @var integer end_time: Latest timestamp (in Unix time) of a news item to return. By default, the current time.
@@ -85,7 +85,7 @@ class Newsfeed implements ActionInterface
 	 * - @var string source_ids: Sources to obtain news from, separated by commas. User IDs can be specified in formats '' or 'u' , where '' is the user's friend ID. Community IDs can be specified in formats '-' or 'g' , where '' is the community ID. If the parameter is not set, all of the user's friends and communities are returned, except for banned sources, which can be obtained with the [vk.com/dev/newsfeed.getBanned|newsfeed.getBanned] method.
 	 * - @var string start_from: identifier required to get the next page of results. Value for this parameter is returned in 'next_from' field in a reply.
 	 * - @var integer count: Number of news items to return (default 50, maximum 100). For auto feed, you can use the 'new_offset' parameter returned by this method.
-	 * - @var array[NewsfeedFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
+	 * - @var array[NewsfeedGetFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
 	 * - @var string section
 	 * @return mixed
 	 * @throws VKClientException
@@ -102,7 +102,7 @@ class Newsfeed implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var boolean extended: '1' - return extra information about users and communities
-	 * - @var array[NewsfeedFields] fields: Profile fields to return.
+	 * - @var array[NewsfeedGetBannedFields] fields: Profile fields to return.
 	 * - @var NameCase name_case: Case for declension of user name and surname: 'nom' - nominative (default), 'gen' - genitive , 'dat' - dative, 'acc' - accusative , 'ins' - instrumental , 'abl' - prepositional
 	 * @return mixed
 	 * @throws VKClientException
@@ -119,13 +119,13 @@ class Newsfeed implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer count: Number of comments to return. For auto feed, you can use the 'new_offset' parameter returned by this method.
-	 * - @var array[NewsfeedFilters] filters: Filters to apply: 'post' - new comments on wall posts, 'photo' - new comments on photos, 'video' - new comments on videos, 'topic' - new comments on discussions, 'note' - new comments on notes,
+	 * - @var array[NewsfeedGetCommentsFilters] filters: Filters to apply: 'post' - new comments on wall posts, 'photo' - new comments on photos, 'video' - new comments on videos, 'topic' - new comments on discussions, 'note' - new comments on notes,
 	 * - @var string reposts: Object ID, comments on repost of which shall be returned, e.g. 'wall1_45486'. (If the parameter is set, the 'filters' parameter is optional.),
 	 * - @var integer start_time: Earliest timestamp (in Unix time) of a comment to return. By default, 24 hours ago.
 	 * - @var integer end_time: Latest timestamp (in Unix time) of a comment to return. By default, the current time.
 	 * - @var integer last_comments_count
 	 * - @var string start_from: Identificator needed to return the next page with results. Value for this parameter returns in 'next_from' field.
-	 * - @var array[NewsfeedFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
+	 * - @var array[NewsfeedGetCommentsFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -180,7 +180,7 @@ class Newsfeed implements ActionInterface
 	 * - @var integer max_photos: Maximum number of photos to return. By default, '5'.
 	 * - @var string start_from: 'new_from' value obtained in previous call.
 	 * - @var integer count: Number of news items to return.
-	 * - @var array[NewsfeedFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
+	 * - @var array[NewsfeedGetRecommendedFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -198,7 +198,7 @@ class Newsfeed implements ActionInterface
 	 * - @var integer offset: offset required to choose a particular subset of communities or users.
 	 * - @var integer count: amount of communities or users to return.
 	 * - @var boolean shuffle: shuffle the returned list or not.
-	 * - @var array[NewsfeedFields] fields: list of extra fields to be returned. See available fields for [vk.com/dev/fields|users] and [vk.com/dev/fields_groups|communities].
+	 * - @var array[NewsfeedGetSuggestedSourcesFields] fields: list of extra fields to be returned. See available fields for [vk.com/dev/fields|users] and [vk.com/dev/fields_groups|communities].
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -257,7 +257,7 @@ class Newsfeed implements ActionInterface
 	 * - @var integer start_time: Earliest timestamp (in Unix time) of a news item to return. By default, 24 hours ago.
 	 * - @var integer end_time: Latest timestamp (in Unix time) of a news item to return. By default, the current time.
 	 * - @var string start_from
-	 * - @var array[NewsfeedFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
+	 * - @var array[NewsfeedSearchFields] fields: Additional fields of [vk.com/dev/fields|profiles] and [vk.com/dev/fields_groups|communities] to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -290,7 +290,7 @@ class Newsfeed implements ActionInterface
 	 * Unsubscribes the current user from specified newsfeeds.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var NewsfeedType type: Type of object from which to unsubscribe: 'note' - note, 'photo' - photo, 'post' - post on user wall or community wall, 'topic' - topic, 'video' - video
+	 * - @var NewsfeedUnsubscribeType type: Type of object from which to unsubscribe: 'note' - note, 'photo' - photo, 'post' - post on user wall or community wall, 'topic' - topic, 'video' - video
 	 * - @var integer owner_id: Object owner ID.
 	 * - @var integer item_id: Object ID.
 	 * @return mixed

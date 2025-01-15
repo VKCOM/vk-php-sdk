@@ -4,7 +4,8 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\NotesSort;
+use VK\Enums\NotesGetCommentsSort;
+use VK\Enums\NotesGetSort;
 use VK\Exceptions\Api\VKApiAccessCommentException;
 use VK\Exceptions\Api\VKApiAccessNoteCommentException;
 use VK\Exceptions\Api\VKApiAccessNoteException;
@@ -147,7 +148,7 @@ class Notes implements ActionInterface
 	 * - @var integer user_id: Note owner ID.
 	 * - @var integer offset
 	 * - @var integer count: Number of notes to return.
-	 * - @var NotesSort sort
+	 * - @var NotesGetSort sort
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -184,7 +185,7 @@ class Notes implements ActionInterface
 	 * @param array $params
 	 * - @var integer note_id: Note ID.
 	 * - @var integer owner_id: Note owner ID.
-	 * - @var NotesSort sort
+	 * - @var NotesGetCommentsSort sort
 	 * - @var integer offset
 	 * - @var integer count: Number of comments to return.
 	 * @return mixed

@@ -5,14 +5,15 @@ namespace VK\Actions;
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
 use VK\Enums\Base\NameCase;
-use VK\Enums\FriendsOrder;
-use VK\Enums\FriendsSort;
+use VK\Enums\FriendsGetOrder;
+use VK\Enums\FriendsGetRequestsSort;
 use VK\Exceptions\Api\VKApiFriendsAddEnemyException;
 use VK\Exceptions\Api\VKApiFriendsAddInEnemyException;
 use VK\Exceptions\Api\VKApiFriendsAddNotFoundException;
 use VK\Exceptions\Api\VKApiFriendsAddYourselfException;
 use VK\Exceptions\Api\VKApiFriendsListIdException;
 use VK\Exceptions\Api\VKApiFriendsListLimitException;
+use VK\Exceptions\Api\VKApiFriendsTooManyFriendsException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -46,6 +47,7 @@ class Friends implements ActionInterface
 	 * @throws VKApiFriendsAddEnemyException Cannot add this user to friends as you put him on blacklist
 	 * @throws VKApiFriendsAddYourselfException Cannot add user himself as friend
 	 * @throws VKApiFriendsAddNotFoundException Cannot add this user to friends as user not found
+	 * @throws VKApiFriendsTooManyFriendsException Too many friends
 	 */
 	public function add(string $access_token, array $params = [])
 	{
@@ -172,11 +174,11 @@ class Friends implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer user_id: User ID. By default, the current user ID.
-	 * - @var FriendsOrder order: Sort order: , 'name' - by name (enabled only if the 'fields' parameter is used), 'hints' - by rating, similar to how friends are sorted in My friends section, , This parameter is available only for [vk.com/dev/standalone|desktop applications].
+	 * - @var FriendsGetOrder order: Sort order: , 'name' - by name (enabled only if the 'fields' parameter is used), 'hints' - by rating, similar to how friends are sorted in My friends section, , This parameter is available only for [vk.com/dev/standalone|desktop applications].
 	 * - @var integer list_id: ID of the friend list returned by the [vk.com/dev/friends.getLists|friends.getLists] method to be used as the source. This parameter is taken into account only when the uid parameter is set to the current user ID. This parameter is available only for [vk.com/dev/standalone|desktop applications].
 	 * - @var integer count: Number of friends to return.
 	 * - @var integer offset: Offset needed to return a specific subset of friends.
-	 * - @var array[FriendsFields] fields: Profile fields to return. Sample values: 'uid', 'first_name', 'last_name', 'nickname', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'domain', 'has_mobile', 'rate', 'contacts', 'education'.
+	 * - @var array[FriendsGetFields] fields: Profile fields to return. Sample values: 'uid', 'first_name', 'last_name', 'nickname', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'domain', 'has_mobile', 'rate', 'contacts', 'education'.
 	 * - @var string ref
 	 * @return mixed
 	 * @throws VKClientException
@@ -198,22 +200,6 @@ class Friends implements ActionInterface
 	public function getAppUsers(string $access_token)
 	{
 		return $this->request->post('friends.getAppUsers', $access_token);
-	}
-
-
-	/**
-	 * Returns a list of the current user's friends whose phone numbers, validated or specified in a profile, are in a given list.
-	 * @param string $access_token
-	 * @param array $params
-	 * - @var array[string] phones: List of phone numbers in MSISDN format (maximum 1000). Example: "+79219876543,+79111234567"
-	 * - @var array[FriendsFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online, counters'.
-	 * @return mixed
-	 * @throws VKClientException
-	 * @throws VKApiException
-	 */
-	public function getByPhones(string $access_token, array $params = [])
-	{
-		return $this->request->post('friends.getByPhones', $access_token, $params);
 	}
 
 
@@ -243,6 +229,7 @@ class Friends implements ActionInterface
 	 * - @var string order: Sort order: 'random' - random order
 	 * - @var integer count: Number of mutual friends to return.
 	 * - @var integer offset: Offset needed to return a specific subset of mutual friends.
+	 * - @var boolean need_common_count: Return mutual friends total count
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -297,11 +284,11 @@ class Friends implements ActionInterface
 	 * - @var boolean extended: '1' - to return response messages from users who have sent a friend request or, if 'suggested' is set to '1', to return a list of suggested friends
 	 * - @var boolean need_mutual: '1' - to return a list of mutual friends (up to 20), if any
 	 * - @var boolean out: '1' - to return outgoing requests, '0' - to return incoming requests (default)
-	 * - @var FriendsSort sort: Sort order: '1' - by number of mutual friends, '0' - by date
+	 * - @var FriendsGetRequestsSort sort: Sort order: '1' - by number of mutual friends, '0' - by date
 	 * - @var boolean need_viewed
 	 * - @var boolean suggested: '1' - to return a list of suggested friends, '0' - to return friend requests (default)
 	 * - @var string ref
-	 * - @var array[FriendsFields] fields
+	 * - @var array[FriendsGetRequestsFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -316,10 +303,10 @@ class Friends implements ActionInterface
 	 * Returns a list of profiles of users whom the current user may know.
 	 * @param string $access_token
 	 * @param array $params
-	 * - @var array[FriendsFilter] filter: Types of potential friends to return: 'mutual' - users with many mutual friends , 'contacts' - users found with the [vk.com/dev/account.importContacts|account.importContacts] method , 'mutual_contacts' - users who imported the same contacts as the current user with the [vk.com/dev/account.importContacts|account.importContacts] method
+	 * - @var array[FriendsGetSuggestionsFilter] filter: Types of potential friends to return: 'mutual' - users with many mutual friends , 'contacts' - users found with the [vk.com/dev/account.importContacts|account.importContacts] method , 'mutual_contacts' - users who imported the same contacts as the current user with the [vk.com/dev/account.importContacts|account.importContacts] method
 	 * - @var integer count: Number of suggestions to return.
 	 * - @var integer offset: Offset needed to return a specific subset of suggestions.
-	 * - @var array[FriendsFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online', 'counters'.
+	 * - @var array[FriendsGetSuggestionsFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online', 'counters'.
 	 * - @var NameCase name_case: Case for declension of user name and surname: , 'nom' - nominative (default) , 'gen' - genitive , 'dat' - dative , 'acc' - accusative , 'ins' - instrumental , 'abl' - prepositional
 	 * @return mixed
 	 * @throws VKClientException
@@ -337,7 +324,7 @@ class Friends implements ActionInterface
 	 * @param array $params
 	 * - @var integer user_id: User ID.
 	 * - @var string q: Search query string (e.g., 'Vasya Babich').
-	 * - @var array[FriendsFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online',
+	 * - @var array[FriendsSearchFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online',
 	 * - @var NameCase name_case: Case for declension of user name and surname: 'nom' - nominative (default), 'gen' - genitive , 'dat' - dative, 'acc' - accusative , 'ins' - instrumental , 'abl' - prepositional
 	 * - @var integer offset: Offset needed to return a specific subset of friends.
 	 * - @var integer count: Number of friends to return.

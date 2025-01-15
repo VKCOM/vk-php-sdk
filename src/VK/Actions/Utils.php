@@ -4,8 +4,8 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\UtilsInterval;
-use VK\Enums\UtilsSource;
+use VK\Enums\UtilsGetLinkStatsInterval;
+use VK\Enums\UtilsGetLinkStatsSource;
 use VK\Exceptions\Api\VKApiNotFoundException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -77,9 +77,9 @@ class Utils implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string key: Link key (characters after vk.cc/).
-	 * - @var UtilsSource source: Source of scope
+	 * - @var UtilsGetLinkStatsSource source: Source of scope
 	 * - @var string access_key: Access key for private link stats.
-	 * - @var UtilsInterval interval: Interval.
+	 * - @var UtilsGetLinkStatsInterval interval: Interval.
 	 * - @var integer intervals_count: Number of intervals to return.
 	 * - @var boolean extended: 1 - to return extended stats data (sex, age, geo). 0 - to return views number only.
 	 * @return mixed
@@ -130,6 +130,7 @@ class Utils implements ActionInterface
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
+	 * @throws VKApiNotFoundException Not found
 	 */
 	public function resolveScreenName(string $access_token, array $params = [])
 	{

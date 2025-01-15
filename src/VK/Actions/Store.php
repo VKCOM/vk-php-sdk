@@ -82,6 +82,7 @@ class Store implements ActionInterface
 	 * - @var boolean aliases
 	 * - @var boolean all_products
 	 * - @var boolean need_stickers
+	 * - @var boolean vmoji_promo
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

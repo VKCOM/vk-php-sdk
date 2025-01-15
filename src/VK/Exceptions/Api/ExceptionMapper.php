@@ -190,6 +190,8 @@ class ExceptionMapper
 				return new VKApiWallDonutException($error);
 			case 232:
 				return new VKApiLikesReactionCanNotBeAppliedException($error);
+			case 242:
+				return new VKApiFriendsTooManyFriendsException($error);
 			case 250:
 				return new VKApiPollsAccessException($error);
 			case 251:
@@ -322,6 +324,22 @@ class ExceptionMapper
 				return new VKApiMessagesMessageCannotBeForwardedException($error);
 			case 970:
 				return new VKApiMessagesCantPinExpiringMessageException($error);
+			case 985:
+				return new VKApiMessagesGroupForNotificationsOnlyException($error);
+			case 987:
+				return new VKApiMessagesNeedMessageRequestException($error);
+			case 988:
+				return new VKApiMessagesPendingMessageRequestException($error);
+			case 990:
+				return new VKApiMessagesDropDeviceCacheException($error);
+			case 1009:
+				return new VKApiMessagesInvalidReactionIdException($error);
+			case 1010:
+				return new VKApiMessagesForbiddenReactionException($error);
+			case 1011:
+				return new VKApiMessagesReactionsLimitReachedException($error);
+			case 1012:
+				return new VKApiMessagesWritingDisabledForChatException($error);
 			case 1105:
 				return new VKApiAuthFloodException($error);
 			case 1114:
@@ -340,6 +358,10 @@ class ExceptionMapper
 				return new VKApiParamDocTitleException($error);
 			case 1153:
 				return new VKApiParamDocAccessException($error);
+			case 1154:
+				return new VKApiParamDocRestoreAccessException($error);
+			case 1155:
+				return new VKApiParamDocRestoreTimeoutException($error);
 			case 1160:
 				return new VKApiPhotoChangedException($error);
 			case 1170:
@@ -372,14 +394,32 @@ class ExceptionMapper
 				return new VKApiMarketItemHasBadLinksException($error);
 			case 1409:
 				return new VKApiMarketExtendedNotEnabledException($error);
+			case 1410:
+				return new VKApiMarketVariantsNotEnabledException($error);
+			case 1411:
+				return new VKApiMarketVariantsException($error);
 			case 1412:
 				return new VKApiMarketGroupingItemsWithDifferentPropertiesException($error);
 			case 1413:
 				return new VKApiMarketGroupingAlreadyHasSuchVariantException($error);
+			case 1414:
+				return new VKApiMarketGroupingHasOtherPropertiesException($error);
+			case 1415:
+				return new VKApiMarketGroupingMustHaveVariantsException($error);
 			case 1416:
 				return new VKApiMarketVariantNotFoundException($error);
 			case 1417:
 				return new VKApiMarketPropertyNotFoundException($error);
+			case 1418:
+				return new VKApiMarketMaxPropertiesLimitExceedException($error);
+			case 1419:
+				return new VKApiMarketMaxVariantsLimitExceedException($error);
+			case 1421:
+				return new VKApiMarketNameTooLongException($error);
+			case 1423:
+				return new VKApiMarketVariantValueTooLongException($error);
+			case 1424:
+				return new VKApiMarketUnknownPropertyTypeException($error);
 			case 1425:
 				return new VKApiMarketGroupingMustContainMoreThanOneItemException($error);
 			case 1426:
@@ -400,12 +440,24 @@ class ExceptionMapper
 				return new VKApiMarketPhotosCropOverflowException($error);
 			case 1435:
 				return new VKApiMarketPhotosCropSizeTooLowException($error);
+			case 1436:
+				return new VKApiMarketOrdersOrderNotFoundException($error);
 			case 1438:
 				return new VKApiMarketNotEnabledException($error);
 			case 1446:
 				return new VKApiMarketAlbumMainHiddenException($error);
 			case 1456:
 				return new VKApiMarketOrdersInvalidStatusException($error);
+			case 1457:
+				return new VKApiMarketFailedToSetAlbumAsMainException($error);
+			case 1458:
+				return new VKApiMarketFailedToUnsetAlbumAsMainException($error);
+			case 1518:
+				return new VKApiMarketItemIsNotDeletedException($error);
+			case 1525:
+				return new VKApiMarketDisabledException($error);
+			case 1526:
+				return new VKApiMarketServicesDisabledException($error);
 			case 1600:
 				return new VKApiStoryExpiredException($error);
 			case 1602:
@@ -456,6 +508,20 @@ class ExceptionMapper
 				return new VKApiAsrNotFoundException($error);
 			case 9999:
 				return new VKApiNotSupportedHttpMethodException($error);
+			case 11500:
+				return new VKApiCuaConfirmationRequiredException($error);
+			case 11003:
+				return new VKApiAppsEmptyFilterParamsException($error);
+			case 11004:
+				return new VKApiAppsEmptySnippetDataException($error);
+			case 11005:
+				return new VKApiAppsTooManySnippetsException($error);
+			case 11006:
+				return new VKApiAppsNotFoundSnippetException($error);
+			case 11101:
+				return new VKApiTranslationsCantTranslateException($error);
+			case 11102:
+				return new VKApiTranslationsMultipleSourceLangException($error);
 			default:
 				return new VKApiException($error->getErrorCode(), $error->getErrorMsg(), $error);}
 	}

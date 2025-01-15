@@ -66,9 +66,7 @@ class Stories implements ActionInterface
 	 * @param array $params
 	 * - @var integer owner_id: Owner ID.
 	 * - @var boolean extended: '1' - to return additional fields for users and communities. Default value is 0.
-	 * - @var array[StoriesFields] fields
-	 * - @var array[string] feed_item_ids
-	 * - @var boolean minimized
+	 * - @var array[StoriesGetFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -84,7 +82,7 @@ class Stories implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var boolean extended: '1' - to return additional fields for users and communities. Default value is 0.
-	 * - @var array[StoriesFields] fields: Additional fields to return
+	 * - @var array[StoriesGetBannedFields] fields: Additional fields to return
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -101,7 +99,7 @@ class Stories implements ActionInterface
 	 * @param array $params
 	 * - @var array[string] stories: Stories IDs separated by commas. Use format {owner_id}+'_'+{story_id}, for example, 12345_54331.
 	 * - @var boolean extended: '1' - to return additional fields for users and communities. Default value is 0.
-	 * - @var array[StoriesFields] fields: Additional fields to return
+	 * - @var array[StoriesGetByIdFields] fields: Additional fields to return
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -160,7 +158,7 @@ class Stories implements ActionInterface
 	 * - @var integer story_id: Story ID.
 	 * - @var string access_key: Access key for the private object.
 	 * - @var boolean extended: '1' - to return additional fields for users and communities. Default value is 0.
-	 * - @var array[StoriesFields] fields: Additional fields to return
+	 * - @var array[StoriesGetRepliesFields] fields: Additional fields to return
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -220,7 +218,7 @@ class Stories implements ActionInterface
 	 * - @var integer count: Maximum number of results.
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * - @var boolean extended: '1' - to return detailed information about photos
-	 * - @var array[StoriesFields] fields
+	 * - @var array[StoriesGetViewersFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -270,7 +268,7 @@ class Stories implements ActionInterface
 	 * - @var array[string] upload_results
 	 * - @var string upload_results_json
 	 * - @var boolean extended
-	 * - @var array[StoriesFields] fields
+	 * - @var array[StoriesSaveFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -292,7 +290,7 @@ class Stories implements ActionInterface
 	 * - @var integer mentioned_id
 	 * - @var integer count
 	 * - @var boolean extended
-	 * - @var array[StoriesFields] fields
+	 * - @var array[StoriesSearchFields] fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

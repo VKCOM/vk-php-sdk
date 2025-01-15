@@ -5,8 +5,8 @@ namespace VK\Actions;
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
 use VK\Enums\Base\NameCase;
-use VK\Enums\PollsBackgroundId;
-use VK\Enums\PollsNameCase;
+use VK\Enums\PollsCreateBackgroundId;
+use VK\Enums\PollsEditBackgroundId;
 use VK\Exceptions\Api\VKApiParamPhotoException;
 use VK\Exceptions\Api\VKApiPollsAccessException;
 use VK\Exceptions\Api\VKApiPollsAccessWithoutVoteException;
@@ -64,7 +64,7 @@ class Polls implements ActionInterface
 	 * - @var integer app_id
 	 * - @var string add_answers: available answers list, for example: " ["yes","no","maybe"]", There can be from 1 to 10 answers.
 	 * - @var integer photo_id
-	 * - @var PollsBackgroundId background_id
+	 * - @var PollsCreateBackgroundId background_id
 	 * - @var boolean disable_unvote
 	 * @return mixed
 	 * @throws VKClientException
@@ -108,7 +108,7 @@ class Polls implements ActionInterface
 	 * - @var string delete_answers: list of answer ids to be deleted. For example: "[382967099, 382967103]"
 	 * - @var integer end_date
 	 * - @var integer photo_id
-	 * - @var PollsBackgroundId background_id
+	 * - @var PollsEditBackgroundId background_id
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -141,7 +141,7 @@ class Polls implements ActionInterface
 	 * - @var boolean extended
 	 * - @var integer friends_count
 	 * - @var array[string] fields
-	 * - @var PollsNameCase name_case
+	 * - @var NameCase name_case
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -178,7 +178,7 @@ class Polls implements ActionInterface
 	 * - @var boolean friends_only: '1' - to return only current user's friends, '0' - to return all users (default),
 	 * - @var integer offset: Offset needed to return a specific subset of voters. '0' - (default)
 	 * - @var integer count: Number of user IDs to return (if the 'friends_only' parameter is not set, maximum '1000', otherwise '10'). '100' - (default)
-	 * - @var array[PollsFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate (birthdate)', 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online', 'counters'.
+	 * - @var array[PollsGetVotersFields] fields: Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate (birthdate)', 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'rate', 'contacts', 'education', 'online', 'counters'.
 	 * - @var NameCase name_case: Case for declension of user name and surname: , 'nom' - nominative (default) , 'gen' - genitive , 'dat' - dative , 'acc' - accusative , 'ins' - instrumental , 'abl' - prepositional
 	 * @return mixed
 	 * @throws VKClientException

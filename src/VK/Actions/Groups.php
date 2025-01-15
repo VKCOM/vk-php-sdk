@@ -4,13 +4,7 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\GroupsAct;
-use VK\Enums\GroupsFilter;
-use VK\Enums\GroupsNameCase;
-use VK\Enums\GroupsSort;
-use VK\Enums\GroupsSubtype;
-use VK\Enums\GroupsTagColor;
-use VK\Enums\GroupsType;
+use VK\Enums\Base\NameCase;
 use VK\Enums\Groups\AddressWorkInfoStatus;
 use VK\Enums\Groups\GroupAccess;
 use VK\Enums\Groups\GroupAgeLimits;
@@ -25,9 +19,16 @@ use VK\Enums\Groups\GroupVideo;
 use VK\Enums\Groups\GroupWall;
 use VK\Enums\Groups\GroupWiki;
 use VK\Enums\Groups\MarketState;
+use VK\Enums\GroupsCreateSubtype;
+use VK\Enums\GroupsCreateType;
+use VK\Enums\GroupsGetMembersFilter;
+use VK\Enums\GroupsGetMembersSort;
+use VK\Enums\GroupsSearchSort;
+use VK\Enums\GroupsSearchType;
+use VK\Enums\GroupsTagAddTagColor;
+use VK\Enums\GroupsTagBindAct;
 use VK\Exceptions\Api\VKApiAccessGroupsException;
 use VK\Exceptions\Api\VKApiCallbackApiServersLimitException;
-use VK\Exceptions\Api\VKApiClientUpdateNeededException;
 use VK\Exceptions\Api\VKApiGroupChangeCreatorException;
 use VK\Exceptions\Api\VKApiGroupHostNeed2faException;
 use VK\Exceptions\Api\VKApiGroupInviteLinksNotValidException;
@@ -165,10 +166,10 @@ class Groups implements ActionInterface
 	 * @param array $params
 	 * - @var string title: Community title.
 	 * - @var string description: Community description (ignored for 'type' = 'public').
-	 * - @var GroupsType type: Community type. Possible values: *'group' - group,, *'event' - event,, *'public' - public page
+	 * - @var GroupsCreateType type: Community type. Possible values: *'group' - group,, *'event' - event,, *'public' - public page
 	 * - @var integer public_category: Category ID (for 'type' = 'public' only).
 	 * - @var integer public_subcategory: Public page subcategory ID.
-	 * - @var GroupsSubtype subtype: Public page subtype. Possible values: *'1' - place or small business,, *'2' - company, organization or website,, *'3' - famous person or group of people,, *'4' - product or work of art.
+	 * - @var GroupsCreateSubtype subtype: Public page subtype. Possible values: *'1' - place or small business,, *'2' - company, organization or website,, *'3' - famous person or group of people,, *'4' - product or work of art.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -279,6 +280,7 @@ class Groups implements ActionInterface
 	 * - @var boolean addresses
 	 * - @var GroupAgeLimits age_limits: Community age limits. Possible values: *'1' - no limits,, *'2' - 16+,, *'3' - 18+.
 	 * - @var boolean market: Market settings. Possible values: *'0' - disabled,, *'1' - enabled.
+	 * - @var string market_buttons: Buttons details, see market/objects.json#/definitions/market_custom_button
 	 * - @var boolean market_comments: market comments settings. Possible values: *'0' - disabled,, *'1' - enabled.
 	 * - @var array[integer] market_country: Market delivery countries.
 	 * - @var array[integer] market_city: Market delivery cities (if only one country is specified).
@@ -287,6 +289,8 @@ class Groups implements ActionInterface
 	 * - @var integer market_wiki: ID of a wiki page with market description.
 	 * - @var boolean obscene_filter: Obscene expressions filter in comments. Possible values: , *'0' - disabled,, *'1' - enabled.
 	 * - @var boolean obscene_stopwords: Stopwords filter in comments. Possible values: , *'0' - disabled,, *'1' - enabled.
+	 * - @var boolean toxic_filter
+	 * - @var boolean disable_replies_from_groups
 	 * - @var array[string] obscene_words: Keywords for stopwords filter.
 	 * - @var integer main_section
 	 * - @var integer secondary_section
@@ -415,8 +419,8 @@ class Groups implements ActionInterface
 	 * @param array $params
 	 * - @var integer user_id: User ID.
 	 * - @var boolean extended: '1' - to return complete information about a user's communities, '0' - to return a list of community IDs without any additional fields (default),
-	 * - @var array[GroupsFilter] filter: Types of communities to return: 'admin' - to return communities administered by the user , 'editor' - to return communities where the user is an administrator or editor, 'moder' - to return communities where the user is an administrator, editor, or moderator, 'groups' - to return only groups, 'publics' - to return only public pages, 'events' - to return only events
-	 * - @var array[GroupsFields] fields: Profile fields to return.
+	 * - @var array[GroupsGetFilter] filter: Types of communities to return: 'admin' - to return communities administered by the user , 'editor' - to return communities where the user is an administrator or editor, 'moder' - to return communities where the user is an administrator, editor, or moderator, 'groups' - to return only groups, 'publics' - to return only public pages, 'events' - to return only events
+	 * - @var array[GroupsGetFields] fields: Profile fields to return.
 	 * - @var integer offset: Offset needed to return a specific subset of communities.
 	 * - @var integer count: Number of communities to return.
 	 * @return mixed
@@ -440,7 +444,7 @@ class Groups implements ActionInterface
 	 * - @var number longitude: Longitude of the user geo position.
 	 * - @var integer offset: Offset needed to return a specific subset of community addresses.
 	 * - @var integer count: Number of community addresses to return.
-	 * - @var array[GroupsFields] fields: Address fields
+	 * - @var array[GroupsGetAddressesFields] fields: Address fields
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -460,7 +464,7 @@ class Groups implements ActionInterface
 	 * - @var integer group_id: Community ID.
 	 * - @var integer offset: Offset needed to return a specific subset of users.
 	 * - @var integer count: Number of users to return.
-	 * - @var array[GroupsFields] fields
+	 * - @var array[GroupsGetBannedFields] fields
 	 * - @var integer owner_id
 	 * @return mixed
 	 * @throws VKClientException
@@ -479,7 +483,7 @@ class Groups implements ActionInterface
 	 * @param array $params
 	 * - @var array[integer]|array[string] group_ids: IDs or screen names of communities.
 	 * - @var integer|string group_id: ID or screen name of the community.
-	 * - @var array[GroupsFields] fields: Group fields to return.
+	 * - @var array[GroupsGetByIdFields] fields: Group fields to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -560,8 +564,8 @@ class Groups implements ActionInterface
 	 * - @var integer group_id: Group ID to return invited users for.
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * - @var integer count: Number of results to return.
-	 * - @var array[GroupsFields] fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online, online_mobile, lists, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters'.
-	 * - @var GroupsNameCase name_case: Case for declension of user name and surname. Possible values: *'nom' - nominative (default),, *'gen' - genitive,, *'dat' - dative,, *'acc' - accusative, , *'ins' - instrumental,, *'abl' - prepositional.
+	 * - @var array[GroupsGetInvitedUsersFields] fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online, online_mobile, lists, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters'.
+	 * - @var NameCase name_case: Case for declension of user name and surname. Possible values: *'nom' - nominative (default),, *'gen' - genitive,, *'dat' - dative,, *'acc' - accusative, , *'ins' - instrumental,, *'abl' - prepositional.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -624,11 +628,11 @@ class Groups implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer|string group_id: ID or screen name of the community.
-	 * - @var GroupsSort sort: Sort order. Available values: 'id_asc', 'id_desc', 'time_asc', 'time_desc'. 'time_asc' and 'time_desc' are availavle only if the method is called by the group's 'moderator'.
+	 * - @var GroupsGetMembersSort sort: Sort order. Available values: 'id_asc', 'id_desc', 'time_asc', 'time_desc'. 'time_asc' and 'time_desc' are availavle only if the method is called by the group's 'moderator'.
 	 * - @var integer offset: Offset needed to return a specific subset of community members.
 	 * - @var integer count: Number of community members to return.
-	 * - @var array[GroupsFields] fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online, online_mobile, lists, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters'.
-	 * - @var GroupsFilter filter: *'friends' - only friends in this community will be returned,, *'unsure' - only those who pressed 'I may attend' will be returned (if it's an event).
+	 * - @var array[GroupsGetMembersFields] fields: List of additional fields to be returned. Available values: 'sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, online, online_mobile, lists, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters'.
+	 * - @var GroupsGetMembersFilter filter: *'friends' - only friends in this community will be returned,, *'unsure' - only those who pressed 'I may attend' will be returned (if it's an event).
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -661,7 +665,7 @@ class Groups implements ActionInterface
 	 * - @var integer group_id: Community ID.
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * - @var integer count: Number of results to return.
-	 * - @var array[GroupsFields] fields: Profile fields to return.
+	 * - @var array[GroupsGetRequestsFields] fields: Profile fields to return.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -720,6 +724,7 @@ class Groups implements ActionInterface
 	 * @param array $params
 	 * - @var integer group_id: Community ID.
 	 * - @var integer user_id: User ID.
+	 * - @var array[integer] user_ids_list: User IDs.
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -775,7 +780,6 @@ class Groups implements ActionInterface
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
-	 * @throws VKApiClientUpdateNeededException Client update needed
 	 */
 	public function leave(string $access_token, array $params = [])
 	{
@@ -821,12 +825,12 @@ class Groups implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var string q: Search query string.
-	 * - @var GroupsType type: Community type. Possible values: 'group, page, event.'
+	 * - @var GroupsSearchType type: Community type. Possible values: 'group, page, event.'
 	 * - @var integer country_id: Country ID.
 	 * - @var integer city_id: City ID. If this parameter is transmitted, country_id is ignored.
 	 * - @var boolean future: '1' - to return only upcoming events. Works with the 'type' = 'event' only.
 	 * - @var boolean market: '1' - to return communities with enabled market only.
-	 * - @var GroupsSort sort: Sort order. Possible values: *'0' - default sorting (similar the full version of the site),, *'1' - by growth speed,, *'2'- by the "day attendance/members number" ratio,, *'3' - by the "Likes number/members number" ratio,, *'4' - by the "comments number/members number" ratio,, *'5' - by the "boards entries number/members number" ratio.
+	 * - @var GroupsSearchSort sort: Sort order. Possible values: *'0' - default sorting (similar the full version of the site),, *'1' - by growth speed,, *'2'- by the "day attendance/members number" ratio,, *'3' - by the "Likes number/members number" ratio,, *'4' - by the "comments number/members number" ratio,, *'5' - by the "boards entries number/members number" ratio.
 	 * - @var integer offset: Offset needed to return a specific subset of results.
 	 * - @var integer count: Number of communities to return. "Note that you can not receive more than first thousand of results, regardless of 'count' and 'offset' values."
 	 * @return mixed
@@ -852,6 +856,7 @@ class Groups implements ActionInterface
 	 * - @var boolean message_edit
 	 * - @var boolean message_deny: Denied messages notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean message_typing_state
+	 * - @var boolean message_read: Messages read notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean photo_new: New photos notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean audio_new: New audios notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean video_new: New videos notifications ('0' - disabled, '1' - enabled).
@@ -861,6 +866,8 @@ class Groups implements ActionInterface
 	 * - @var boolean wall_reply_restore: A wall comment has been restored ('0' - disabled, '1' - enabled).
 	 * - @var boolean wall_post_new: New wall posts notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean wall_repost: New wall posts notifications ('0' - disabled, '1' - enabled).
+	 * - @var boolean wall_schedule_post_new: Scheduled post added to time slot ('0' - disabled, '1' - enabled).
+	 * - @var boolean wall_schedule_post_delete: Scheduled post removed from time slot ('0' - disabled, '1' - enabled).
 	 * - @var boolean board_post_new: New board posts notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean board_post_edit: Board posts edited notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean board_post_restore: Board posts restored notifications ('0' - disabled, '1' - enabled).
@@ -891,6 +898,7 @@ class Groups implements ActionInterface
 	 * - @var boolean like_add
 	 * - @var boolean like_remove
 	 * - @var boolean message_event
+	 * - @var boolean message_reaction_event
 	 * - @var boolean donut_subscription_create
 	 * - @var boolean donut_subscription_prolonged
 	 * - @var boolean donut_subscription_cancelled
@@ -922,6 +930,7 @@ class Groups implements ActionInterface
 	 * - @var boolean message_deny: Denied messages notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean message_edit: A message has been edited ('0' - disabled, '1' - enabled).
 	 * - @var boolean message_typing_state
+	 * - @var boolean message_read: Messages read notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean photo_new: New photos notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean audio_new: New audios notifications ('0' - disabled, '1' - enabled).
 	 * - @var boolean video_new: New videos notifications ('0' - disabled, '1' - enabled).
@@ -958,6 +967,7 @@ class Groups implements ActionInterface
 	 * - @var boolean like_add
 	 * - @var boolean like_remove
 	 * - @var boolean message_event
+	 * - @var boolean message_reaction_event
 	 * - @var boolean donut_subscription_create
 	 * - @var boolean donut_subscription_prolonged
 	 * - @var boolean donut_subscription_cancelled
@@ -983,6 +993,7 @@ class Groups implements ActionInterface
 	 * - @var boolean bots_capabilities: By enabling bot abilities, you can send users messages with a customized keyboard attached as well as use other promotional abilities
 	 * - @var boolean bots_start_button: If this setting is enabled, users will see a Start button when they start a chat with your community for the first time
 	 * - @var boolean bots_add_to_chat: If this setting is enabled then users can add your community to a chat
+	 * - @var boolean bot_online_booking_enabled: If this setting is enabled then online booking chatbot add in your community chats
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -1016,7 +1027,7 @@ class Groups implements ActionInterface
 	 * @param array $params
 	 * - @var integer group_id
 	 * - @var string tag_name
-	 * - @var GroupsTagColor tag_color
+	 * - @var GroupsTagAddTagColor tag_color
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -1034,7 +1045,7 @@ class Groups implements ActionInterface
 	 * - @var integer group_id
 	 * - @var integer tag_id
 	 * - @var integer user_id
-	 * - @var GroupsAct act: Describe the action
+	 * - @var GroupsTagBindAct act: Describe the action
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

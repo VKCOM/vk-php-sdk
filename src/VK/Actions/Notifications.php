@@ -4,7 +4,7 @@ namespace VK\Actions;
 
 use VK\Client\Actions\ActionInterface;
 use VK\Client\VKApiRequest;
-use VK\Enums\NotificationsSendingMode;
+use VK\Enums\NotificationsSendMessageSendingMode;
 use VK\Exceptions\Api\VKApiGroupAppIsNotInstalledInCommunityException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
@@ -31,7 +31,7 @@ class Notifications implements ActionInterface
 	 * @param array $params
 	 * - @var integer count: Number of notifications to return.
 	 * - @var string start_from
-	 * - @var array[NotificationsFilters] filters: Type of notifications to return: 'wall' - wall posts, 'mentions' - mentions in wall posts, comments, or topics, 'comments' - comments to wall posts, photos, and videos, 'likes' - likes, 'reposted' - wall posts that are copied from the current user's wall, 'followers' - new followers, 'friends' - accepted friend requests
+	 * - @var array[NotificationsGetFilters] filters: Type of notifications to return: 'wall' - wall posts, 'mentions' - mentions in wall posts, comments, or topics, 'comments' - comments to wall posts, photos, and videos, 'likes' - likes, 'reposted' - wall posts that are copied from the current user's wall, 'followers' - new followers, 'friends' - accepted friend requests
 	 * - @var integer start_time: Earliest timestamp (in Unix time) of a notification to return. By default, 24 hours ago.
 	 * - @var integer end_time: Latest timestamp (in Unix time) of a notification to return. By default, the current time.
 	 * @return mixed
@@ -65,7 +65,7 @@ class Notifications implements ActionInterface
 	 * - @var string fragment
 	 * - @var integer group_id
 	 * - @var integer random_id
-	 * - @var NotificationsSendingMode sending_mode: Type of sending (delivering) notifications: 'immediately' - push and bell notifications will be delivered as soon as possible, 'delayed' - push and bell notifications will be delivered in the most comfortable time for the user, 'delayed_push' - only push notifications will be delivered in the most comfortable time, while the bell notifications will be delivered as soon as possible
+	 * - @var NotificationsSendMessageSendingMode sending_mode: Type of sending (delivering) notifications: 'immediately' - push and bell notifications will be delivered as soon as possible, 'delayed' - push and bell notifications will be delivered in the most comfortable time for the user, 'delayed_push' - only push notifications will be delivered in the most comfortable time, while the bell notifications will be delivered as soon as possible
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
