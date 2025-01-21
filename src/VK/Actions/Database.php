@@ -49,6 +49,7 @@ class Database implements ActionInterface
 	 * - @var boolean need_all: '1' - to return all cities in the country, '0' - to return major cities in the country (default),
 	 * - @var integer offset: Offset needed to return a specific subset of cities.
 	 * - @var integer count: Number of cities to return.
+	 * - @var array[string] fields: Cities fields to return. Sample values: 'fias_guid'
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -64,6 +65,7 @@ class Database implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var array[integer] city_ids: City IDs.
+	 * - @var array[string] fields: Cities fields to return. Sample values: 'fias_guid'
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException

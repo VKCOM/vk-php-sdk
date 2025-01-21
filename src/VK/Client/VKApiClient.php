@@ -9,10 +9,8 @@ use VK\Exceptions\VKApiException;
 /**
  * @method \VK\Actions\Account account()
  * @method \VK\Actions\Ads ads()
- * @method \VK\Actions\Adsweb adsweb()
  * @method \VK\Actions\AppWidgets appwidgets()
  * @method \VK\Actions\Apps apps()
- * @method \VK\Actions\Asr asr()
  * @method \VK\Actions\Auth auth()
  * @method \VK\Actions\Board board()
  * @method \VK\Actions\Bugtracker bugtracker()

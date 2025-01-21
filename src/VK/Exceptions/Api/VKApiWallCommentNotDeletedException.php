@@ -5,15 +5,15 @@ namespace VK\Exceptions\Api;
 use VK\Client\VKApiError;
 use VK\Exceptions\VKApiException;
 
-class VKApiAsrNotFoundException extends VKApiException
+class VKApiWallCommentNotDeletedException extends VKApiException
 {
 	/**
-	 * VKApiAsrNotFoundException constructor.
+	 * VKApiWallCommentNotDeletedException constructor.
 	 * @param VkApiError $error
 	 */
 	public function __construct(VKApiError $error)
 	{
-		parent::__construct(7704, 'Task not found', $error);
+		parent::__construct(243, 'Comment has not been deleted', $error);
 	}
 }
 

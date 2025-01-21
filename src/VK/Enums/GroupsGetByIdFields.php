@@ -81,12 +81,17 @@ class GroupsGetByIdFields
 	public const USING_VKPAY_MARKET_APP = 'using_vkpay_market_app';
 	public const HAS_GROUP_CHANNEL = 'has_group_channel';
 	public const ADDRESSES = 'addresses';
+	public const MESSAGES = 'messages';
+	public const BUSINESS_RATING = 'business_rating';
 	public const IS_SUBSCRIBED_PODCASTS = 'is_subscribed_podcasts';
 	public const CAN_SUBSCRIBE_PODCASTS = 'can_subscribe_podcasts';
 	public const CAN_SUBSCRIBE_POSTS = 'can_subscribe_posts';
 	public const LIVE_COVERS = 'live_covers';
 	public const STORIES_ARCHIVE_COUNT = 'stories_archive_count';
 	public const HAS_UNSEEN_STORIES = 'has_unseen_stories';
+	public const CATEGORY = 'category';
+	public const CATEGORY0 = 'category0';
+	public const CATEGORY1 = 'category1';
 	public const RATING = 'rating';
 	public const IS_MARKET_MARKET_LINK_ATTACHMENT_ENABLED = 'is_market_market_link_attachment_enabled';
 	public const IS_MARKET_MESSAGE_TO_BC_ATTACHMENT_ENABLED = 'is_market_message_to_bc_attachment_enabled';

@@ -21,6 +21,7 @@ use VK\Exceptions\Api\VKApiWallAddPostException;
 use VK\Exceptions\Api\VKApiWallAdsPostLimitReachedException;
 use VK\Exceptions\Api\VKApiWallAdsPublishedException;
 use VK\Exceptions\Api\VKApiWallCheckLinkCantDetermineSourceException;
+use VK\Exceptions\Api\VKApiWallCommentNotDeletedException;
 use VK\Exceptions\Api\VKApiWallDonutException;
 use VK\Exceptions\Api\VKApiWallLinksForbiddenException;
 use VK\Exceptions\Api\VKApiWallReplyOwnerFloodException;
@@ -524,6 +525,8 @@ class Wall implements ActionInterface
 	 * @throws VKClientException
 	 * @throws VKApiException
 	 * @throws VKApiWallAccessCommentException Access to wall's comment denied
+	 * @throws VKApiNotFoundException Not found
+	 * @throws VKApiWallCommentNotDeletedException Comment has not been deleted
 	 */
 	public function restoreComment(string $access_token, array $params = [])
 	{

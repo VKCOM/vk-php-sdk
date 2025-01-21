@@ -192,6 +192,8 @@ class ExceptionMapper
 				return new VKApiLikesReactionCanNotBeAppliedException($error);
 			case 242:
 				return new VKApiFriendsTooManyFriendsException($error);
+			case 243:
+				return new VKApiWallCommentNotDeletedException($error);
 			case 250:
 				return new VKApiPollsAccessException($error);
 			case 251:
@@ -498,14 +500,6 @@ class ExceptionMapper
 				return new VKApiUserServiceDeactivatedException($error);
 			case 3800:
 				return new VKApiFaveAliexpressTagException($error);
-			case 7701:
-				return new VKApiAsrAudioDurationFloodedException($error);
-			case 7702:
-				return new VKApiAsrFileIsTooBigException($error);
-			case 7703:
-				return new VKApiAsrInvalidHashException($error);
-			case 7704:
-				return new VKApiAsrNotFoundException($error);
 			case 9999:
 				return new VKApiNotSupportedHttpMethodException($error);
 			case 11500:

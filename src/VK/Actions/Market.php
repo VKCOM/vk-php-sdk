@@ -693,6 +693,7 @@ class Market implements ActionInterface
 	 * @param string $access_token
 	 * @param array $params
 	 * - @var integer group_id: Community ID.
+	 * - @var boolean bulk
 	 * @return mixed
 	 * @throws VKClientException
 	 * @throws VKApiException
@@ -900,6 +901,22 @@ class Market implements ActionInterface
 	public function saveProductPhoto(string $access_token, array $params = [])
 	{
 		return $this->request->post('market.saveProductPhoto', $access_token, $params);
+	}
+
+
+	/**
+	 * Bulk save market photo after upload.
+	 * @param string $access_token
+	 * @param array $params
+	 * - @var string upload_response: Upload response
+	 * @return mixed
+	 * @throws VKClientException
+	 * @throws VKApiException
+	 * @throws VKApiMarketNotEnabledException Market not enabled
+	 */
+	public function saveProductPhotoBulk(string $access_token, array $params = [])
+	{
+		return $this->request->post('market.saveProductPhotoBulk', $access_token, $params);
 	}
 
 

@@ -1047,6 +1047,7 @@ class Messages implements ActionInterface
 	 * @throws VKApiUploadException Upload error
 	 * @throws VKApiPhotoChangedException Original photo was changed
 	 * @throws VKApiMessagesChatNotAdminException You are not admin of this chat
+	 * @throws VKApiMessagesChatDisabledException Chat was disabled
 	 */
 	public function setChatPhoto(string $access_token, array $params = [])
 	{

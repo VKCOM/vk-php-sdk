@@ -8,5 +8,6 @@ class AppsGetCatalogFilter
 	public const FEATURED = 'featured';
 	public const INSTALLED = 'installed';
 	public const _NEW = 'new';
+	public const RECOMMENDED = 'recommended';
 }
 
