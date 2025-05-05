@@ -280,7 +280,7 @@ class CallbackApiMyHandler extends VK\CallbackApi\VKCallbackApiHandler {
 ```
 
 To start listening to LongPoll events, create an instance of your CallbackApiMyHandler class, instance of
-VK\CallbackApi\LongPoll\VKCallbackApiLongPollExecutor class and call method listen():
+VK\CallbackApi\VKCallbackApiLongPollExecutor class and call method listen():
 
 ```php
 $vk = new \VK\Client\VKApiClient();
@@ -345,8 +345,7 @@ $data = json_decode(file_get_contents('php://input'));
 $handler->parse($data);
 ```
 
-To handle events you need to override methods from VK\CallbackApi\Server\VKCallbackApiServerHandler class as shown
+To handle events you need to override methods from VK\CallbackApi\VKCallbackApiServerHandler class as shown
 above.
 
 `confirmation` event handler has 2 arguments: group id, and secret key. You need to override this method.
-
