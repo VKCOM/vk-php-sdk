@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace VK\OAuth\User\DTO;
 
@@ -70,7 +70,7 @@ class TokensParams
     public function __construct(int $client_id, string $code_verifier, string $redirect_uri, string $code, string $device_id)
     {
         $this->client_id = $client_id;
-        $this->code_verifier = rtrim(strtr(base64_encode($code_verifier), '+/', '-_'), '=');
+        $this->code_verifier = $code_verifier;
         $this->redirect_uri = $redirect_uri;
         $this->code = $code;
         $this->device_id = $device_id;

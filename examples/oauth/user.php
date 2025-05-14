@@ -1,6 +1,7 @@
 <?php
 
 use VK\OAuth\User\DTO\AuthorizeUrlParams;
+use VK\OAuth\User\DTO\Scopes;
 use VK\OAuth\User\DTO\TokensParams;
 use VK\OAuth\User\User;
 
@@ -21,7 +22,7 @@ $authParams = (new AuthorizeUrlParams(
     $verifier,
     $redirectUri,
     $state,
-))->setScope([Scopes::EMAIL, Scopes::PHONE]);
+))->setScopes([Scopes::EMAIL, Scopes::PHONE]);
 
 $authUrl = $auth->getAuthorizeUrl($authParams);
 
@@ -31,7 +32,7 @@ echo "3. Copy url from the address bar\n";
 echo "4. Paste this option below\n\n";
 
 echo 'url > ';
-$handle = fopen ('php://stdin','r');
+$handle = fopen('php://stdin', 'r');
 $url = fgets($handle);
 fclose($handle);
 
