@@ -16,7 +16,7 @@ use VK\OAuth\User\DTO\RefreshTokensParams;
 
 class User extends AbstractOAuth
 {
-    protected const HOST                  = 'https://id.vk.com';
+    protected const HOST                  = 'https://id.vk.ru';
     protected const ENDPOINT_AUTHORIZE    = '/authorize';
     protected const ENDPOINT_TOKEN        = '/oauth2/auth';
     protected const ENDPOINT_REVOKE       = '/oauth2/revoke';

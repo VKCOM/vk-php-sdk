@@ -15,7 +15,7 @@ class Group extends AbstractOAuth
 {
     protected const VERSION = '5.199';
 
-    protected const HOST = 'https://oauth.vk.com';
+    protected const HOST = 'https://oauth.vk.ru';
     private const ENDPOINT_AUTHORIZE = '/authorize';
     private const ENDPOINT_ACCESS_TOKEN = '/access_token';
 
